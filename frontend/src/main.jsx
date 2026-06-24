@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { routeTree } from './routeTree.gen'
 import './index.css'
 
+import { QuestionnaireProvider } from './context/questionnaireContext'
+
 // Create a new router instance
 const router = createRouter({ routeTree })
 
@@ -14,7 +16,9 @@ const queryClient = new QueryClient()
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <QuestionnaireProvider>
+        <RouterProvider router={router} />
+      </QuestionnaireProvider>
     </QueryClientProvider>
   </StrictMode>,
 )
