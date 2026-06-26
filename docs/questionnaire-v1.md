@@ -43,6 +43,7 @@ Basic Information
 Questions 1–3 of 3
 
 1. What should we call you? Type: Short text input. Placeholder: e.g. Alex
+
 2. How old are you? Type: Single-select
 * Under 25
 * 25–34
@@ -50,6 +51,7 @@ Questions 1–3 of 3
 * 45–54
 * 55–64
 * 65 or older
+
 3. What best describes your current situation?  Type: Single-select
 * Student
 * Working full-time
@@ -120,7 +122,7 @@ Total Score	Risk Profile
 
 Batch 4
 Investment Values
-10. Are there any causes or themes you want your investments to support? Type: Multi-select (choose up to 3)
+10. Are there any causes or themes you want your investments to support? Type: Multi-select (choose up to 5)
 * Clean energy & environment
 * Technology & innovation
 * Healthcare & wellness

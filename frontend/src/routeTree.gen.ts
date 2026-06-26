@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UsersRouteImport } from './routes/users'
 import { Route as QuestionnaireRouteImport } from './routes/questionnaire'
+import { Route as QuestionnaireRouteImport } from './routes/questionnaire'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as QuestionnaireBatchesBatch5RouteImport } from './routes/questionnaireBatches/batch5'
@@ -23,6 +24,11 @@ import { Route as QuestionnaireBatchesBatch0RouteImport } from './routes/questio
 const UsersRoute = UsersRouteImport.update({
   id: '/users',
   path: '/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuestionnaireRoute = QuestionnaireRouteImport.update({
+  id: '/questionnaire',
+  path: '/questionnaire',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuestionnaireRoute = QuestionnaireRouteImport.update({
@@ -252,6 +258,17 @@ const rootRouteChildren: RootRouteChildren = {
   QuestionnaireBatchesBatch3Route: QuestionnaireBatchesBatch3Route,
   QuestionnaireBatchesBatch4Route: QuestionnaireBatchesBatch4Route,
   QuestionnaireBatchesBatch5Route: QuestionnaireBatchesBatch5Route,
+}
+
+const QuestionnaireRouteWithChildren = QuestionnaireRoute._addFileChildren(
+  QuestionnaireRouteChildren,
+)
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  QuestionnaireRoute: QuestionnaireRouteWithChildren,
+  UsersRoute: UsersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
