@@ -1,10 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/questionnaire/')({
-  component: QuestionnaireIndex,
+export const Route = createFileRoute('/questionnaire')({
+  component: QuestionnairePage,
 })
 
-function QuestionnaireIndex() {
+function QuestionnairePage() {
   return (
     <div>
       <h1>Questionnaire</h1>

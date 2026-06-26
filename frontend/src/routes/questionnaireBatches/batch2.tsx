@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/questionnaire/batch2')({
+export const Route = createFileRoute('/questionnaireBatches/batch2')({
   component: Batch2,
 })
 

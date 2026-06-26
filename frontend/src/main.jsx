@@ -1,24 +1,16 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { routeTree } from './routeTree.gen'
 import './index.css'
-
-import { QuestionnaireProvider } from './context/questionnaireContext'
 
 // Create a new router instance
 const router = createRouter({ routeTree })
 
 // Register the router instance for type safety
-const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <QuestionnaireProvider>
-        <RouterProvider router={router} />
-      </QuestionnaireProvider>
-    </QueryClientProvider>
+    <RouterProvider router={router} />
   </StrictMode>,
 )

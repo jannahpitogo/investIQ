@@ -32,6 +32,13 @@ function RootLayout() {
         >
           Users
         </Link>
+        <Link
+          to="/questionnaire"
+          activeProps={{ className: 'font-semibold' }}
+          className="no-underline text-inherit"
+        >
+          Questionnaire
+        </Link>
       </nav>
 
       {/* Outlet renders the matched child route */}
