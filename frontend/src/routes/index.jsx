@@ -11,7 +11,7 @@ function HomePage() {
     <main>
       {/* Hero Section */}
       <section className="hero">
-        <div className="badge">Built for beginner investors</div>
+        <div className="badge">Built for retail investors</div>
 
         <h1 className="hero-title">
           Invest with <span className="gradient-text">clarity, confidence</span>
