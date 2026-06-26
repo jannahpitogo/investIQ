@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-//import './style.css'
 
 // File name determines the URL path:  index.tsx → "/"
 export const Route = createFileRoute('/')({
