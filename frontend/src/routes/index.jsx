@@ -75,6 +75,66 @@ function HomePage() {
           combining financial analysis with sustainability awareness.
         </p>
       </section>
+      {/* Testimonials Section */}
+      <section className="testimonials-section">
+        <h2>What users are saying</h2>
+
+        <div className="testimonials-grid">
+          <div className="testimonial-card">
+            <p>
+              “InvestIQ helped me finally understand how diversified my portfolio actually was.
+              Super clear and beginner-friendly.”
+            </p>
+            <span className="testimonial-author">— Sarah M.</span>
+          </div>
+
+          <div className="testimonial-card">
+            <p>
+              “I used to invest randomly. Now I actually understand risk and sector exposure. Game
+              changer.”
+            </p>
+            <span className="testimonial-author">— Daniel K.</span>
+          </div>
+
+          <div className="testimonial-card">
+            <p>
+              “The ESG insights make me feel more confident that my investments align with my
+              values.”
+            </p>
+            <span className="testimonial-author">— Priya S.</span>
+          </div>
+        </div>
+      </section>
+      {/* Footer */}
+      <footer className="footer">
+        <div className="footer-container">
+          {/* Brand */}
+          <div className="footer-brand">
+            <h3>InvestIQ</h3>
+            <p>Smarter investing through clarity, education, and ESG awareness.</p>
+          </div>
+
+          {/* Links */}
+          <div className="footer-links">
+            <div className="footer-column">
+              <h4>Legal</h4>
+
+              <button type="button" className="footer-link">
+                Privacy Policy
+              </button>
+
+              <button type="button" className="footer-link">
+                Terms of Service
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="footer-bottom">
+          <p>© {new Date().getFullYear()} InvestIQ. All rights reserved.</p>
+        </div>
+      </footer>
     </main>
   )
 }
