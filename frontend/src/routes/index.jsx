@@ -20,8 +20,13 @@ function HomePage() {
         </h1>
 
         <p className="hero-description">
-          InvestIQ helps new investors understand portfolio risk, diversification, and ESG impact
+          InvestIQ helps retail investors understand portfolio risk, diversification, and ESG impact
           through interactive learning and personalized recommendations.
+        </p>
+
+        <p className="market-note">
+          🇺🇸 Currently supports <strong>U.S. stock market investments only.</strong>
+          Global markets will be supported in future releases.
         </p>
 
         <div className="hero-actions">
