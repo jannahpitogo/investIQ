@@ -6,7 +6,7 @@ export function QuestionnaireProvider({ children }) {
   const [answers, setAnswers] = useState({})
 
   function updateAnswers(newAnswers) {
-    setAnswers(prev => ({ ...prev, ...newAnswers }))
+    setAnswers((prev) => ({ ...prev, ...newAnswers }))
   }
 
   return (
