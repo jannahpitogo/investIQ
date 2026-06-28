@@ -48,7 +48,7 @@ function Batch1() {
   return (
     <div className="max-w-lg mx-auto py-12 px-6">
       <p className="text-sm text-base-content/50 mb-1">Basic Information</p>
-      <p className="text-sm text-base-content/50 mb-4">Questions 1-3 of 3</p>
+      <p className="text-sm text-base-content/50 mb-4 italic">Questions 1-3 of 3</p>
       <progress className="progress progress-primary w-full mb-8" value={25} max={100} />
 
       {/* Q1 */}
