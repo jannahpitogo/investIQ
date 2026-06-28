@@ -111,7 +111,7 @@ function Batch3() {
   return (
     <div className="max-w-lg mx-auto py-12 px-6">
       <p className="text-sm text-base-content/50 mb-1">Risk Profile</p>
-      <p className="text-sm text-base-content/50 mb-4">Questions 7–10 of 4</p>
+      <p className="text-sm text-base-content/50 mb-4 italic">Questions 7-10 of 4</p>
       <progress className="progress progress-primary w-full mb-8" value={75} max={100} />
 
       {/* Q7 */}
