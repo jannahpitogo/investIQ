@@ -6,37 +6,36 @@ export const Route = createFileRoute('/questionnaireBatches/batch3')({
   component: Batch3,
 })
 
-type ScoredOption = { label: string; score: number }
 
-const q7Options: ScoredOption[] = [
+const q7Options = [
   { label: "Sell everything, I don't want to lose more", score: 1 },
   { label: 'Sell some and move to safer options', score: 2 },
   { label: 'Do nothing and wait for it to recover', score: 3 },
   { label: "Buy more, it's a good opportunity", score: 4 },
 ]
 
-const q8Options: ScoredOption[] = [
+const q8Options = [
   { label: 'Very low — I prefer certainty over growth', score: 1 },
   { label: 'Low — small fluctuations are okay', score: 2 },
   { label: 'Medium — I can handle moderate ups and downs', score: 3 },
   { label: "High — I'm comfortable with significant swings for higher returns", score: 4 },
 ]
 
-const q9Options: ScoredOption[] = [
+const q9Options = [
   { label: 'Very uncomfortable — that level of change would stress me out', score: 1 },
   { label: "Somewhat uncomfortable — I'd rather have steadier returns", score: 2 },
   { label: "Neutral — I understand it's part of investing", score: 3 },
   { label: "Comfortable — short-term swings don't bother me", score: 4 },
 ]
 
-const q10Options: ScoredOption[] = [
+const q10Options = [
   { label: 'I want to protect my money, even if it grows slowly', score: 1 },
   { label: "I'm okay with some ups and downs for moderate growth", score: 2 },
   { label: 'I want strong growth, and I can handle big swings', score: 3 },
   { label: 'I want the highest possible returns, even with major volatility', score: 4 },
 ]
 
-function getRiskProfile(score: number): string {
+function getRiskProfile(score) {
   if (score <= 7) return 'Conservative'
   if (score <= 11) return 'Moderate'
   return 'Aggressive'
@@ -46,10 +45,6 @@ function ChipGroup({
   options,
   selected,
   onSelect,
-}: {
-  options: ScoredOption[]
-  selected: ScoredOption | null
-  onSelect: (opt: ScoredOption) => void
 }) {
   return (
     <div className="flex flex-wrap gap-2">
@@ -76,16 +71,16 @@ function Batch3() {
   const navigate = useNavigate()
   const { answers, updateAnswers } = useQuestionnaire()
 
-  const [portfolioDrop, setPortfolioDrop] = useState<ScoredOption | null>(
+  const [portfolioDrop, setPortfolioDrop] = useState(
     answers.portfolioDrop ?? null,
   )
-  const [comfortLevel, setComfortLevel] = useState<ScoredOption | null>(
+  const [comfortLevel, setComfortLevel] = useState(
     answers.comfortLevel ?? null,
   )
-  const [monthlySwing, setMonthlySwing] = useState<ScoredOption | null>(
+  const [monthlySwing, setMonthlySwing] = useState(
     answers.monthlySwing ?? null,
   )
-  const [returnsPriority, setReturnsPriority] = useState<ScoredOption | null>(
+  const [returnsPriority, setReturnsPriority] = useState(
     answers.returnsPriority ?? null,
   )
 

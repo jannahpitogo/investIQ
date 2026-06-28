@@ -44,8 +44,8 @@ function Batch4() {
   const { answers, updateAnswers } = useQuestionnaire()
 
   // const [causes, setCauses] = useState<string[]>(answers.causes ?? [])
-  const [exclusions, setExclusions] = useState<string[]>(answers.exclusions ?? [])
-  const [highlights, setHighlights] = useState<string[]>(answers.highlights ?? [])
+  const [exclusions, setExclusions] = useState(answers.exclusions ?? [])
+  const [highlights, setHighlights] = useState(answers.highlights ?? [])
 
   // function toggleCause(option: string) {
   //   if (causes.includes(option)) {
@@ -55,7 +55,7 @@ function Batch4() {
   //   }
   // }
 
-  function toggleExclusion(option: string) {
+  function toggleExclusion(option) {
     if (option === 'None, I have no restrictions') {
       setExclusions(['None, I have no restrictions'])
     } else {
@@ -68,7 +68,7 @@ function Batch4() {
     }
   }
 
-  function toggleHighlight(option: string) {
+  function toggleHighlight(option) {
     if (option === 'None of these') {
       setHighlights(['None of these'])
     } else {

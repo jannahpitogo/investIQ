@@ -35,11 +35,7 @@ function ChipGroup({
   options,
   selected,
   onSelect,
-}: {
-  options: string[]
-  selected: string
-  onSelect: (val: string) => void
-}) {
+}){
   return (
     <div className="flex flex-wrap gap-2">
       {options.map((option) => (

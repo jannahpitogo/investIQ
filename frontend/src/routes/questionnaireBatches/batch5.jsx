@@ -7,21 +7,12 @@ export const Route = createFileRoute('/questionnaireBatches/batch5')({
   component: Batch5,
 })
 
-interface PortfolioRow {
-  id: string
-  ticker: string
-  name: string
-  industry: string
-  quantity: string
-  currentPrice: number
-}
-
 function Batch5() {
   const navigate = useNavigate()
   const { answers, updateAnswers } = useQuestionnaire()
 
   const [query, setQuery] = useState('')
-  const [rows, setRows] = useState<PortfolioRow[]>(answers.portfolio ?? [])
+  const [rows, setRows] = useState(answers.portfolio ?? [])
 
   const suggestions =
     query.trim().length >= 1
@@ -33,7 +24,7 @@ function Batch5() {
         ).slice(0, 6)
       : []
 
-  function addStock(stock: (typeof US_STOCKS)[number]) {
+  function addStock(stock) {
     setRows((prev) => [
       ...prev,
       {
@@ -48,11 +39,11 @@ function Batch5() {
     setQuery('')
   }
 
-  function updateQuantity(id: string, value: string) {
+  function updateQuantity(id, value) {
     setRows((prev) => prev.map((r) => (r.id === id ? { ...r, quantity: value } : r)))
   }
 
-  function removeRow(id: string) {
+  function removeRow(id) {
     setRows((prev) => prev.filter((r) => r.id !== id))
   }
 
