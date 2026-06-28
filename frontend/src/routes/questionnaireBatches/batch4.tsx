@@ -7,21 +7,42 @@ export const Route = createFileRoute('/questionnaireBatches/batch4')({
 })
 
 const causeOptions = [
-  'Clean energy & environment',
-  'Technology & innovation',
-  'Healthcare & wellness',
-  'Social equality & community',
-  'Education & opportunity',
+  'Clean Energy & Sustainability',
+  'Technology & Innovation',
+  'Healthcare & Wellness',
+  'Education & Opportunity',
   'Human Rights',
+  'Social Equality & Community',
+  'Renewable Energy',
+  'Ethical Business Practices',
+  'Local Economic Development',
+  'Financial Inclusion',
+  'Climate Action',
+  'Responsible Corporate Governance',
 ]
 
 const exclusionOptions = [
-  'Tobacco & alcohol',
+  'Tobacco',
+  'Alcohol',
   'Gambling',
-  'Weapons & defense',
-  'Fossil fuels (oil, gas, coal)',
-  'Fast fashion & low-wage labor',
-  'None — I have no restrictions',
+  'Weapons & Defense',
+  'Fossil Fuels',
+  'Ultra-processed Food & Drinks',
+  'Fast Fashion',
+  'None, I have no restrictions',
+]
+
+const highlightOptions = [
+  'Human Rights Concerns',
+  'Animal Welfare Issues',
+  'Environmental Impact',
+  'Tax Avoidance',
+  'Fossil Fuel Activities',
+  'Tobacco Products',
+  'Weapons & Defense',
+  'Gambling Activities',
+  'Ultra-processed Food & Drinks',
+  'None of these',
 ]
 
 function Batch4() {
@@ -30,6 +51,7 @@ function Batch4() {
 
   const [causes, setCauses] = useState<string[]>(answers.causes ?? [])
   const [exclusions, setExclusions] = useState<string[]>(answers.exclusions ?? [])
+  const [highlights, setHighlights] = useState<string[]>(answers.highlights ?? [])
 
   function toggleCause(option: string) {
     if (causes.includes(option)) {
@@ -40,10 +62,10 @@ function Batch4() {
   }
 
   function toggleExclusion(option: string) {
-    if (option === 'None — I have no restrictions') {
-      setExclusions(['None — I have no restrictions'])
+    if (option === 'None, I have no restrictions') {
+      setExclusions(['None, I have no restrictions'])
     } else {
-      const withoutNone = exclusions.filter((e) => e !== 'None — I have no restrictions')
+      const withoutNone = exclusions.filter((e) => e !== 'None, I have no restrictions')
       if (withoutNone.includes(option)) {
         setExclusions(withoutNone.filter((e) => e !== option))
       } else {
@@ -52,25 +74,38 @@ function Batch4() {
     }
   }
 
-  const canProceed = causes.length > 0 && exclusions.length > 0
+  function toggleHighlight(option: string) {
+    if (option === 'None of these') {
+      setHighlights(['None of these'])
+    } else {
+      const withoutNone = highlights.filter((h) => h !== 'None of these')
+      if (withoutNone.includes(option)) {
+        setHighlights(withoutNone.filter((h) => h !== option))
+      } else if (withoutNone.length < 3) {
+        setHighlights([...withoutNone, option])
+      }
+    }
+  }
+
+  const canProceed = causes.length > 0 && exclusions.length > 0 && highlights.length > 0
 
   function handleSubmit() {
-    updateAnswers({ causes, exclusions })
+    updateAnswers({ causes, exclusions, highlights })
     navigate({ to: '/questionnaireBatches/batch5' })
   }
 
   return (
     <div className="max-w-lg mx-auto py-12 px-6">
-      <p className="text-sm text-base-content/50 mb-1">Investment Values</p>
-      <p className="text-sm text-base-content/50 mb-4">Questions 11–12 of 2</p>
+      <p className="text-sm text-base-content/50 mb-1">Portfolio Values & Alignment</p>
+      <p className="text-sm text-base-content/50 mb-4 italic">Questions 11-13 of 3</p>
       <progress className="progress progress-primary w-full mb-8" value={90} max={100} />
 
       {/* Q11 */}
-      <div className="mb-6">
+      <div className="mb-8">
         <label className="block font-medium mb-1">
-          11. Are there any causes or themes you want your investments to support?
+          11. What causes would you like your investments to support?
         </label>
-        <p className="text-sm text-base-content/50 mb-3">Choose up to 5</p>
+        <p className="text-sm text-base-content/50 mb-3 italic">Choose up to 5</p>
         <div className="flex flex-wrap gap-2">
           {causeOptions.map((option) => {
             const isSelected = causes.includes(option)
@@ -84,7 +119,7 @@ function Batch4() {
                 className={`px-4 py-2 rounded border-2 text-sm cursor-pointer transition-all
                   ${
                     isSelected
-                      ? 'border-primary bg-primary/20 text-primary font-semibold'
+                      ? 'border-primary bg-primary text-primary-content font-semibold'
                       : isDisabled
                         ? 'border-base-300 opacity-40 cursor-not-allowed'
                         : 'border-base-300 hover:border-primary/50'
@@ -99,9 +134,10 @@ function Batch4() {
 
       {/* Q12 */}
       <div className="mb-8">
-        <label className="block font-medium mb-3">
+        <label className="block font-medium mb-1">
           12. Are there any industries you would prefer to avoid investing in?
         </label>
+        <p className="text-sm text-base-content/50 mb-3 italic">Choose all that apply</p>
         <div className="flex flex-wrap gap-2">
           {exclusionOptions.map((option) => (
             <button
@@ -111,7 +147,7 @@ function Batch4() {
               className={`px-4 py-2 rounded border-2 text-sm cursor-pointer transition-all
                 ${
                   exclusions.includes(option)
-                    ? 'border-primary bg-primary/10 text-primary font-semibold'
+                    ? 'border-primary bg-primary text-primary-content font-semibold'
                     : 'border-base-300 hover:border-primary/50'
                 }`}
             >
@@ -121,8 +157,45 @@ function Batch4() {
         </div>
       </div>
 
+      {/* Q13 */}
+      <div className="mb-8">
+        <label className="block font-medium mb-1">
+          13. Which types of company practices would you like us to highlight if they appear in your
+          portfolio?
+        </label>
+        <p className="text-sm text-base-content/50 mb-3 italic">Choose up to 3</p>
+        <div className="flex flex-wrap gap-2">
+          {highlightOptions.map((option) => {
+            const isSelected = highlights.includes(option)
+            const isDisabled =
+              option !== 'None of these' &&
+              !isSelected &&
+              !highlights.includes('None of these') &&
+              highlights.length >= 3
+            return (
+              <button
+                key={option}
+                type="button"
+                onClick={() => toggleHighlight(option)}
+                disabled={isDisabled}
+                className={`px-4 py-2 rounded border-2 text-sm cursor-pointer transition-all
+                  ${
+                    isSelected
+                      ? 'border-primary bg-primary text-primary-content font-semibold'
+                      : isDisabled
+                        ? 'border-base-300 opacity-40 cursor-not-allowed'
+                        : 'border-base-300 hover:border-primary/50'
+                  }`}
+              >
+                {option}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
       <button className="btn btn-primary w-full" disabled={!canProceed} onClick={handleSubmit}>
-        View My Insights →
+        Next →
       </button>
     </div>
   )
