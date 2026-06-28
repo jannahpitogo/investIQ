@@ -10,15 +10,15 @@ export const Route = createRootRoute({
 function RootLayout() {
   return (
     <>
-      <nav className="flex gap-6 px-6 py-3 border-b border-border">
+      <nav className="sticky top-0 z-50 flex gap-6 px-6 py-3 border-b border-border">
         <Link
           to="/"
           activeProps={{ className: 'font-semibold' }}
           className="no-underline text-inherit"
         >
-          Home
+          investIQ
         </Link>
-        <Link
+        {/* <Link
           to="/about"
           activeProps={{ className: 'font-semibold' }}
           className="no-underline text-inherit"
@@ -38,7 +38,7 @@ function RootLayout() {
           className="no-underline text-inherit"
         >
           Questionnaire
-        </Link>
+        </Link> */}
       </nav>
 
       {/* Outlet renders the matched child route */}
