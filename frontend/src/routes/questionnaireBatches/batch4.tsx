@@ -6,42 +6,36 @@ export const Route = createFileRoute('/questionnaireBatches/batch4')({
   component: Batch4,
 })
 
-const causeOptions = [
-  'Clean Energy & Sustainability',
-  'Technology & Innovation',
-  'Healthcare & Wellness',
-  'Education & Opportunity',
-  'Human Rights',
-  'Social Equality & Community',
-  'Renewable Energy',
-  'Ethical Business Practices',
-  'Local Economic Development',
-  'Financial Inclusion',
-  'Climate Action',
-  'Responsible Corporate Governance',
-]
+// const causeOptions = [
+//   'Clean Energy & Sustainability',
+//   'Technology & Innovation',
+//   'Healthcare & Wellness',
+//   'Education & Opportunity',
+//   'Human Rights',
+//   'Social Equality & Community',
+//   'Renewable Energy',
+//   'Ethical Business Practices',
+//   'Local Economic Development',
+//   'Financial Inclusion',
+//   'Climate Action',
+//   'Responsible Corporate Governance',
+// ]
 
 const exclusionOptions = [
+  'Fast food and ultra-processed drinks',
   'Tobacco',
-  'Alcohol',
-  'Gambling',
-  'Weapons & Defense',
   'Fossil Fuels',
-  'Ultra-processed Food & Drinks',
+  'Weapons & Defense',
+  'Gambling',
   'Fast Fashion',
   'None, I have no restrictions',
 ]
 
 const highlightOptions = [
-  'Human Rights Concerns',
-  'Animal Welfare Issues',
-  'Environmental Impact',
-  'Tax Avoidance',
-  'Fossil Fuel Activities',
-  'Tobacco Products',
-  'Weapons & Defense',
-  'Gambling Activities',
-  'Ultra-processed Food & Drinks',
+  'Human Rights', 
+  'Tax Avoidance', 
+  'Animal Rights', 
+  'Habitats & Resources',
   'None of these',
 ]
 
@@ -49,17 +43,17 @@ function Batch4() {
   const navigate = useNavigate()
   const { answers, updateAnswers } = useQuestionnaire()
 
-  const [causes, setCauses] = useState<string[]>(answers.causes ?? [])
+  // const [causes, setCauses] = useState<string[]>(answers.causes ?? [])
   const [exclusions, setExclusions] = useState<string[]>(answers.exclusions ?? [])
   const [highlights, setHighlights] = useState<string[]>(answers.highlights ?? [])
 
-  function toggleCause(option: string) {
-    if (causes.includes(option)) {
-      setCauses(causes.filter((c) => c !== option))
-    } else if (causes.length < 5) {
-      setCauses([...causes, option])
-    }
-  }
+  // function toggleCause(option: string) {
+  //   if (causes.includes(option)) {
+  //     setCauses(causes.filter((c) => c !== option))
+  //   } else if (causes.length < 5) {
+  //     setCauses([...causes, option])
+  //   }
+  // }
 
   function toggleExclusion(option: string) {
     if (option === 'None, I have no restrictions') {
@@ -87,21 +81,21 @@ function Batch4() {
     }
   }
 
-  const canProceed = causes.length > 0 && exclusions.length > 0 && highlights.length > 0
+  const canProceed = exclusions.length > 0 && highlights.length > 0
 
   function handleSubmit() {
-    updateAnswers({ causes, exclusions, highlights })
+    updateAnswers({ exclusions, highlights })
     navigate({ to: '/questionnaireBatches/batch5' })
   }
 
   return (
     <div className="max-w-lg mx-auto py-12 px-6">
       <p className="text-sm text-base-content/50 mb-1">Portfolio Values & Alignment</p>
-      <p className="text-sm text-base-content/50 mb-4 italic">Questions 11-13 of 3</p>
+      <p className="text-sm text-base-content/50 mb-4 italic">Step 4 of 5</p>
       <progress className="progress progress-primary w-full mb-8" value={90} max={100} />
 
       {/* Q11 */}
-      <div className="mb-8">
+      {/* <div className="mb-8">
         <label className="block font-medium mb-1">
           11. What causes would you like your investments to support?
         </label>
@@ -130,12 +124,12 @@ function Batch4() {
             )
           })}
         </div>
-      </div>
+      </div> */}
 
-      {/* Q12 */}
+      {/* Q11 */}
       <div className="mb-8">
         <label className="block font-medium mb-1">
-          12. Are there any industries you would prefer to avoid investing in?
+          11. Are there any industries you would prefer to avoid investing in?
         </label>
         <p className="text-sm text-base-content/50 mb-3 italic">Choose all that apply</p>
         <div className="flex flex-wrap gap-2">
@@ -157,11 +151,10 @@ function Batch4() {
         </div>
       </div>
 
-      {/* Q13 */}
+      {/* Q12 */}
       <div className="mb-8">
         <label className="block font-medium mb-1">
-          13. Which types of company practices would you like us to highlight if they appear in your
-          portfolio?
+          12. 12. Are there any categories you would like your investments to avoid violating?
         </label>
         <p className="text-sm text-base-content/50 mb-3 italic">Choose up to 3</p>
         <div className="flex flex-wrap gap-2">
