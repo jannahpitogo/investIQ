@@ -12,7 +12,59 @@ function Batch5() {
   const { answers, updateAnswers } = useQuestionnaire()
 
   const [query, setQuery] = useState('')
-  const [rows, setRows] = useState(answers.portfolio ?? [])
+  const defaultPortfolio = [
+  {
+    id: crypto.randomUUID(),
+    ticker: "AAPL",
+    name: "Apple",
+    quantity: "12",
+    buyPrice: "185.50",
+  },
+  {
+    id: crypto.randomUUID(),
+    ticker: "MSFT",
+    name: "Microsoft",
+    quantity: "8",
+    buyPrice: "412.80",
+  },
+  {
+    id: crypto.randomUUID(),
+    ticker: "NVDA",
+    name: "NVIDIA",
+    quantity: "15",
+    buyPrice: "118.40",
+  },
+  {
+    id: crypto.randomUUID(),
+    ticker: "AMZN",
+    name: "Amazon",
+    quantity: "6",
+    buyPrice: "174.30",
+  },
+  {
+    id: crypto.randomUUID(),
+    ticker: "RNW",
+    name: "ReNew Energy Global",
+    quantity: "10",
+    buyPrice: "7.50",
+  },
+  {
+    id: crypto.randomUUID(),
+    ticker: "KO",
+    name: "Coca-Cola",
+    quantity: "5",
+    buyPrice: "80.00",
+  },
+  {
+    id: crypto.randomUUID(),
+    ticker: "SBUX",
+    name: "Starbucks",
+    quantity: "7",
+    buyPrice: "100.00",
+  },
+]
+
+  const [rows, setRows] = useState(defaultPortfolio)
 
   const suggestions =
     query.trim().length >= 1
@@ -31,9 +83,8 @@ function Batch5() {
         id: crypto.randomUUID(),
         ticker: stock.ticker,
         name: stock.name,
-        industry: stock.industry,
         quantity: '',
-        currentPrice: stock.currentPrice,
+        buyPrice: '',
       },
     ])
     setQuery('')
@@ -57,8 +108,18 @@ function Batch5() {
     navigate({ to: '/' }) // update when insights page is ready
   }
 
+  function updateBuyPrice(id, value) {
+  setRows((prev) =>
+    prev.map((r) =>
+      r.id === id
+        ? { ...r, buyPrice: value }
+        : r
+    )
+  )
+}
+
   const canProceed =
-    rows.length > 0 && rows.every((r) => r.quantity !== '' && Number(r.quantity) > 0)
+    rows.length > 0 && rows.every((r) => Number(r.quantity) > 0 && Number(r.buyPrice) > 0)
 
   return (
     <div className="max-w-2xl mx-auto py-12 px-6">
@@ -68,7 +129,7 @@ function Batch5() {
 
       <h2 className="text-xl font-bold mb-2">What investments do you currently hold?</h2>
       <p className="text-sm text-base-content/60 mb-6">
-        Search for each stock and enter the quantity you hold. Market value is calculated
+        Search for each stock and enter the quantity you hold. Investment value is calculated
         automatically.
       </p>
 
@@ -108,46 +169,76 @@ function Batch5() {
       {rows.length > 0 && (
         <div className="overflow-x-auto mb-6 border border-base-300 rounded-lg">
           <table className="table w-full">
-            <thead className="bg-base-200 text-center text-base-content/60">
+            <thead>
               <tr>
                 <th>Asset Name</th>
-                <th>Type</th>
-                <th className="text-center">Quantity</th> <th>Market Value (USD)</th>
+                <th className="text-center">Type</th>
+                <th className="text-center">Quantity</th> 
+                <th className="text-center">Buy Price (USD)</th>
+                <th className="text-center">Investment Value (USD)</th>
                 <th>Remove</th>
               </tr>
             </thead>
+
             <tbody>
               {rows.map((row) => {
                 const qty = Number(row.quantity)
-                const marketValue = qty > 0 ? `$${(row.currentPrice * qty).toFixed(2)}` : '—'
+                const buyPrice = Number(row.buyPrice)
+                const investmentValue =
+                  qty > 0 && buyPrice > 0
+                    ? `$${(qty * buyPrice).toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}`
+                    : "—"
+
                 return (
-                  <tr key={row.id} className="border-t border-base-200">
+                  <tr key={row.id}>
                     <td>
-                      <p className="font-semibold text-sm">{row.name}</p>
-                      <p className="text-xs text-base-content/50">{row.ticker}</p>
+                      <div className="font-semibold">{row.name}</div>
+                      <div className="text-xs opacity-60">{row.ticker}</div>
                     </td>
-                    <td className="text-center">Stock</td>
-                    <td>
-                      <td className="text-center">
-                        <input
-                          type="number"
-                          min={1}
-                          className="input input-bordered input-sm w-24"
-                          placeholder="e.g. 10"
-                          value={row.quantity}
-                          onChange={(e) => updateQuantity(row.id, e.target.value)}
-                        />
-                      </td>
+
+                    <td className="text-center">
+                      Stock
                     </td>
-                    <td className="text-sm font-medium">{marketValue}</td>
-                    <td>
+
+                    <td className="text-center">
+                      <input
+                        type="number"
+                        min="1"
+                        className="input input-bordered input-sm w-20 text-center"
+                        value={row.quantity}
+                        onChange={(e) =>
+                          updateQuantity(row.id, e.target.value)
+                        }
+                      />
+                    </td>
+
+                    <td className="text-center">
+                      <input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        className="input input-bordered input-sm w-28 text-right"
+                        value={row.buyPrice}
+                        onChange={(e) =>
+                          updateBuyPrice(row.id, e.target.value)
+                        }
+                      />
+                    </td>
+
+                    <td className="text-center font-semibold">
+                      {investmentValue}
+                    </td>
+
+                    <td className="text-center">
                       <button
                         type="button"
                         className="btn btn-ghost btn-sm text-error"
                         onClick={() => removeRow(row.id)}
-                        aria-label="Remove"
                       >
-                        🗑
+                        🗑️
                       </button>
                     </td>
                   </tr>
