@@ -4,7 +4,7 @@ import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen'
 import { QuestionnaireProvider } from './context/questionnaireContext'
 import './index.css'
-import './style.css'
+//import './style.css'
 
 // Create a new router instance
 const router = createRouter({ routeTree })
