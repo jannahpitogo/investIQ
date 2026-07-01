@@ -62,7 +62,16 @@ function Batch5() {
     quantity: "7",
     buyPrice: "100.00",
   },
-]
+].map((holding) => {
+  const stock = US_STOCKS.find((s) => s.ticker === holding.ticker)
+
+  return {
+    id: crypto.randomUUID(),
+    ...stock,
+    quantity: holding.quantity,
+    buyPrice: holding.buyPrice,
+  }
+})
 
   const [rows, setRows] = useState(defaultPortfolio)
 
@@ -83,6 +92,9 @@ function Batch5() {
         id: crypto.randomUUID(),
         ticker: stock.ticker,
         name: stock.name,
+        sector: stock.sector,
+        industry: stock.industry,
+        currentPrice: stock.currentPrice,
         quantity: '',
         buyPrice: '',
       },
@@ -103,10 +115,38 @@ function Batch5() {
     document.getElementById('stock-search')?.focus()
   }
 
-  function handleFinish() {
-    updateAnswers({ portfolio: rows })
-    navigate({ to: '/' }) // update when insights page is ready
+  async function handleFinish() {
+  const questionnaire = {
+    ...answers,
+    portfolio: rows,
   }
+
+  try {
+    console.log(questionnaire.portfolio)
+    const response = await fetch(
+      'http://localhost:3000/api/questionnaire',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(questionnaire),
+      }
+    )
+
+    const analysis = await response.json()
+    console.log('Analysis:', analysis)
+
+    updateAnswers({
+      portfolio: rows,
+      analysis,
+    })
+
+    navigate({ to: '/dashboard' })
+  } catch (err) {
+    console.error(err)
+  }
+}
 
   function updateBuyPrice(id, value) {
   setRows((prev) =>
