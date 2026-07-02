@@ -13,7 +13,7 @@ export const Route = createFileRoute('/questionnaireBatches/batch5')({
 
 function Batch5() {
   const navigate = useNavigate()
-  const { updateAnswers } = useQuestionnaire()
+  const { answers, updateAnswers } = useQuestionnaire()
 
   const [query, setQuery] = useState('')
 
@@ -67,7 +67,16 @@ function Batch5() {
       quantity: '7',
       buyPrice: '100.00',
     },
-  ]
+  ].map((holding) => {
+    const stock = US_STOCKS.find((s) => s.ticker === holding.ticker)
+
+    return {
+      id: crypto.randomUUID(),
+      ...stock,
+      quantity: holding.quantity,
+      buyPrice: holding.buyPrice,
+    }
+  })
 
   const [rows, setRows] = useState(defaultPortfolio)
 
@@ -113,10 +122,36 @@ function Batch5() {
   const canProceed =
     rows.length > 0 && rows.every((r) => Number(r.quantity) > 0 && Number(r.buyPrice) > 0)
 
-  function handleFinish() {
-    updateAnswers({ portfolio: rows })
-    navigate({ to: '/' })
+  async function handleFinish() {
+  const questionnaire = {
+    ...answers,
+    portfolio: rows,
   }
+
+  try {
+    const response = await fetch(
+      'http://localhost:3000/api/questionnaire',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(questionnaire),
+      },
+    )
+
+    const analysis = await response.json()
+
+    updateAnswers({
+      portfolio: rows,
+      analysis,
+    })
+
+    navigate({ to: '/dashboard' })
+  } catch (err) {
+    console.error(err)
+  }
+}
 
   function handleBack() {
     navigate({ to: '/questionnaireBatches/batch4' })
