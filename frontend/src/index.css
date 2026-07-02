@@ -552,6 +552,13 @@ nav {
   font-style: italic;
 }
 
+.q-helperError {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  margin-top: -0.25rem;
+  font-style: italic;
+} 
+
 .q-input-group {
   margin-top: 0.25rem;
 }
@@ -646,9 +653,9 @@ nav {
 .q-breadcrumbs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem;
+  gap: 0.30rem;
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: #050505;
   margin-bottom: 0.75rem;
 }
 
