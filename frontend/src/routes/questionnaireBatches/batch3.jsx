@@ -6,7 +6,6 @@ export const Route = createFileRoute('/questionnaireBatches/batch3')({
   component: Batch3,
 })
 
-
 const q7Options = [
   { label: "Sell everything, I don't want to lose more", score: 1 },
   { label: 'Sell some and move to safer options', score: 2 },
@@ -41,11 +40,7 @@ function getRiskProfile(score) {
   return 'Aggressive'
 }
 
-function ChipGroup({
-  options,
-  selected,
-  onSelect,
-}) {
+function ChipGroup({ options, selected, onSelect }) {
   return (
     <div className="flex flex-wrap gap-2">
       {options.map((opt) => (
@@ -71,18 +66,10 @@ function Batch3() {
   const navigate = useNavigate()
   const { answers, updateAnswers } = useQuestionnaire()
 
-  const [portfolioDrop, setPortfolioDrop] = useState(
-    answers.portfolioDrop ?? null,
-  )
-  const [comfortLevel, setComfortLevel] = useState(
-    answers.comfortLevel ?? null,
-  )
-  const [monthlySwing, setMonthlySwing] = useState(
-    answers.monthlySwing ?? null,
-  )
-  const [returnsPriority, setReturnsPriority] = useState(
-    answers.returnsPriority ?? null,
-  )
+  const [portfolioDrop, setPortfolioDrop] = useState(answers.portfolioDrop ?? null)
+  const [comfortLevel, setComfortLevel] = useState(answers.comfortLevel ?? null)
+  const [monthlySwing, setMonthlySwing] = useState(answers.monthlySwing ?? null)
+  const [returnsPriority, setReturnsPriority] = useState(answers.returnsPriority ?? null)
 
   const canProceed = !!(portfolioDrop && comfortLevel && monthlySwing && returnsPriority)
 

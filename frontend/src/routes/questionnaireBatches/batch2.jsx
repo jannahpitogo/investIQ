@@ -31,11 +31,7 @@ const contributionOptions = [
   "I don't contribute regularly yet",
 ]
 
-function ChipGroup({
-  options,
-  selected,
-  onSelect,
-}){
+function ChipGroup({ options, selected, onSelect }) {
   return (
     <div className="flex flex-wrap gap-2">
       {options.map((option) => (

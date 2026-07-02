@@ -32,9 +32,9 @@ const exclusionOptions = [
 ]
 
 const highlightOptions = [
-  'Human Rights', 
-  'Tax Avoidance', 
-  'Animal Rights', 
+  'Human Rights',
+  'Tax Avoidance',
+  'Animal Rights',
   'Habitats & Resources',
   'None of these',
 ]

@@ -53,7 +53,9 @@ function Batch1() {
 
       {/* Q1 */}
       <div className="mb-6">
-        <label htmlFor="display-name" className="block font-medium mb-2">1. What should we call you?</label>
+        <label htmlFor="display-name" className="block font-medium mb-2">
+          1. What should we call you?
+        </label>
         <input
           type="text"
           id="display-name"
@@ -66,7 +68,9 @@ function Batch1() {
 
       {/* Q2 */}
       <div className="mb-6">
-        <label htmlFor="age" className="block font-medium mb-2">2. How old are you?</label>
+        <label htmlFor="age" className="block font-medium mb-2">
+          2. How old are you?
+        </label>
         <input
           type="number"
           className={`input input-bordered w-full ${ageError ? 'input-error' : ''}`}
@@ -81,9 +85,7 @@ function Batch1() {
 
       {/* Q3 */}
       <div className="mb-8">
-        <p className="block font-medium mb-3">
-          3. What best describes your current situation?
-        </p>
+        <p className="block font-medium mb-3">3. What best describes your current situation?</p>
         <div className="flex flex-wrap gap-2">
           {situationOptions.map((option) => (
             <button
