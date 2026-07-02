@@ -63,10 +63,31 @@ function Batch2() {
       <ProgressHeader title="Investment Goals" step={2} totalSteps={5} />
 
       {/* Q4 */}
-      <div className="mb-6">
-        <label className="block font-medium mb-3">4. What is your main reason for investing?</label>
-        <ChipGroup options={reasonOptions} selected={reason} onSelect={setReason} />
-      </div>
+           <QuestionBlock
+        title="What is your main reason for investing?"
+        helper="We'll tailor your recommendations based on what you're investing for."
+        completed={!!reason}
+      >
+        <div className="q-options">
+          {reasonOptions.map((option) => {
+            const isLong = option.length > 28
+
+            return (
+              <button
+                key={option}
+                type="button"
+                onClick={() => setReason(option)}
+                className={`q-option-btn ${reason === option ? 'active' : ''}`}
+                style={{
+                  gridColumn: isLong ? 'span 2' : 'span 1',
+                }}
+              >
+                {option}
+              </button>
+            )
+          })}
+        </div>
+      </QuestionBlock>
 
       {/* Q5 */}
       <QuestionBlock
