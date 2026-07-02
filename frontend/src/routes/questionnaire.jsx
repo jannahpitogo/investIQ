@@ -12,10 +12,8 @@ function QuestionnairePage() {
     <QuestionnaireLayout>
       {/* FULL PAGE CENTERING AREA */}
       <div className="min-h-[70vh] flex items-center justify-center px-6 py-16">
-
         {/* CONTENT CONTAINER */}
         <div className="w-full max-w-2xl text-center flex flex-col items-center gap-10">
-
           {/* TITLE */}
           <h1 className="text-4xl font-bold text-primary leading-tight">
             Let’s build your investment profile
@@ -24,7 +22,8 @@ function QuestionnairePage() {
           {/* MAIN TEXT */}
           <p className="text-base-content/70 text-lg leading-relaxed max-w-xl">
             In the next five short steps, we'll learn about your goals, investing style, and current
-            portfolio so we can give you personalised insights and help you make more informed decisions.
+            portfolio so we can give you personalised insights and help you make more informed
+            decisions.
           </p>
 
           {/* HIGHLIGHT BOX */}
@@ -46,11 +45,8 @@ function QuestionnairePage() {
               Get Started
             </button>
 
-            <p className="text-xs text-base-content/50">
-              You can change your answers at any time
-            </p>
+            <p className="text-xs text-base-content/50">You can change your answers at any time</p>
           </div>
-
         </div>
       </div>
     </QuestionnaireLayout>

@@ -7,9 +7,7 @@ export default function QuestionBlock({ title, helper, state = '', children }) {
         {helper && <p className="q-helper">{helper}</p>}
       </div>
 
-      <div className="q-question-body">
-        {children}
-      </div>
+      <div className="q-question-body">{children}</div>
     </div>
   )
 }
