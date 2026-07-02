@@ -1,6 +1,9 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import { useQuestionnaire } from '../../context/questionnaireContext'
+import QuestionnaireLayout from '../../components/questionnaireLayout'
+import ProgressHeader from '../../components/progressHeader'
+import QuestionBlock from '../../components/questionBlock'
 
 export const Route = createFileRoute('/questionnaireBatches/batch2')({
   component: Batch2,
@@ -31,28 +34,6 @@ const contributionOptions = [
   "I don't contribute regularly yet",
 ]
 
-function ChipGroup({ options, selected, onSelect }) {
-  return (
-    <div className="flex flex-wrap gap-2">
-      {options.map((option) => (
-        <button
-          key={option}
-          type="button"
-          onClick={() => onSelect(option)}
-          className={`px-4 py-2 rounded border-2 text-sm cursor-pointer transition-all
-            ${
-              selected === option
-                ? 'border-primary bg-primary text-primary-content font-semibold'
-                : 'border-base-300 hover:border-primary/50'
-            }`}
-        >
-          {option}
-        </button>
-      ))}
-    </div>
-  )
-}
-
 function Batch2() {
   const navigate = useNavigate()
   const { answers, updateAnswers } = useQuestionnaire()
@@ -65,46 +46,117 @@ function Batch2() {
 
   const canProceed = reason !== '' && horizon !== '' && contributionFrequency !== ''
 
+  const isComplete = canProceed
+
   function handleNext() {
-    updateAnswers({ reason, horizon, contributionFrequency })
+    updateAnswers({
+      reason,
+      horizon,
+      contributionFrequency,
+    })
+
     navigate({ to: '/questionnaireBatches/batch3' })
   }
 
   return (
-    <div className="max-w-lg mx-auto py-12 px-6">
-      <p className="text-sm text-base-content/50 mb-1">Investment Goals</p>
-      <p className="text-sm text-base-content/50 mb-4 italic">Step 2 of 5</p>
-      <progress className="progress progress-primary w-full mb-8" value={50} max={100} />
+    <QuestionnaireLayout>
+      <ProgressHeader title="Investment Goals" step={2} totalSteps={5} />
 
       {/* Q4 */}
-      <div className="mb-6">
-        <p className="block font-medium mb-3">4. What is your main reason for investing?</p>
-        <ChipGroup options={reasonOptions} selected={reason} onSelect={setReason} />
-      </div>
+      <QuestionBlock
+        title="What is your main reason for investing?"
+        helper="We'll tailor your recommendations based on what you're investing for."
+        completed={!!reason}
+      >
+        <div className="q-options">
+          {reasonOptions.map((option) => {
+            const isLong = option.length > 28
+
+            return (
+              <button
+                key={option}
+                type="button"
+                onClick={() => setReason(option)}
+                className={`q-option-btn ${reason === option ? 'active' : ''}`}
+                style={{
+                  gridColumn: isLong ? 'span 2' : 'span 1',
+                }}
+              >
+                {option}
+              </button>
+            )
+          })}
+        </div>
+      </QuestionBlock>
 
       {/* Q5 */}
-      <div className="mb-6">
-        <p className="block font-medium mb-3">
-          5. How long are you planning to keep your money invested?
-        </p>
-        <ChipGroup options={horizonOptions} selected={horizon} onSelect={setHorizon} />
-      </div>
+      <QuestionBlock
+        title="How long are you planning to keep your money invested?"
+        helper="Your investment timeline helps us suggest an appropriate level of risk."
+        completed={!!horizon}
+      >
+        <div className="q-options">
+          {horizonOptions.map((option) => {
+            const isLong = option.length > 28
+
+            return (
+              <button
+                key={option}
+                type="button"
+                onClick={() => setHorizon(option)}
+                className={`q-option-btn ${horizon === option ? 'active' : ''}`}
+                style={{
+                  gridColumn: isLong ? 'span 2' : 'span 1',
+                }}
+              >
+                {option}
+              </button>
+            )
+          })}
+        </div>
+      </QuestionBlock>
 
       {/* Q6 */}
-      <div className="mb-8">
-        <p className="block font-medium mb-3">
-          6. How often do you currently add money to your investments?
-        </p>
-        <ChipGroup
-          options={contributionOptions}
-          selected={contributionFrequency}
-          onSelect={setContributionFrequency}
-        />
-      </div>
+      <QuestionBlock
+        title="How often do you currently add money to your investments?"
+        helper="Regular contributions can influence your long-term investment outcomes."
+        completed={!!contributionFrequency}
+      >
+        <div className="q-options">
+          {contributionOptions.map((option) => {
+            const isLong = option.length > 28
 
-      <button className="btn btn-primary w-full" disabled={!canProceed} onClick={handleNext}>
-        Next
-      </button>
-    </div>
+            return (
+              <button
+                key={option}
+                type="button"
+                onClick={() => setContributionFrequency(option)}
+                className={`q-option-btn ${contributionFrequency === option ? 'active' : ''}`}
+                style={{
+                  gridColumn: isLong ? 'span 2' : 'span 1',
+                }}
+              >
+                {option}
+              </button>
+            )
+          })}
+        </div>
+      </QuestionBlock>
+
+      {/* Navigation */}
+      <div className="q-nav-actions mt-12 flex justify-between gap-4">
+        <button
+          type="button"
+          className="btn btn-outline w-full"
+          onClick={() => navigate({ to: '/questionnaireBatches/batch1' })}
+        >
+          ← Back
+        </button>
+
+        <button className="btn btn-primary w-full" disabled={!canProceed} onClick={handleNext}>
+          {isComplete ? 'Continue →' : 'Next →'}
+        </button>
+      </div>
+    </QuestionnaireLayout>
   )
 }
