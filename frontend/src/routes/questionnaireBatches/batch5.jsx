@@ -131,28 +131,33 @@ function Batch5() {
       ></QuestionBlock>
 
       {/* SEARCH */}
+      {/* SEARCH */}
       <QuestionBlock title="Search stocks">
-        <div className="relative">
+        <div className="flex flex-col gap-2">
           <input
             id="stock-search"
             type="text"
             className="input input-bordered w-full"
-            placeholder="e.g. Apple, AAPL..."
+            placeholder=" 🔍 Search by company or ticker (e.g. Apple, AAPL)..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
 
           {suggestions.length > 0 && (
-            <ul className="absolute z-10 w-full bg-base-100 border border-base-300 rounded-lg mt-2 shadow">
+            <ul className="w-full mt-1 bg-white border border-green-100 rounded-xl shadow-lg overflow-hidden max-h-64 overflow-y-auto">
               {suggestions.map((s) => (
                 <li key={s.ticker}>
                   <button
                     type="button"
-                    className="w-full text-left px-4 py-3 hover:bg-base-200"
                     onClick={() => addStock(s)}
+                    aria-label={`Select stock ${s.ticker} (${s.name})`}
+                    className="w-full flex items-center justify-between px-4 py-3 hover:bg-green-50 transition-colors duration-150 border-b last:border-b-0 border-base-200"
                   >
-                    <span className="font-semibold">{s.ticker}</span>
-                    <span className="text-sm text-base-content/60 ml-2">{s.name}</span>
+                    <div className="flex flex-col items-start">
+                      <span className="font-semibold text-base-content">{s.ticker}</span>
+
+                      <span className="text-sm text-base-content/60">{s.name}</span>
+                    </div>
                   </button>
                 </li>
               ))}
