@@ -123,35 +123,32 @@ function Batch5() {
     rows.length > 0 && rows.every((r) => Number(r.quantity) > 0 && Number(r.buyPrice) > 0)
 
   async function handleFinish() {
-  const questionnaire = {
-    ...answers,
-    portfolio: rows,
-  }
+    const questionnaire = {
+      ...answers,
+      portfolio: rows,
+    }
 
-  try {
-    const response = await fetch(
-      'http://localhost:3000/api/questionnaire',
-      {
+    try {
+      const response = await fetch('http://localhost:3000/api/questionnaire', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(questionnaire),
-      },
-    )
+      })
 
-    const analysis = await response.json()
+      const analysis = await response.json()
 
-    updateAnswers({
-      portfolio: rows,
-      analysis,
-    })
+      updateAnswers({
+        portfolio: rows,
+        analysis,
+      })
 
-    navigate({ to: '/dashboard' })
-  } catch (err) {
-    console.error(err)
+      navigate({ to: '/dashboard' })
+    } catch (err) {
+      console.error(err)
+    }
   }
-}
 
   function handleBack() {
     navigate({ to: '/questionnaireBatches/batch4' })
