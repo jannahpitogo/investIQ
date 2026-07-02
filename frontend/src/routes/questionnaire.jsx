@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import QuestionnaireLayout from '../components/QuestionnaireLayout.jsx'
+import QuestionnaireLayout from '../components/questionnaireLayout.jsx'
 
 export const Route = createFileRoute('/questionnaire')({
   component: QuestionnairePage,
