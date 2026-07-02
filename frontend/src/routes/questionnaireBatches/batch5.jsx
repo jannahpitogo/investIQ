@@ -7,62 +7,62 @@ export const Route = createFileRoute('/questionnaireBatches/batch5')({
   component: Batch5,
 })
 
-function Batch5() {
+export default function Batch5() {
   const navigate = useNavigate()
   const { answers, updateAnswers } = useQuestionnaire()
 
   const [query, setQuery] = useState('')
   const defaultPortfolio = [
-  {
-    id: crypto.randomUUID(),
-    ticker: "AAPL",
-    name: "Apple",
-    quantity: "12",
-    buyPrice: "185.50",
-  },
-  {
-    id: crypto.randomUUID(),
-    ticker: "MSFT",
-    name: "Microsoft",
-    quantity: "8",
-    buyPrice: "412.80",
-  },
-  {
-    id: crypto.randomUUID(),
-    ticker: "NVDA",
-    name: "NVIDIA",
-    quantity: "15",
-    buyPrice: "118.40",
-  },
-  {
-    id: crypto.randomUUID(),
-    ticker: "AMZN",
-    name: "Amazon",
-    quantity: "6",
-    buyPrice: "174.30",
-  },
-  {
-    id: crypto.randomUUID(),
-    ticker: "RNW",
-    name: "ReNew Energy Global",
-    quantity: "10",
-    buyPrice: "7.50",
-  },
-  {
-    id: crypto.randomUUID(),
-    ticker: "KO",
-    name: "Coca-Cola",
-    quantity: "5",
-    buyPrice: "80.00",
-  },
-  {
-    id: crypto.randomUUID(),
-    ticker: "SBUX",
-    name: "Starbucks",
-    quantity: "7",
-    buyPrice: "100.00",
-  },
-]
+    {
+      id: crypto.randomUUID(),
+      ticker: 'AAPL',
+      name: 'Apple',
+      quantity: '12',
+      buyPrice: '185.50',
+    },
+    {
+      id: crypto.randomUUID(),
+      ticker: 'MSFT',
+      name: 'Microsoft',
+      quantity: '8',
+      buyPrice: '412.80',
+    },
+    {
+      id: crypto.randomUUID(),
+      ticker: 'NVDA',
+      name: 'NVIDIA',
+      quantity: '15',
+      buyPrice: '118.40',
+    },
+    {
+      id: crypto.randomUUID(),
+      ticker: 'AMZN',
+      name: 'Amazon',
+      quantity: '6',
+      buyPrice: '174.30',
+    },
+    {
+      id: crypto.randomUUID(),
+      ticker: 'RNW',
+      name: 'ReNew Energy Global',
+      quantity: '10',
+      buyPrice: '7.50',
+    },
+    {
+      id: crypto.randomUUID(),
+      ticker: 'KO',
+      name: 'Coca-Cola',
+      quantity: '5',
+      buyPrice: '80.00',
+    },
+    {
+      id: crypto.randomUUID(),
+      ticker: 'SBUX',
+      name: 'Starbucks',
+      quantity: '7',
+      buyPrice: '100.00',
+    },
+  ]
 
   const [rows, setRows] = useState(defaultPortfolio)
 
@@ -109,14 +109,8 @@ function Batch5() {
   }
 
   function updateBuyPrice(id, value) {
-  setRows((prev) =>
-    prev.map((r) =>
-      r.id === id
-        ? { ...r, buyPrice: value }
-        : r
-    )
-  )
-}
+    setRows((prev) => prev.map((r) => (r.id === id ? { ...r, buyPrice: value } : r)))
+  }
 
   const canProceed =
     rows.length > 0 && rows.every((r) => Number(r.quantity) > 0 && Number(r.buyPrice) > 0)
@@ -173,7 +167,7 @@ function Batch5() {
               <tr>
                 <th>Asset Name</th>
                 <th className="text-center">Type</th>
-                <th className="text-center">Quantity</th> 
+                <th className="text-center">Quantity</th>
                 <th className="text-center">Buy Price (USD)</th>
                 <th className="text-center">Investment Value (USD)</th>
                 <th>Remove</th>
@@ -190,7 +184,7 @@ function Batch5() {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })}`
-                    : "—"
+                    : '—'
 
                 return (
                   <tr key={row.id}>
@@ -199,9 +193,7 @@ function Batch5() {
                       <div className="text-xs opacity-60">{row.ticker}</div>
                     </td>
 
-                    <td className="text-center">
-                      Stock
-                    </td>
+                    <td className="text-center">Stock</td>
 
                     <td className="text-center">
                       <input
@@ -209,9 +201,7 @@ function Batch5() {
                         min="1"
                         className="input input-bordered input-sm w-20 text-center"
                         value={row.quantity}
-                        onChange={(e) =>
-                          updateQuantity(row.id, e.target.value)
-                        }
+                        onChange={(e) => updateQuantity(row.id, e.target.value)}
                       />
                     </td>
 
@@ -222,15 +212,11 @@ function Batch5() {
                         step="0.01"
                         className="input input-bordered input-sm w-28 text-right"
                         value={row.buyPrice}
-                        onChange={(e) =>
-                          updateBuyPrice(row.id, e.target.value)
-                        }
+                        onChange={(e) => updateBuyPrice(row.id, e.target.value)}
                       />
                     </td>
 
-                    <td className="text-center font-semibold">
-                      {investmentValue}
-                    </td>
+                    <td className="text-center font-semibold">{investmentValue}</td>
 
                     <td className="text-center">
                       <button
