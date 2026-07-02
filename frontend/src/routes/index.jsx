@@ -6,7 +6,7 @@ export const Route = createFileRoute('/')({
   component: HomePage,
 })
 
-function HomePage() {
+export default function HomePage() {
   return (
     <main>
       {/* Hero Section */}
@@ -21,8 +21,8 @@ function HomePage() {
         </h1>
 
         <p className="hero-description">
-          InvestIQ helps retail investors understand portfolio risk, diversification, and social impacts
-          through interactive learning and personalized recommendations.
+          InvestIQ helps retail investors understand portfolio risk, diversification, and social
+          impacts through interactive learning and personalized recommendations.
         </p>
 
         <p className="market-note">
@@ -62,10 +62,7 @@ function HomePage() {
 
           <h3>Environmental and Social Impacts</h3>
 
-          <p>
-            Evaluate environmental and social factors before making investment
-            decisions.
-          </p>
+          <p>Evaluate environmental and social factors before making investment decisions.</p>
         </div>
       </section>
 
@@ -110,8 +107,8 @@ function HomePage() {
               ★★★★☆ <span className="rating-number">4.8</span>{' '}
             </div>
             <p>
-              “The environmental and social impact insights make me feel more confident that my investments align with my
-              values.”
+              “The environmental and social impact insights make me feel more confident that my
+              investments align with my values.”
             </p>
             <span className="testimonial-author">— Priya S.</span>
           </div>
@@ -123,7 +120,10 @@ function HomePage() {
           {/* Brand */}
           <div className="footer-brand">
             <h3>InvestIQ</h3>
-            <p>Smarter investing through clarity, education, and environmental and social impact awareness.</p>
+            <p>
+              Smarter investing through clarity, education, and environmental and social impact
+              awareness.
+            </p>
           </div>
 
           {/* Links */}
