@@ -1,6 +1,9 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import { useQuestionnaire } from '../../context/questionnaireContext'
+import QuestionnaireLayout from '../../components/questionnaireLayout'
+import ProgressHeader from '../../components/progressHeader'
+import QuestionBlock from '../../components/questionBlock'
 
 export const Route = createFileRoute('/questionnaireBatches/batch3')({
   component: Batch3,
@@ -71,7 +74,7 @@ export default function Batch3() {
   const [monthlySwing, setMonthlySwing] = useState(answers.monthlySwing ?? null)
   const [returnsPriority, setReturnsPriority] = useState(answers.returnsPriority ?? null)
 
-  const canProceed = !!(portfolioDrop && comfortLevel && monthlySwing && returnsPriority)
+  const canProceed = portfolioDrop && comfortLevel && monthlySwing && returnsPriority
 
   function handleNext() {
     const totalScore =
@@ -79,6 +82,7 @@ export default function Batch3() {
       (comfortLevel?.score ?? 0) +
       (monthlySwing?.score ?? 0) +
       (returnsPriority?.score ?? 0)
+
     updateAnswers({
       portfolioDrop,
       comfortLevel,
@@ -87,50 +91,108 @@ export default function Batch3() {
       riskScore: totalScore,
       riskProfile: getRiskProfile(totalScore),
     })
+
     navigate({ to: '/questionnaireBatches/batch4' })
   }
 
   return (
-    <div className="max-w-lg mx-auto py-12 px-6">
-      <p className="text-sm text-base-content/50 mb-1">Risk Profile</p>
-      <p className="text-sm text-base-content/50 mb-4 italic">Step 3 of 5</p>
-      <progress className="progress progress-primary w-full mb-8" value={75} max={100} />
+    <QuestionnaireLayout>
+      <ProgressHeader title="Risk Profile" step={3} totalSteps={5} />
 
       {/* Q7 */}
-      <div className="mb-6">
-        <label className="block font-medium mb-3">
-          7. Imagine your portfolio drops 20% in value. What would you most likely do?
-        </label>
-        <ChipGroup options={q7Options} selected={portfolioDrop} onSelect={setPortfolioDrop} />
-      </div>
+      <QuestionBlock
+        title="7. Imagine your portfolio drops 20% in value. What would you most likely do?"
+        helper="This helps us understand your emotional reaction to market downturns."
+        state={portfolioDrop ? 'completed' : ''}
+      >
+        <div className="q-options">
+          {q7Options.map((opt) => (
+            <button
+              key={opt.label}
+              type="button"
+              onClick={() => setPortfolioDrop(opt)}
+              className={`q-option-btn ${portfolioDrop?.label === opt.label ? 'active' : ''}`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </QuestionBlock>
 
       {/* Q8 */}
-      <div className="mb-6">
-        <label className="block font-medium mb-3">
-          8. How would you describe your comfort level with investment risk?
-        </label>
-        <ChipGroup options={q8Options} selected={comfortLevel} onSelect={setComfortLevel} />
-      </div>
+      <QuestionBlock
+        title="8. How would you describe your comfort level with investment risk?"
+        helper="We use this to determine your risk tolerance band."
+        state={comfortLevel ? 'completed' : ''}
+      >
+        <div className="q-options">
+          {q8Options.map((opt) => (
+            <button
+              key={opt.label}
+              type="button"
+              onClick={() => setComfortLevel(opt)}
+              className={`q-option-btn ${comfortLevel?.label === opt.label ? 'active' : ''}`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </QuestionBlock>
 
       {/* Q9 */}
-      <div className="mb-6">
-        <label className="block font-medium mb-3">
-          9. How would you feel if your portfolio's value swung up or down by 15% in a single month?
-        </label>
-        <ChipGroup options={q9Options} selected={monthlySwing} onSelect={setMonthlySwing} />
-      </div>
+      <QuestionBlock
+        title="9. How would you feel if your portfolio's value swung up or down by 15% in a single month?"
+        helper="Short-term volatility helps us understand your behavioural risk profile."
+        state={monthlySwing ? 'completed' : ''}
+      >
+        <div className="q-options">
+          {q9Options.map((opt) => (
+            <button
+              key={opt.label}
+              type="button"
+              onClick={() => setMonthlySwing(opt)}
+              className={`q-option-btn ${monthlySwing?.label === opt.label ? 'active' : ''}`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </QuestionBlock>
 
       {/* Q10 */}
-      <div className="mb-8">
-        <label className="block font-medium mb-3">
-          10. When it comes to returns and risk, what matters most to you?
-        </label>
-        <ChipGroup options={q10Options} selected={returnsPriority} onSelect={setReturnsPriority} />
-      </div>
+      <QuestionBlock
+        title="10. When it comes to returns and risk, what matters most to you?"
+        helper="This helps us balance growth vs stability in your recommendations."
+        state={returnsPriority ? 'completed' : ''}
+      >
+        <div className="q-options">
+          {q10Options.map((opt) => (
+            <button
+              key={opt.label}
+              type="button"
+              onClick={() => setReturnsPriority(opt)}
+              className={`q-option-btn ${returnsPriority?.label === opt.label ? 'active' : ''}`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </QuestionBlock>
 
-      <button className="btn btn-primary w-full" disabled={!canProceed} onClick={handleNext}>
-        Next
-      </button>
-    </div>
+      {/* Navigation */}
+      <div className="q-nav-actions">
+        <button
+          type="button"
+          className="btn btn-outline w-full"
+          onClick={() => navigate({ to: '/questionnaireBatches/batch2' })}
+        >
+          ← Back
+        </button>
+
+        <button className="btn btn-primary w-full" disabled={!canProceed} onClick={handleNext}>
+          Next →
+        </button>
+      </div>
+    </QuestionnaireLayout>
   )
 }
