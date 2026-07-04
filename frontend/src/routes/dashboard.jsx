@@ -1,14 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-// about.tsx → "/about"
-export const Route = createFileRoute('/about')({
-  component: AboutPage,
+export const Route = createFileRoute('/dashboard')({
+  component: DashboardPage,
 })
 
-function AboutPage() {
+function DashboardPage() {
   return (
     <div>
-      <h1>ℹ️ About</h1>
+      <h1>ℹ️ Dashboard</h1>
       <p>
         This project was scaffolded with <strong>create-migracode-app</strong>.
       </p>
