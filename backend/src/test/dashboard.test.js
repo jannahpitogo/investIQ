@@ -1,0 +1,128 @@
+import { describe, it, expect, test } from 'vitest'
+
+
+//REMOVE WHEN THERE IS AN ACTUAL FUNCTION IMPLEMENTATION
+const totalPortfolioValue = (holdings) => {
+	return holdings.reduce((total, holding) => {
+		return total + holding.quantity * holding.currentPrice
+	}, 0)
+}
+
+const totalInvestedValue = (holdings) => {
+  return holdings.reduce((total, holding) => {
+    return total + holding.quantity * holding.averagePrice
+  }, 0)
+}
+
+const numberofHoldings = (holdings) => {
+  return holdings.length
+}
+
+const topHoldingsByValue = (holdings) => {
+  let topHoldings = [];
+
+  topHoldings = holdings
+	.sort((a, b) => (b.quantity * b.currentPrice) - (a.quantity * a.currentPrice))
+	.slice(0, 3)
+
+	return topHoldings; 
+}
+
+const sectorExposureBreakdown = (holdings) => {
+
+const totalHoldingValue = totalPortfolioValue(holdings);
+  
+
+  const sectorExposure = holdings.reduce((accumulation, holding) => {
+	const value = holding.quantity * holding.currentPrice;	
+	if (!accumulation[holding.sector]) {
+		accumulation[holding.sector] = { value: 0, percentage: 0 };
+	}
+	accumulation[holding.sector].value += value;
+	return accumulation;
+  }, {});
+
+  for (const sector in sectorExposure) {
+	sectorExposure[sector].percentage = (sectorExposure[sector].value / totalHoldingValue) * 100;
+  }
+
+  return sectorExposure;
+}
+
+//UP UNTIL HERE
+
+
+
+describe('dashboard logic components', () => {
+
+    test('returns the total portfolio value', () => {
+		const positions = [
+			{ symbol: 'AAPL', quantity: 10, currentPrice: 215.5 },
+			{ symbol: 'MSFT', quantity: 5, currentPrice: 430.2 },
+			{ symbol: 'TSLA', quantity: 2, currentPrice: 180.0 },
+		]
+
+		const total = totalPortfolioValue(positions);
+		expect(total).toBe(4666);
+	})
+
+	test('returns the total invested value', () => {
+		const positions = [
+			{ symbol: 'AAPL', quantity: 10, averagePrice: 200.0 },
+			{ symbol: 'MSFT', quantity: 5, averagePrice: 400.0 },
+			{ symbol: 'TSLA', quantity: 2, averagePrice: 150.0 },
+		]
+
+		const total = totalInvestedValue(positions)
+		expect(total).toBe(4300);
+	})
+
+	test('returns the number of holdings', () => {
+		const positions = [
+			{ symbol: 'AAPL', quantity: 10, currentPrice: 215.5 },
+			{ symbol: 'MSFT', quantity: 5, currentPrice: 430.2 },
+			{ symbol: 'TSLA', quantity: 2, currentPrice: 180.0 },
+		]
+
+		const numberOfHoldings = numberofHoldings(positions)
+		expect(numberOfHoldings).toBe(3);
+	})
+
+	test('returns the top 3 holdings by value', () => {
+		const positions = [
+			{ symbol: 'AAPL', quantity: 10, currentPrice: 215.5 },
+			{ symbol: 'MSFT', quantity: 5, currentPrice: 430.2 },
+			{ symbol: 'TSLA', quantity: 2, currentPrice: 180.0 },
+			{ symbol: 'GOOGL', quantity: 1, currentPrice: 2800.0 },
+			{ symbol: 'AMZN', quantity: 3, currentPrice: 3300.0 },
+		]
+
+		const topHoldings = topHoldingsByValue(positions);
+ 
+		expect(topHoldings).toEqual([
+			{ symbol: 'AMZN', quantity: 3, currentPrice: 3300.0 },
+			{ symbol: 'GOOGL', quantity: 1, currentPrice: 2800.0 },
+			{ symbol: 'AAPL', quantity: 10, currentPrice: 215.5 },
+		])
+	})
+
+	test('returns the sector exposure breakdown, value and percentage', () => {
+		const positions = [
+			{ symbol: 'AAPL', quantity: 10, currentPrice: 215.5, sector: 'Technology' },
+			{ symbol: 'MSFT', quantity: 5, currentPrice: 430.2, sector: 'Technology' },
+			{ symbol: 'TSLA', quantity: 2, currentPrice: 180.0, sector: 'Automotive' },
+			{ symbol: 'GOOGL', quantity: 1, currentPrice: 2800.0, sector: 'Technology' },
+			{ symbol: 'AMZN', quantity: 3, currentPrice: 3300.0, sector: 'E-commerce' },
+		]
+
+		const totalHoldingValue = totalPortfolioValue(positions);
+		const sectorExposure = sectorExposureBreakdown(positions);
+
+		expect(sectorExposure).toEqual({
+			'Technology': { value: 2155 + 2151 + 2800, percentage: ((2155 + 2151 + 2800) / totalHoldingValue) * 100 },
+			'Automotive': { value: 360, percentage: (360 / totalHoldingValue) * 100 },
+			'E-commerce': { value: 9900, percentage: (9900 / totalHoldingValue) * 100 },
+		});
+	});
+
+})
