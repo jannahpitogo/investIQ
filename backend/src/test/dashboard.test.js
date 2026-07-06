@@ -49,6 +49,110 @@ const totalHoldingValue = totalPortfolioValue(holdings);
   return sectorExposure;
 }
 
+
+const diversificationScore = (holdings) => {
+	const Holdings = numberofHoldings(holdings);
+	let scoreOfHoldings;
+	let concentrationPercentage;
+	let concentrationScore;
+
+	let sectorValues = [{
+		RetailTrade: 0,
+		ConsumerServices: 0,
+		ElectronicTechnology: 0,
+		EnergyMinerals: 0,
+		ProducerManufacturing: 0,
+		Utilities: 0,
+		ConsumerNonDurables: 0,
+		ConsumerDurables: 0,
+		TechnologyServices: 0
+	}]
+
+	let sectorPercentages = [{
+		RetailTrade: 0,
+		ConsumerServices: 0,
+		ElectronicTechnology: 0,
+		EnergyMinerals: 0,
+		ProducerManufacturing: 0,
+		Utilities: 0,
+		ConsumerNonDurables: 0,
+		ConsumerDurables: 0,
+		TechnologyServices: 0
+	}];
+
+	//score for number of holdings
+	const scoreForHoldings = [
+		{min: 1, max: 5, score: 20}, 
+		{min: 6, max: 10, score: 50}, 
+		{min: 11, max: 20, score: 80}, 
+		{min: 21, max: Infinity, score: 100}
+	]
+
+	for (const row of scoreForHoldings) {
+		if (Holdings >= row.min && Holdings <= row.max) {
+			scoreOfHoldings = row.score;
+		}
+	}
+
+	//score for concentration
+	const topHolding = topHoldingsByValue(holdings)[0];
+	const totalPortfolioValue = totalPortfolioValue(holdings);
+	const topHoldingValue = topHolding.quantity * topHolding.currentPrice;
+	concentrationPercentage = topHoldingValue / totalPortfolioValue * 100
+
+	const tableForConcentration = [
+		{min: 0, max: 10, score:100}, 
+		{min: 11, max: 20, score:80},
+		{min: 21, max: 30, score:60},
+		{min: 31, max: 40, score:40},
+		{min: 41, max: Infinity, score:20}
+	]
+
+	for (const row of tableForConcentration) {
+		if ((concentrationPercentage / 100) >= row.min && (concentrationPercentage / 100) <= row.max) {
+			concentrationScore = row.score;
+		}
+	}
+
+	//score for sector diversification
+	for (const holding of holdings) {
+	switch (holding.sector) {
+		case "Retail Trade":
+			sectorValues.RetailTrade += holding.quantity * holding.currentPrice;
+			break;
+		case "Consumer Services":
+			sectorValues.ConsumerServices += holding.quantity * holding.currentPrice;
+			break;
+		case "Electronic Technology":
+			sectorValues.ElectronicTechnology += holding.quantity * holding.currentPrice;
+			break;
+		case "Energy Minerals":
+			sectorValues.EnergyMinerals += holding.quantity * holding.currentPrice;
+			break;
+		case "Producer Manufacturing":
+			sectorValues.ProducerManufacturing += holding.quantity * holding.currentPrice;
+			break;
+		case "Utilities":
+			sectorValues.Utilities += holding.quantity * holding.currentPrice;
+			break;
+		case "Consumer Non-Durables":
+			sectorValues.ConsumerNonDurables += holding.quantity * holding.currentPrice;
+			break;
+		case "Consumer Durables":
+			sectorValues.ConsumerDurables += holding.quantity * holding.currentPrice;
+			break;
+		case "Technology Services":
+			sectorValues.TechnologyServices += holding.quantity * holding.currentPrice;
+			break;
+	}
+	
+	
+
+
+}
+
+}
+
 //UP UNTIL HERE
 
 
