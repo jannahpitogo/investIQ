@@ -8,12 +8,14 @@ export function analysePortfolio(questionnaire) {
     sectorExposure,
     questionnaire
   )
+  const riskComparison = compareRisk(riskTolerance, portfolioRisk)
 
   return {
     portfolioSummary,
     sectorExposure,
     riskTolerance,
     portfolioRisk,
+    riskComparison,
     // more metrics later...
   }
 }
@@ -216,3 +218,33 @@ export function calculatePortfolioRisk(
   }
 }
 
+export function compareRisk(riskTolerance, portfolioRisk) {
+  const difference = Math.abs(
+    riskTolerance.score - portfolioRisk.score
+  );
+
+  let status;
+
+  if (difference <= 15) status = "Excellent";
+  else if (difference <= 30) status = "Good";
+  else if (difference <= 50) status = "Fair";
+  else status = "Poor";
+
+  let direction = "Well aligned";
+
+  if (riskTolerance.score < portfolioRisk.score) {
+    direction = "Portfolio is riskier than your tolerance";
+  } else if (riskTolerance.score > portfolioRisk.score) {
+    direction = "Portfolio is more conservative than your tolerance";
+  } else {
+    direction = "Portfolio is aligned with your tolerance";
+  }
+
+  console.log(`Risk comparison: Difference = ${difference}, Status = ${status}, Direction = ${direction}`);
+
+  return {
+    difference,
+    status,
+    direction,
+  };
+}
