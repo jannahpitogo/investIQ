@@ -4,6 +4,7 @@ export function analysePortfolio(questionnaire) {
   return {
     portfolioSummary: calculateTotalInvestment(portfolio),
     sectorExposure: calculateSectorExposure(portfolio),
+    riskTolerance: calculateRiskTolerance(questionnaire),
     // more metrics later...
   }
 }
@@ -83,3 +84,14 @@ export function calculateSectorExposure(portfolio) {
 
   return sectorExposure
 }
+
+export function calculateRiskTolerance(questionnaire) {
+  console.log(`Risk tolerance score: ${questionnaire.riskScore}, Profile: ${questionnaire.riskProfile}`);
+  
+  return {
+    score: questionnaire.riskScore,
+    profile: questionnaire.riskProfile,
+  };
+}
+
+
