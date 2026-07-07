@@ -3,11 +3,7 @@ export function analysePortfolio(questionnaire) {
   const portfolioSummary = calculateTotalInvestment(portfolio)
   const sectorExposure = calculateSectorExposure(portfolio)
   const riskTolerance = calculateRiskTolerance(questionnaire)
-  const portfolioRisk = calculatePortfolioRisk(
-    portfolioSummary,
-    sectorExposure,
-    questionnaire
-  )
+  const portfolioRisk = calculatePortfolioRisk(portfolioSummary, sectorExposure, questionnaire)
   const riskComparison = compareRisk(riskTolerance, portfolioRisk)
 
   return {
@@ -98,30 +94,22 @@ export function calculateSectorExposure(portfolio) {
 
 export function calculateRiskTolerance(questionnaire) {
   // Change score to percentage of max score (100) from 4 to 16
-  const normalizedScore = Math.round(
-    ((questionnaire.riskScore -4 ) / (16 - 4)) * 100
-  );
-  console.log(`Risk tolerance score: ${normalizedScore}, Profile: ${questionnaire.riskProfile}`);
-  
+  const normalizedScore = Math.round(((questionnaire.riskScore - 4) / (16 - 4)) * 100)
+  console.log(`Risk tolerance score: ${normalizedScore}, Profile: ${questionnaire.riskProfile}`)
+
   return {
     score: normalizedScore,
     profile: questionnaire.riskProfile,
-  };
+  }
 }
 
-export function calculatePortfolioRisk(
-  portfolioSummary,
-  sectorExposure,
-  questionnaire,
-) {
+export function calculatePortfolioRisk(portfolioSummary, sectorExposure, questionnaire) {
   let score = 0
   const reasons = []
 
   // 1. Largest sector exposure (40 pts)
   // Is most of the money in one sector? -> More risk.
-  const largestSector = Math.max(
-    ...Object.values(sectorExposure).map((s) => s.percentage),
-  )
+  const largestSector = Math.max(...Object.values(sectorExposure).map((s) => s.percentage))
 
   if (largestSector > 50) {
     score += 40
@@ -148,12 +136,9 @@ export function calculatePortfolioRisk(
 
   // 3. Largest holding (20 pts)
   // Does one stock represent a large share of the portfolio? -> More risk.
-  const largestInvestment = Math.max(
-    ...portfolioSummary.holdings.map((h) => h.investment),
-  )
+  const largestInvestment = Math.max(...portfolioSummary.holdings.map((h) => h.investment))
 
-  const largestWeight =
-    (largestInvestment / portfolioSummary.totalInvestment) * 100
+  const largestWeight = (largestInvestment / portfolioSummary.totalInvestment) * 100
 
   if (largestWeight > 40) {
     score += 20
@@ -209,32 +194,32 @@ export function calculatePortfolioRisk(
 }
 
 export function compareRisk(riskTolerance, portfolioRisk) {
-  const difference = Math.abs(
-    riskTolerance.score - portfolioRisk.score
-  );
+  const difference = Math.abs(riskTolerance.score - portfolioRisk.score)
 
-  let status;
+  let status
 
-  if (difference <= 15) status = "Excellent";
-  else if (difference <= 30) status = "Good";
-  else if (difference <= 50) status = "Fair";
-  else status = "Poor";
+  if (difference <= 15) status = 'Excellent'
+  else if (difference <= 30) status = 'Good'
+  else if (difference <= 50) status = 'Fair'
+  else status = 'Poor'
 
-  let direction = "Well aligned";
+  let direction = 'Well aligned'
 
   if (riskTolerance.score < portfolioRisk.score) {
-    direction = "Portfolio is riskier than your tolerance";
+    direction = 'Portfolio is riskier than your tolerance'
   } else if (riskTolerance.score > portfolioRisk.score) {
-    direction = "Portfolio is more conservative than your tolerance";
+    direction = 'Portfolio is more conservative than your tolerance'
   } else {
-    direction = "Portfolio is aligned with your tolerance";
+    direction = 'Portfolio is aligned with your tolerance'
   }
 
-  console.log(`Risk comparison: Difference = ${difference}, Status = ${status}, Direction = ${direction}`);
+  console.log(
+    `Risk comparison: Difference = ${difference}, Status = ${status}, Direction = ${direction}`,
+  )
 
   return {
     difference,
     status,
     direction,
-  };
+  }
 }
