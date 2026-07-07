@@ -95,10 +95,14 @@ export function calculateSectorExposure(portfolio) {
 }
 
 export function calculateRiskTolerance(questionnaire) {
-  console.log(`Risk tolerance score: ${questionnaire.riskScore}, Profile: ${questionnaire.riskProfile}`);
+  // Change score to percentage of max score (100) from 4 to 16
+  const normalizedScore = Math.round(
+    ((questionnaire.riskScore -4 ) / (16 - 4)) * 100
+  );
+  console.log(`Risk tolerance score: ${normalizedScore}, Profile: ${questionnaire.riskProfile}`);
   
   return {
-    score: questionnaire.riskScore,
+    score: normalizedScore,
     profile: questionnaire.riskProfile,
   };
 }
@@ -211,3 +215,4 @@ export function calculatePortfolioRisk(
     reasons,
   }
 }
+
