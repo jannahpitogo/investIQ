@@ -45,6 +45,7 @@ export function analysePortfolio(questionnaire) {
 }
 
 
+
 const totalPortfolioValue = (holdings) => {
   return holdings.reduce((total, holding) => {
     return total + holding.quantity * holding.currentPrice
@@ -188,7 +189,7 @@ const diversificationScore = (holdings) => {
     { min: 61, max: Infinity, score: 20 },
   ]
 
-  let sectorDiversificationScore = 20 // in for the final
+  let sectorDiversificationScore; // in for the final
 
   for (const row of tableForSectorDiversification) {
     if (largestSectorPercentage >= row.min && largestSectorPercentage < row.max) {
@@ -199,9 +200,9 @@ const diversificationScore = (holdings) => {
 
   //Calculating the overall and interpretation
   let weightScore = {
-    holdings: scoreOfHoldings * 0.25, // 20% weight
-    concentration: concentrationScore * 0.4, // 40% weight
-    sectorDiversification: sectorDiversificationScore * 0.35, // 35% weight
+    holdings: scoreOfHoldings * 0.25, 
+    concentration: concentrationScore * 0.4, 
+    sectorDiversification: sectorDiversificationScore * 0.35,
   }
 
   //Interpretation Table for weightScore
@@ -216,8 +217,10 @@ const diversificationScore = (holdings) => {
   const finalScore = weightScore.holdings + weightScore.concentration + weightScore.sectorDiversification
 
   for (const row of weightScoreTable) {
+    let summaryInterpretation = '';
     if (finalScore >= row.min && finalScore <= row.max) {
-      return row.interpretation
+      summaryInterpretation = `Your portfolio has a ${row.interpretation}`
+      return { interpretation: summaryInterpretation, finalScore }
     }
   }
 }
