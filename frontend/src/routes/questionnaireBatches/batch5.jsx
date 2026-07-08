@@ -17,6 +17,13 @@ export default function Batch5() {
 
   const [query, setQuery] = useState('')
 
+  const [selectedStock, setSelectedStock] = useState(null)
+
+  const [newHolding, setNewHolding] = useState({
+    quantity: '',
+    buyPrice: '',
+  })
+
   const defaultPortfolio = [
     {
       id: crypto.randomUUID(),
@@ -84,26 +91,21 @@ export default function Batch5() {
     query.trim().length >= 1
       ? US_STOCKS.filter(
           (s) =>
-            !rows.find((r) => r.ticker === s.ticker) &&
-            (s.ticker.toLowerCase().includes(query.toLowerCase()) ||
-              s.name.toLowerCase().includes(query.toLowerCase())),
+            s.ticker.toLowerCase().includes(query.toLowerCase()) ||
+            s.name.toLowerCase().includes(query.toLowerCase()),
         ).slice(0, 6)
       : []
 
   function addStock(stock) {
-    setRows((prev) => [
-      ...prev,
-      {
-        id: crypto.randomUUID(),
-        ticker: stock.ticker,
-        name: stock.name,
-        sector: stock.sector,
-        industry: stock.industry,
-        currentPrice: stock.currentPrice,
-        quantity: '',
-        buyPrice: '',
-      },
-    ])
+    setSelectedStock(stock)
+
+    const existingHolding = rows.find((row) => row.ticker === stock.ticker)
+
+    setNewHolding({
+      quantity: existingHolding?.quantity || '',
+      buyPrice: existingHolding?.buyPrice || '',
+    })
+
     setQuery('')
   }
 
@@ -116,7 +118,58 @@ export default function Batch5() {
   }
 
   function removeRow(id) {
+    const confirmed = window.confirm(
+      'Are you sure you want to remove this stock from your portfolio?',
+    )
+
+    if (!confirmed) return
+
     setRows((prev) => prev.filter((r) => r.id !== id))
+  }
+
+  function handleAddHolding() {
+    if (!selectedStock || !newHolding.quantity || !newHolding.buyPrice) {
+      return
+    }
+
+    setRows((prev) => {
+      const existing = prev.find((row) => row.ticker === selectedStock.ticker)
+
+      if (existing) {
+        return prev.map((row) =>
+          row.ticker === selectedStock.ticker
+            ? {
+                ...row,
+                quantity: newHolding.quantity,
+                buyPrice: newHolding.buyPrice,
+              }
+            : row,
+        )
+      }
+
+      return [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          ticker: selectedStock.ticker,
+          name: selectedStock.name,
+          sector: selectedStock.sector,
+          industry: selectedStock.industry,
+          currentPrice: selectedStock.currentPrice,
+          quantity: newHolding.quantity,
+          buyPrice: newHolding.buyPrice,
+        },
+      ]
+    })
+
+    setSelectedStock(null)
+
+    setNewHolding({
+      quantity: '',
+      buyPrice: '',
+    })
+
+    setQuery('')
   }
 
   const canProceed =
@@ -163,9 +216,8 @@ export default function Batch5() {
         title="13. What investments do you currently hold?"
         helper="Search for stocks and enter quantities and buy prices."
         state={rows.length > 0 ? 'completed' : ''}
-      ></QuestionBlock>
+      />
 
-      {/* SEARCH */}
       {/* SEARCH */}
       <QuestionBlock title="Search stocks">
         <div className="flex flex-col gap-2">
@@ -192,6 +244,11 @@ export default function Batch5() {
                       <span className="font-semibold text-base-content">{s.ticker}</span>
 
                       <span className="text-sm text-base-content/60">{s.name}</span>
+                      {rows.some((row) => row.ticker === s.ticker) && (
+                        <span className="text-xs text-success font-medium">
+                          Already in portfolio
+                        </span>
+                      )}
                     </div>
                   </button>
                 </li>
@@ -199,11 +256,77 @@ export default function Batch5() {
             </ul>
           )}
         </div>
+
+        {selectedStock && (
+          <div className="selected-stock-card mt-6">
+            <div className="selected-stock-header">
+              <h3>{selectedStock.name}</h3>
+              <span>{selectedStock.ticker}</span>
+            </div>
+
+            <div className="selected-stock-details">
+              <p>
+                <strong>Current Price:</strong> ${selectedStock.currentPrice}
+              </p>
+
+              <p>
+                <strong>Sector:</strong> {selectedStock.sector}
+              </p>
+
+              <p>
+                <strong>Industry:</strong> {selectedStock.industry}
+              </p>
+            </div>
+
+            <div className="selected-stock-form">
+              <div>
+                <label>Quantity</label>
+
+                <input
+                  className="input input-bordered w-full"
+                  type="number"
+                  min="1"
+                  value={newHolding.quantity}
+                  onChange={(e) =>
+                    setNewHolding({
+                      ...newHolding,
+                      quantity: e.target.value,
+                    })
+                  }
+                />
+              </div>
+
+              <div>
+                <label>Buy Price</label>
+
+                <input
+                  className="input input-bordered w-full"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={newHolding.buyPrice}
+                  onChange={(e) =>
+                    setNewHolding({
+                      ...newHolding,
+                      buyPrice: e.target.value,
+                    })
+                  }
+                />
+              </div>
+
+              <button type="button" className="btn btn-primary w-full" onClick={handleAddHolding}>
+                {rows.some((row) => row.ticker === selectedStock.ticker)
+                  ? 'Update Holding'
+                  : 'Add to Portfolio'}
+              </button>
+            </div>
+          </div>
+        )}
       </QuestionBlock>
 
       {/* TABLE */}
       <QuestionBlock title="Your holdings">
-        <div className="overflow-x-auto">
+        <div className="desktop-holdings overflow-x-auto">
           <table className="table w-full">
             <thead>
               <tr>
@@ -258,7 +381,7 @@ export default function Batch5() {
                         className="btn btn-ghost btn-sm text-error"
                         onClick={() => removeRow(row.id)}
                       >
-                        🗑️
+                        Remove 🗑️
                       </button>
                     </td>
                   </tr>
@@ -266,6 +389,66 @@ export default function Batch5() {
               })}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile holdings */}
+        <div className="mobile-holdings">
+          {rows.map((row) => {
+            const qty = Number(row.quantity)
+            const price = Number(row.buyPrice)
+            const value = qty && price ? `$${(qty * price).toFixed(2)}` : '—'
+
+            return (
+              <div key={row.id} className="holding-card">
+                <div className="holding-card-header">
+                  <div>
+                    <div className="holding-name">{row.name}</div>
+                    <div className="holding-ticker">{row.ticker}</div>
+                  </div>
+                </div>
+
+                <div className="holding-grid">
+                  <div className="holding-field">
+                    <label>Quantity</label>
+
+                    <input
+                      className="input input-bordered input-sm"
+                      type="number"
+                      min="1"
+                      value={row.quantity}
+                      onChange={(e) => updateQuantity(row.id, e.target.value)}
+                    />
+                  </div>
+
+                  <div className="holding-field">
+                    <label>Buy Price</label>
+
+                    <input
+                      className="input input-bordered input-sm"
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={row.buyPrice}
+                      onChange={(e) => updateBuyPrice(row.id, e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="holding-value">
+                  <span>Portfolio Value</span>
+                  <strong>{value}</strong>
+                </div>
+
+                <button
+                  type="button"
+                  className="holding-remove-btn"
+                  onClick={() => removeRow(row.id)}
+                >
+                  🗑 Remove
+                </button>
+              </div>
+            )
+          })}
         </div>
       </QuestionBlock>
 
