@@ -63,6 +63,26 @@ function Dashboard() {
     },
   ]
 
+  const analysis = {
+    riskTolerance: {
+      score: 75,
+      profile: 'Aggressive',
+    },
+
+    portfolioRisk: {
+      score: 62,
+      profile: 'High',
+      reasons: [
+        'Large concentration in Technology sector.',
+        'One investment represents a large share of the portfolio.',
+      ],
+    },
+
+    riskComparison: {
+      status: 'Good',
+      direction: 'Portfolio is aligned with your tolerance',
+    },
+  }
   // ===============================
   // Portfolio Summary
   // ===============================
@@ -74,6 +94,7 @@ function Dashboard() {
   const beta = 1.12
   const totalInvested = 44195
   const numberOfHoldings = holdings.length
+  const { riskTolerance, portfolioRisk, riskComparison } = analysis
 
   // ===============================
   // Sector Allocation
@@ -140,6 +161,7 @@ function Dashboard() {
   // ===============================
 
   const largestHolding = holdings.reduce((a, b) => (a.allocation > b.allocation ? a : b))
+  const topHoldings = [...holdings].toSorted((a, b) => b.allocation - a.allocation).slice(0, 3)
 
   const largestSector = sectors.reduce((a, b) => (a.value > b.value ? a : b))
 
@@ -199,13 +221,79 @@ function Dashboard() {
       <div className="dashboard-content">
         {/* LEFT COLUMN */}
 
-        <div className="left-column">{/* Top Holdings */}</div>
+        <div className="left-column">
+          <div className="dashboard-card">
+            <h2>Top 3 Holdings</h2>
+
+            <div className="top-holdings-list">
+              {topHoldings.map((stock, index) => (
+                <div className="holding-row" key={stock.name}>
+                  <div className="holding-rank">#{index + 1}</div>
+
+                  <div className="holding-info">
+                    <strong>{stock.name}</strong>
+                    <span>{stock.sector}</span>
+                  </div>
+
+                  <div className="holding-stats">
+                    <strong>{stock.allocation}%</strong>
+
+                    <span className={stock.change.startsWith('+') ? 'positive' : 'negative'}>
+                      {stock.change}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
         {/* RIGHT COLUMN */}
 
         <div className="right-column">
           {/* Allocation */}
+          <div className="dashboard-card">
+            <h2>Risk Tolerance</h2>
 
+            <div className="tolerance-score">
+              <h1>{riskTolerance.score}/100</h1>
+
+              <span>{riskTolerance.profile}</span>
+            </div>
+
+            <div className="progress">
+              <div
+                className="progress-fill"
+                style={{
+                  width: `${riskTolerance.score}%`,
+                }}
+              />
+            </div>
+
+            <p>Based on your questionnaire responses, your risk preference is classified as:</p>
+
+            <strong>{riskTolerance.profile} Investor</strong>
+          </div>
+
+          <div className="dashboard-card">
+            <h2>Risk Match</h2>
+
+            <div className="comparison">
+              <div>
+                <span>Your Tolerance</span>
+                <strong>{riskTolerance.score}/100</strong>
+              </div>
+
+              <div>
+                <span>Portfolio Risk</span>
+                <strong>{portfolioRisk.score}/100</strong>
+              </div>
+            </div>
+
+            <div className={`match-status ${riskComparison.status.toLowerCase()}`}>
+              {riskComparison.status}
+            </div>
+          </div>
           <div className="dashboard-card">
             <h2>Sector Allocation</h2>
 
