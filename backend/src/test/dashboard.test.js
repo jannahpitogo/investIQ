@@ -273,20 +273,6 @@ describe('dashboard logic components', () => {
 
 		const score = diversificationScore(positions); // to change to function call
 
-		// const tableForDiversificationInterpretation = [
-		// 	{ min: 0, max: 20, interpretation: "Very Poor Diversification" },
-		// 	{ min: 21, max: 40, interpretation: "Poor Diversification" },
-		// 	{ min: 41, max: 60, interpretation: "Moderate Diversification" },
-		// 	{ min: 61, max: 80, interpretation: "Good Diversification" },
-		// 	{ min: 81, max: 100, interpretation: "Excellent Diversification" }
-		// ]
-
-		// for (const row of tableForDiversificationInterpretation) {
-		// 	if (score >= row.min && score <= row.max) {
-		// 		return row.interpretation;
-		// 	}
-		// }
-
 		expect(score).toBe("Poor Diversification");
 	})
 
