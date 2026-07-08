@@ -1,11 +1,5 @@
-// ASSUMPTION: stocks.js is in the same folder. Adjust the import path if it lives elsewhere.
 import { US_STOCKS } from '../data/stocks.js'
 
-/**
- * Enriches raw portfolio entries (ticker, name, sector, quantity, buyPrice)
- * with `currentPrice` looked up from US_STOCKS by ticker, and renames
- * buyPrice -> averagePrice to match the functions below.
- */
 function enrichHoldings(portfolio, stockData = US_STOCKS) {
   return portfolio.map((stock) => {
     const stockInfo = stockData.find((s) => s.ticker === stock.ticker)
@@ -93,9 +87,9 @@ const sectorExposureBreakdown = (holdings) => {
 
 const diversificationScore = (holdings) => {
   const Holdings = numberofHoldings(holdings)
-  let scoreOfHoldings //in for the final
+  let scoreOfHoldings
   let concentrationPercentage
-  let concentrationScore //in for the final
+  let concentrationScore 
 
   let sectorValues = {
     RetailTrade: 0,
@@ -177,10 +171,7 @@ const diversificationScore = (holdings) => {
   }
 
   const largestSectorValue = Math.max(...Object.values(sectorValues))
-
   const largestSectorPercentage = (largestSectorValue / totalValue) * 100
-
-  //score lookup, find lookup in the scoretable.
   const tableForSectorDiversification = [
     { min: 0, max: 25, score: 100 },
     { min: 26, max: 40, score: 80 },
@@ -189,7 +180,7 @@ const diversificationScore = (holdings) => {
     { min: 61, max: Infinity, score: 20 },
   ]
 
-  let sectorDiversificationScore; // in for the final
+  let sectorDiversificationScore;
 
   for (const row of tableForSectorDiversification) {
     if (largestSectorPercentage >= row.min && largestSectorPercentage < row.max) {
@@ -220,7 +211,7 @@ const diversificationScore = (holdings) => {
     let summaryInterpretation = '';
     if (finalScore >= row.min && finalScore <= row.max) {
       summaryInterpretation = `Your portfolio has a ${row.interpretation}`
-      return { interpretation: summaryInterpretation, finalScore }
+      return { interpretation: summaryInterpretation, finalScore } //Final return for diversification
     }
   }
 }
