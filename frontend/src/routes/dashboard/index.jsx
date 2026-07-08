@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+
 import './dashboard.css'
 
 export const Route = createFileRoute('/dashboard/')({
@@ -71,7 +72,7 @@ function Dashboard() {
   const annualReturn = 18.4
   const volatility = 14.3
   const beta = 1.12
-  const maxDrawdown = -12.5
+  const numberOfHoldings = holdings.length
 
   // ===============================
   // Sector Allocation
@@ -191,6 +192,7 @@ function Dashboard() {
           value={`${diversificationScore} / 100`}
           subtitle={diversificationLabel}
         />
+        <MetricCard title="Holdings" value={numberOfHoldings} subtitle="Individual Stocks" />
       </div>
 
       {/* ================= MAIN CONTENT ================= */}
@@ -247,22 +249,6 @@ function Dashboard() {
                   <th>Change</th>
                 </tr>
               </thead>
-
-              <tbody>
-                {holdings.map((stock) => (
-                  <tr key={stock.name}>
-                    <td>{stock.name}</td>
-
-                    <td>{stock.sector}</td>
-
-                    <td>{stock.allocation}%</td>
-
-                    <td className={stock.change.startsWith('+') ? 'positive' : 'negative'}>
-                      {stock.change}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
             </table>
           </div>
         </div>
@@ -301,11 +287,6 @@ function Dashboard() {
             <div className="risk-item">
               <span>Beta</span>
               <strong>{beta}</strong>
-            </div>
-
-            <div className="risk-item">
-              <span>Max Drawdown</span>
-              <strong>{maxDrawdown}%</strong>
             </div>
           </div>
 
