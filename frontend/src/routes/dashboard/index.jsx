@@ -70,8 +70,9 @@ function Dashboard() {
   const portfolioValue = 52340
   const totalProfit = 8145
   const annualReturn = 18.4
-  const volatility = 14.3
+
   const beta = 1.12
+  const totalInvested = 44195
   const numberOfHoldings = holdings.length
 
   // ===============================
@@ -118,12 +119,11 @@ function Dashboard() {
   // ===============================
 
   const concentrationPenalty = hhi * 20
-  const volatilityPenalty = volatility / 10
   const betaPenalty = beta
 
   const riskScore = Math.min(
     10,
-    Math.max(1, Number((concentrationPenalty + volatilityPenalty + betaPenalty).toFixed(1))),
+    Math.max(1, Number((concentrationPenalty + betaPenalty).toFixed(1))),
   )
 
   const riskLevel = riskScore < 4 ? 'Low' : riskScore < 7 ? 'Medium' : 'High'
@@ -173,18 +173,17 @@ function Dashboard() {
           change="+8.2%"
           positive
         />
+        <MetricCard
+          title="Total Invested"
+          value={`$${totalInvested.toLocaleString()}`}
+          subtitle="Initial Investment"
+        />
 
         <MetricCard
           title="Total Return"
           value={`${annualReturn}%`}
           change={`$${totalProfit.toLocaleString()}`}
           positive
-        />
-
-        <MetricCard
-          title="Annual Volatility"
-          value={`${volatility}%`}
-          subtitle={`${riskLevel} Risk`}
         />
 
         <MetricCard
@@ -201,40 +200,6 @@ function Dashboard() {
         {/* LEFT COLUMN */}
 
         <div className="left-column">
-          {/* Portfolio Performance */}
-
-          <div className="dashboard-card">
-            <div className="card-header">
-              <h2>Portfolio Performance</h2>
-
-              <div className="time-filter">
-                <button>1M</button>
-                <button>3M</button>
-                <button className="active">1Y</button>
-                <button>ALL</button>
-              </div>
-            </div>
-
-            <div className="chart-placeholder">Performance Chart</div>
-
-            <div className="performance-stats">
-              <div>
-                <h4>1-Year Return</h4>
-                <p>{annualReturn}%</p>
-              </div>
-
-              <div>
-                <h4>Total Profit</h4>
-                <p>${totalProfit.toLocaleString()}</p>
-              </div>
-
-              <div>
-                <h4>Risk Score</h4>
-                <p>{riskScore}/10</p>
-              </div>
-            </div>
-          </div>
-
           {/* Top Holdings */}
 
           <div className="dashboard-card">
@@ -293,7 +258,7 @@ function Dashboard() {
           {/* AI Insights */}
 
           <div className="dashboard-card">
-            <h2>AI Portfolio Insights</h2>
+            <h2> Suggestions Tab </h2>
 
             <ul className="insight-list">
               {insights.map((item, index) => (
