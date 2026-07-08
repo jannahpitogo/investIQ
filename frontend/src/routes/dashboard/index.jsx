@@ -268,6 +268,10 @@ function Dashboard() {
           </div>
         </div>
       </div>
+      <div className="disclaimer">
+        ⚠️ This dashboard uses mock data for demonstration purposes only. It is not financial advice
+        and should not be used as a basis for investment decisions.
+      </div>
     </div>
   )
 }
