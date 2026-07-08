@@ -55,6 +55,7 @@ const diversificationScore = (holdings) => {
 	let scoreOfHoldings; //in for the final
 	let concentrationPercentage;
 	let concentrationScore; //in for the final
+	
 
 
 	let sectorValues = {
@@ -86,9 +87,9 @@ const diversificationScore = (holdings) => {
 
 	//score for concentration
 	const topHolding = topHoldingsByValue(holdings)[0];
-	const totalPortfolioValue = totalPortfolioValue(holdings);
+	const totalValue = totalPortfolioValue(holdings);
 	const topHoldingValue = topHolding.quantity * topHolding.currentPrice;
-	concentrationPercentage = topHoldingValue / totalPortfolioValue * 100
+	concentrationPercentage = topHoldingValue / totalValue * 100
 
 	const tableForConcentration = [
 		{min: 0, max: 10, score:100}, 
@@ -99,7 +100,7 @@ const diversificationScore = (holdings) => {
 	]
 
 	for (const row of tableForConcentration) {
-		if ((concentrationPercentage / 100) >= row.min && (concentrationPercentage / 100) <= row.max) {
+		if (concentrationPercentage >= row.min && concentrationPercentage <= row.max) {
 			concentrationScore = row.score;
 		}
 	}
@@ -135,41 +136,10 @@ const diversificationScore = (holdings) => {
 			sectorValues.TechnologyServices += holding.quantity * holding.currentPrice;
 			break;
 	}}
-	
-	// for (const element in sectorValues) {
-	// 	switch (element) {
-	// 		case "RetailTrade":
-	// 			sectorPercentages.RetailTrade = sectorValues.RetailTrade / totalPortfolioValue * 100;
-	// 			break;
-	// 		case "ConsumerServices":
-	// 			sectorPercentages.ConsumerServices = sectorValues.ConsumerServices / totalPortfolioValue * 100;
-	// 			break;
-	// 		case "ElectronicTechnology":
-	// 			sectorPercentages.ElectronicTechnology = sectorValues.ElectronicTechnology / totalPortfolioValue * 100;
-	// 			break;
-	// 		case "EnergyMinerals":
-	// 			sectorPercentages.EnergyMinerals = sectorValues.EnergyMinerals / totalPortfolioValue * 100;
-	// 			break;
-	// 		case "ProducerManufacturing":
-	// 			sectorPercentages.ProducerManufacturing = sectorValues.ProducerManufacturing / totalPortfolioValue * 100;
-	// 			break;
-	// 		case "Utilities":
-	// 			sectorPercentages.Utilities = sectorValues.Utilities / totalPortfolioValue * 100;
-	// 			break;
-	// 		case "ConsumerNonDurables":
-	// 			sectorPercentages.ConsumerNonDurables = sectorValues.ConsumerNonDurables / totalPortfolioValue * 100;
-	// 			break;
-	// 		case "ConsumerDurables":
-	// 			sectorPercentages.ConsumerDurables = sectorValues.ConsumerDurables / totalPortfolioValue * 100;
-	// 			break;
-	// 		case "TechnologyServices":
-	// 			sectorPercentages.TechnologyServices = sectorValues.TechnologyServices / totalPortfolioValue * 100;
-	// 			break;
-	// 	}
 
 	const largestSectorValue = Math.max(...Object.values(sectorValues));
 	
-	const largestSectorPercentage = (largestSectorValue / totalPortfolioValue) * 100;
+	const largestSectorPercentage = (largestSectorValue / totalValue) * 100;
 
 		//score lookup, find lookup in the scoretable.
 		const tableForSectorDiversification = [
@@ -189,8 +159,30 @@ const diversificationScore = (holdings) => {
 		}
 		}
 
-		//Calculate market cap
+		
+		//Calculating the overall and interpretation
+		let weightScore = {
+		holdings: scoreOfHoldings * 0.25, // 20% weight
+		concentration: concentrationScore * 0.40, // 40% weight
+		sectorDiversification: sectorDiversificationScore * 0.35 // 35% weight
+	}
 
+		//Interpretation Table for weightScore
+		const weightScoreTable = [
+		{ min: 0, max: 20, interpretation: "Very Concentrated" },
+		{ min: 21, max: 40, interpretation: "Poor Diversification" },
+		{ min: 41, max: 60, interpretation: "Moderate Diversification" },
+		{ min: 61, max: 80, interpretation: "Good Diversification" },
+		{ min: 81, max: 100, interpretation: "Excellent Diversification" }
+	]
+
+	const finalScore = (weightScore.holdings + weightScore.concentration + weightScore.sectorDiversification);
+
+	for (const row of weightScoreTable) {
+		if (finalScore >= row.min && finalScore <= row.max) {
+			return row.interpretation;
+		}
+	}
 }
 
 //UP UNTIL HERE
@@ -252,58 +244,59 @@ describe('dashboard logic components', () => {
 
 	test('returns the sector exposure breakdown, value and percentage', () => {
 		const positions = [
-			{ symbol: 'AAPL', quantity: 10, currentPrice: 215.5, sector: 'Technology' },
-			{ symbol: 'MSFT', quantity: 5, currentPrice: 430.2, sector: 'Technology' },
-			{ symbol: 'TSLA', quantity: 2, currentPrice: 180.0, sector: 'Automotive' },
-			{ symbol: 'GOOGL', quantity: 1, currentPrice: 2800.0, sector: 'Technology' },
-			{ symbol: 'AMZN', quantity: 3, currentPrice: 3300.0, sector: 'E-commerce' },
+			{ symbol: 'AAPL', quantity: 10, currentPrice: 215.5, sector: 'Electronic Technology' },
+			{ symbol: 'MSFT', quantity: 5, currentPrice: 430.2, sector: 'Technology Services' },
+			{ symbol: 'TSLA', quantity: 2, currentPrice: 180.0, sector: 'Consumer Durables' },
+			{ symbol: 'GOOGL', quantity: 1, currentPrice: 2800.0, sector: 'Technology Services' },
+			{ symbol: 'AMZN', quantity: 3, currentPrice: 3300.0, sector: 'Retail Trade' },
 		]
 
 		const totalHoldingValue = totalPortfolioValue(positions);
 		const sectorExposure = sectorExposureBreakdown(positions);
 
 		expect(sectorExposure).toEqual({
-			'Technology': { value: 2155 + 2151 + 2800, percentage: ((2155 + 2151 + 2800) / totalHoldingValue) * 100 },
-			'Automotive': { value: 360, percentage: (360 / totalHoldingValue) * 100 },
-			'E-commerce': { value: 9900, percentage: (9900 / totalHoldingValue) * 100 },
+			'Electronic Technology': { value: 2155, percentage: (2155 / totalHoldingValue) * 100 },
+			'Technology Services': { value: 2151 + 2800, percentage: ((2151 + 2800) / totalHoldingValue) * 100 },
+			'Consumer Durables': { value: 360, percentage: (360 / totalHoldingValue) * 100 },
+			'Retail Trade': { value: 9900, percentage: (9900 / totalHoldingValue) * 100 },
 		});
 	});
 
 	test('returns the diversification score', () => {
 		const positions = [
-			{ symbol: 'AAPL', quantity: 10, currentPrice: 215.5, sector: 'Technology' },
-			{ symbol: 'MSFT', quantity: 5, currentPrice: 430.2, sector: 'Technology' },
-			{ symbol: 'TSLA', quantity: 2, currentPrice: 180.0, sector: 'Automotive' },
-			{ symbol: 'GOOGL', quantity: 1, currentPrice: 2800.0, sector: 'Technology' },
-			{ symbol: 'AMZN', quantity: 3, currentPrice: 3300.0, sector: 'E-commerce' },
+			{ symbol: 'AAPL', quantity: 10, currentPrice: 215.5, sector: 'Electronic Technology' },
+			{ symbol: 'MSFT', quantity: 5, currentPrice: 430.2, sector: 'Technology Services' },
+			{ symbol: 'TSLA', quantity: 2, currentPrice: 180.0, sector: 'Consumer Durables' },
+			{ symbol: 'GOOGL', quantity: 1, currentPrice: 2800.0, sector: 'Technology Services' },
+			{ symbol: 'AMZN', quantity: 3, currentPrice: 3300.0, sector: 'Retail Trade' },
 		]
 
-		const score = 31; // to change to function call
+		const score = diversificationScore(positions); // to change to function call
 
-		const tableForDiversificationInterpretation = [
-			{ min: 0, max: 20, interpretation: "Very Poor Diversification" },
-			{ min: 21, max: 40, interpretation: "Poor Diversification" },
-			{ min: 41, max: 60, interpretation: "Moderate Diversification" },
-			{ min: 61, max: 80, interpretation: "Good Diversification" },
-			{ min: 81, max: 100, interpretation: "Excellent Diversification" }
-		]
+		// const tableForDiversificationInterpretation = [
+		// 	{ min: 0, max: 20, interpretation: "Very Poor Diversification" },
+		// 	{ min: 21, max: 40, interpretation: "Poor Diversification" },
+		// 	{ min: 41, max: 60, interpretation: "Moderate Diversification" },
+		// 	{ min: 61, max: 80, interpretation: "Good Diversification" },
+		// 	{ min: 81, max: 100, interpretation: "Excellent Diversification" }
+		// ]
 
-		for (const row of tableForDiversificationInterpretation) {
-			if (score >= row.min && score <= row.max) {
-				return row.interpretation;
-			}
-		}
+		// for (const row of tableForDiversificationInterpretation) {
+		// 	if (score >= row.min && score <= row.max) {
+		// 		return row.interpretation;
+		// 	}
+		// }
 
 		expect(score).toBe("Poor Diversification");
 	})
 
 	test('returns the risk assessment interpretation', () => {
 		const positions = [
-			{ symbol: 'AAPL', quantity: 10, currentPrice: 215.5, sector: 'Technology' },
-			{ symbol: 'MSFT', quantity: 5, currentPrice: 430.2, sector: 'Technology' },
-			{ symbol: 'TSLA', quantity: 2, currentPrice: 180.0, sector: 'Automotive' },
-			{ symbol: 'GOOGL', quantity: 1, currentPrice: 2800.0, sector: 'Technology' },
-			{ symbol: 'AMZN', quantity: 3, currentPrice: 3300.0, sector: 'E-commerce' },
+			{ symbol: 'AAPL', quantity: 10, currentPrice: 215.5, sector: 'Electronic Technology' },
+			{ symbol: 'MSFT', quantity: 5, currentPrice: 430.2, sector: 'Technology Services' },
+			{ symbol: 'TSLA', quantity: 2, currentPrice: 180.0, sector: 'Consumer Durables' },
+			{ symbol: 'GOOGL', quantity: 1, currentPrice: 2800.0, sector: 'Technology Services' },
+			{ symbol: 'AMZN', quantity: 3, currentPrice: 3300.0, sector: 'Retail Trade' },
 		]
 
 		const finalRiskScore = 100; // to change to function call
