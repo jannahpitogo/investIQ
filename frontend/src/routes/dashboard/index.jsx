@@ -199,24 +199,7 @@ function Dashboard() {
       <div className="dashboard-content">
         {/* LEFT COLUMN */}
 
-        <div className="left-column">
-          {/* Top Holdings */}
-
-          <div className="dashboard-card">
-            <h2>Top Holdings</h2>
-
-            <table className="holdings-table">
-              <thead>
-                <tr>
-                  <th>Company</th>
-                  <th>Sector</th>
-                  <th>Allocation</th>
-                  <th>Change</th>
-                </tr>
-              </thead>
-            </table>
-          </div>
-        </div>
+        <div className="left-column">{/* Top Holdings */}</div>
 
         {/* RIGHT COLUMN */}
 
