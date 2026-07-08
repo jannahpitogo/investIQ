@@ -193,7 +193,135 @@ function Dashboard() {
         />
       </div>
 
-      {/* PART 2 STARTS HERE */}
+      {/* ================= MAIN CONTENT ================= */}
+
+      <div className="dashboard-content">
+        {/* LEFT COLUMN */}
+
+        <div className="left-column">
+          {/* Portfolio Performance */}
+
+          <div className="dashboard-card">
+            <div className="card-header">
+              <h2>Portfolio Performance</h2>
+
+              <div className="time-filter">
+                <button>1M</button>
+                <button>3M</button>
+                <button className="active">1Y</button>
+                <button>ALL</button>
+              </div>
+            </div>
+
+            <div className="chart-placeholder">Performance Chart</div>
+
+            <div className="performance-stats">
+              <div>
+                <h4>1-Year Return</h4>
+                <p>{annualReturn}%</p>
+              </div>
+
+              <div>
+                <h4>Total Profit</h4>
+                <p>${totalProfit.toLocaleString()}</p>
+              </div>
+
+              <div>
+                <h4>Risk Score</h4>
+                <p>{riskScore}/10</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Top Holdings */}
+
+          <div className="dashboard-card">
+            <h2>Top Holdings</h2>
+
+            <table className="holdings-table">
+              <thead>
+                <tr>
+                  <th>Company</th>
+                  <th>Sector</th>
+                  <th>Allocation</th>
+                  <th>Change</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {holdings.map((stock) => (
+                  <tr key={stock.name}>
+                    <td>{stock.name}</td>
+
+                    <td>{stock.sector}</td>
+
+                    <td>{stock.allocation}%</td>
+
+                    <td className={stock.change.startsWith('+') ? 'positive' : 'negative'}>
+                      {stock.change}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN */}
+
+        <div className="right-column">
+          {/* Allocation */}
+
+          <div className="dashboard-card">
+            <h2>Sector Allocation</h2>
+
+            {sectors.map((sector) => (
+              <div className="sector-row" key={sector.name}>
+                <div className="sector-label">
+                  <span className="sector-dot" style={{ background: sector.color }} />
+
+                  {sector.name}
+                </div>
+
+                <strong>{sector.value}%</strong>
+              </div>
+            ))}
+          </div>
+
+          {/* Portfolio Risk */}
+
+          <div className="dashboard-card">
+            <h2>Portfolio Risk</h2>
+
+            <div className="risk-item">
+              <span>Risk Score</span>
+              <strong>{riskScore}/10</strong>
+            </div>
+
+            <div className="risk-item">
+              <span>Beta</span>
+              <strong>{beta}</strong>
+            </div>
+
+            <div className="risk-item">
+              <span>Max Drawdown</span>
+              <strong>{maxDrawdown}%</strong>
+            </div>
+          </div>
+
+          {/* AI Insights */}
+
+          <div className="dashboard-card">
+            <h2>AI Portfolio Insights</h2>
+
+            <ul className="insight-list">
+              {insights.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
