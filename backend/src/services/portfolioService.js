@@ -1,3 +1,5 @@
+import { BOYCOTT_LIST } from '../data/boycottList.js'
+
 export function analysePortfolio(questionnaire) {
   const portfolio = questionnaire.portfolio ?? []
   const portfolioSummary = calculateTotalInvestment(portfolio)
@@ -19,6 +21,7 @@ export function analysePortfolio(questionnaire) {
   const portfolioRisk = calculatePortfolioRisk(portfolioSummary, sectorExposure, questionnaire)
   const riskComparison = compareRisk(riskTolerance, portfolioRisk)
   const environmentalImpact = analyzeEnvironmentalImpact(questionnaire)
+  const socialImpact = analyzeSocialImpact(questionnaire)
 
   return {
     portfolioSummary,
@@ -32,6 +35,7 @@ export function analysePortfolio(questionnaire) {
     portfolioRisk,
     riskComparison,
     environmentalImpact,
+    socialImpact,
     // more metrics later...
   }
 }
@@ -432,5 +436,61 @@ export function analyzeEnvironmentalImpact(questionnaire) {
   return {
     status,
     message,
+  }
+}
+
+export function analyzeSocialImpact(questionnaire) {
+  const portfolio = questionnaire.portfolio ?? []
+  const highlights = questionnaire.highlights ?? []
+
+  const conflicts = []
+
+  for (const value of highlights) {
+    const boycottCategory = BOYCOTT_LIST.find(
+      (item) => item.category === value,
+    )
+
+    if (!boycottCategory) continue
+
+    const matchedCompanies = portfolio.filter((stock) =>
+      boycottCategory.companies.includes(stock.name),
+    )
+
+    if (matchedCompanies.length > 0) {
+      conflicts.push({
+        category: value,
+        companies: matchedCompanies.map((stock) => stock.name),
+      })
+    }
+  }
+
+  let status
+  let message
+
+  if (conflicts.length === 0) {
+    status = 'Positive'
+
+    message =
+      'Your current portfolio appears to align with the social values you selected.'
+  } else {
+    status = 'Conflict'
+
+    const summary = conflicts
+      .map(
+        (item) =>
+          `${item.category}: ${item.companies.join(', ')}`,
+      )
+      .join('; ')
+
+    message = `Some of your investments may conflict with your selected values. ${summary}. You may wish to review these holdings.`
+  }
+
+  console.log('Social impact:')
+  console.log({ status, message })
+
+  return {
+    status,
+    message,
+    conflicts,
   }
 }
