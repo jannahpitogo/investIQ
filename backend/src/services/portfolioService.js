@@ -5,6 +5,7 @@ export function analysePortfolio(questionnaire) {
   const portfolioChange = calculatePortfolioChange(totalPortfolioValue, portfolioSummary.totalInvestment)
   const topHoldings = calculateTopHoldings(portfolio, totalPortfolioValue)
 
+  const assetAllocation = calculateAssetAllocation(portfolio, totalPortfolioValue)
   const sectorExposure = calculateSectorExposure(portfolio)
   const riskTolerance = calculateRiskTolerance(questionnaire)
   const portfolioRisk = calculatePortfolioRisk(portfolioSummary, sectorExposure, questionnaire)
@@ -16,6 +17,7 @@ export function analysePortfolio(questionnaire) {
     totalPortfolioValue,
     portfolioChange,
     topHoldings,
+    assetAllocation,
     sectorExposure,
     riskTolerance,
     portfolioRisk,
@@ -110,6 +112,23 @@ export function calculateTopHoldings(portfolio, totalPortfolioValue) {
   console.log(topHoldings)
 
   return topHoldings
+}
+
+export function calculateAssetAllocation(portfolio, totalPortfolioValue) {
+  const assetAllocation = portfolio.map((stock) => {
+    const value = Number(stock.quantity) * Number(stock.currentPrice)
+    const percentage = Number(((value / totalPortfolioValue) * 100).toFixed(1))
+
+    return {
+      ticker: stock.ticker,
+      percentage,
+    }
+  })
+
+  console.log('Asset allocation:')
+  console.log(assetAllocation)
+
+  return assetAllocation
 }
 
 export function calculateSectorExposure(portfolio) {
