@@ -1,9 +1,9 @@
 import { pool } from '../db/pool.js'
 
 export async function saveAnalysis(questionnaire, analysis) {
-    console.log('Saving analysis to database...')
+  console.log('Saving analysis to database...')
 
-    const query = `
+  const query = `
     INSERT INTO portfolio_analyses (
         name,
         age,
@@ -51,62 +51,61 @@ export async function saveAnalysis(questionnaire, analysis) {
     )
     `
 
-    try {
-        const result = await pool.query(query, [
-            questionnaire.name,
-            questionnaire.age,
-            questionnaire.situation,
+  try {
+    const result = await pool.query(query, [
+      questionnaire.name,
+      questionnaire.age,
+      questionnaire.situation,
 
-            questionnaire.reason,
-            questionnaire.horizon,
-            questionnaire.contributionFrequency,
-            questionnaire.riskScore,
-            questionnaire.riskProfile,
+      questionnaire.reason,
+      questionnaire.horizon,
+      questionnaire.contributionFrequency,
+      questionnaire.riskScore,
+      questionnaire.riskProfile,
 
-            questionnaire.exclusions,
-            questionnaire.highlights,
+      questionnaire.exclusions,
+      questionnaire.highlights,
 
-            analysis.portfolioSummary.totalInvestment,
-            analysis.totalPortfolioValue,
-            analysis.portfolioChange,
+      analysis.portfolioSummary.totalInvestment,
+      analysis.totalPortfolioValue,
+      analysis.portfolioChange,
 
-            analysis.portfolioSummary.totalShares,
-            analysis.portfolioSummary.numberOfHoldings,
+      analysis.portfolioSummary.totalShares,
+      analysis.portfolioSummary.numberOfHoldings,
 
-            analysis.portfolioRisk.score,
-            analysis.portfolioRisk.profile,
+      analysis.portfolioRisk.score,
+      analysis.portfolioRisk.profile,
 
-            analysis.riskComparison.difference,
-            analysis.riskComparison.status,
-            analysis.riskComparison.direction,
+      analysis.riskComparison.difference,
+      analysis.riskComparison.status,
+      analysis.riskComparison.direction,
 
-            analysis.diversification.finalScore,
-            analysis.diversification.interpretation,
+      analysis.diversification.finalScore,
+      analysis.diversification.interpretation,
 
-            analysis.environmentalImpact.status,
-            analysis.environmentalImpact.message,
+      analysis.environmentalImpact.status,
+      analysis.environmentalImpact.message,
 
-            analysis.socialImpact.status,
-            analysis.socialImpact.message,
+      analysis.socialImpact.status,
+      analysis.socialImpact.message,
 
-            JSON.stringify(analysis.portfolioSummary.holdings),
-            JSON.stringify(analysis.sectorExposure),
-            JSON.stringify(analysis.topHoldings),
-            JSON.stringify(analysis.assetAllocation),
-            JSON.stringify(analysis.aiSuggestions),
-            ])
-        console.log('Database saved!', result.rowCount)
-    } catch (error) {
-        console.error('Error saving analysis to database:', error)
-        throw error
-    }    
+      JSON.stringify(analysis.portfolioSummary.holdings),
+      JSON.stringify(analysis.sectorExposure),
+      JSON.stringify(analysis.topHoldings),
+      JSON.stringify(analysis.assetAllocation),
+      JSON.stringify(analysis.aiSuggestions),
+    ])
+    console.log('Database saved!', result.rowCount)
+  } catch (error) {
+    console.error('Error saving analysis to database:', error)
+    throw error
+  }
 }
 
-// to check in console, run: 
-// psql investiq -c 
+// to check in console, run:
+// psql investiq -c
 // \x to expand output
 // SELECT ai_suggestions FROM portfolio_analyses WHERE id = 3;
-
 
 export async function getAllAnalyses() {
   const result = await pool.query(`
