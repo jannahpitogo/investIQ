@@ -275,6 +275,37 @@ function Dashboard() {
 
             <strong>{riskTolerance.profile} Investor</strong>
           </div>
+          <div className="dashboard-card">
+            <h2>
+              Stock Allocation
+              <InfoTooltip text="Shows how your portfolio is distributed across each stock." />
+            </h2>
+
+            <div className="stock-allocation-list">
+              {holdings.map((stock) => (
+                <div key={stock.name} className="stock-allocation-item">
+                  <div className="stock-allocation-header">
+                    <div>
+                      <strong>{stock.name}</strong>
+                      <p>{stock.sector}</p>
+                    </div>
+
+                    <span>{stock.allocation}%</span>
+                  </div>
+
+                  <div className="allocation-bar">
+                    <div
+                      className="allocation-fill"
+                      style={{
+                        width: `${stock.allocation}%`,
+                        backgroundColor: sectorColors[stock.sector],
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
           <div className="dashboard-card">
             <h2>
