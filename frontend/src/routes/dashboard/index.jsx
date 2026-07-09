@@ -331,23 +331,6 @@ function Dashboard() {
 
           {/* Portfolio Risk */}
 
-          <div className="dashboard-card">
-            <h2>
-              Portfolio Risk
-              <InfoTooltip text="Measures portfolio risk using factors like concentration and market sensitivity (beta)." />
-            </h2>
-
-            <div className="risk-item">
-              <span>Risk Score</span>
-              <strong>{riskScore}/10</strong>
-            </div>
-
-            <div className="risk-item">
-              <span>Beta</span>
-              <strong>{beta}</strong>
-            </div>
-          </div>
-
           {/* AI Insights */}
 
           <div className="dashboard-card">
