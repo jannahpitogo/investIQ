@@ -95,16 +95,15 @@ export function calculateTotalPortfolioValue(portfolio) {
 
 export function calculatePortfolioChange(totalPortfolioValue, totalInvestment) {
   if (totalInvestment === 0) {
-    return '0%'
+    return Number(0)
   }
 
   const change = ((totalPortfolioValue - totalInvestment) / totalInvestment) * 100
-  const formattedChange = `${change >= 0 ? '+' : ''}${Math.round(change)}%`
 
   console.log('Portfolio change:')
-  console.log(formattedChange)
+  console.log(change)
 
-  return formattedChange
+  return Number(change.toFixed(2))
 }
 
 export function calculateTopHoldings(portfolio, totalPortfolioValue) {
