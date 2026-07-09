@@ -2,6 +2,8 @@ export function analysePortfolio(questionnaire) {
   const portfolio = questionnaire.portfolio ?? []
   const portfolioSummary = calculateTotalInvestment(portfolio)
   const totalPortfolioValue = calculateTotalPortfolioValue(portfolio)
+  const portfolioChange = calculatePortfolioChange(totalPortfolioValue, portfolioSummary.totalInvestment)
+
   const sectorExposure = calculateSectorExposure(portfolio)
   const riskTolerance = calculateRiskTolerance(questionnaire)
   const portfolioRisk = calculatePortfolioRisk(portfolioSummary, sectorExposure, questionnaire)
@@ -11,10 +13,12 @@ export function analysePortfolio(questionnaire) {
   return {
     portfolioSummary,
     totalPortfolioValue,
+    portfolioChange,
     sectorExposure,
     riskTolerance,
     portfolioRisk,
     riskComparison,
+
 
     // more metrics later...
   }
@@ -71,6 +75,20 @@ export function calculateTotalPortfolioValue(portfolio) {
   console.log(totalPortfolioValue)
 
   return Number(totalPortfolioValue.toFixed(2))
+}
+
+export function calculatePortfolioChange(totalPortfolioValue, totalInvestment) {
+  if (totalInvestment === 0) {
+    return '0%'
+  }
+
+  const change = ((totalPortfolioValue - totalInvestment) / totalInvestment) * 100
+  const formattedChange = `${change >= 0 ? '+' : ''}${Math.round(change)}%`
+
+  console.log('Portfolio change:')
+  console.log(formattedChange)
+
+  return formattedChange
 }
 
 export function calculateSectorExposure(portfolio) {
