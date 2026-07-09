@@ -4,9 +4,14 @@ export function analysePortfolio(questionnaire) {
   const totalPortfolioValue = calculateTotalPortfolioValue(portfolio)
   const portfolioChange = calculatePortfolioChange(totalPortfolioValue, portfolioSummary.totalInvestment)
   const topHoldings = calculateTopHoldings(portfolio, totalPortfolioValue)
-
   const assetAllocation = calculateAssetAllocation(portfolio, totalPortfolioValue)
   const sectorExposure = calculateSectorExposure(portfolio)
+  const diversification = calculateDiversification(
+    portfolio,
+    portfolioSummary,
+    sectorExposure,
+    totalPortfolioValue,
+  )
   const riskTolerance = calculateRiskTolerance(questionnaire)
   const portfolioRisk = calculatePortfolioRisk(portfolioSummary, sectorExposure, questionnaire)
   const riskComparison = compareRisk(riskTolerance, portfolioRisk)
@@ -19,6 +24,7 @@ export function analysePortfolio(questionnaire) {
     topHoldings,
     assetAllocation,
     sectorExposure,
+    diversification,
     riskTolerance,
     portfolioRisk,
     riskComparison,
@@ -167,6 +173,84 @@ export function calculateSectorExposure(portfolio) {
   console.log(sectorExposure)
 
   return sectorExposure
+}
+
+export function calculateDiversification(
+  portfolio,
+  portfolioSummary,
+  sectorExposure,
+  totalPortfolioValue,
+) {
+  // 1. Number of holdings (25%)
+  const holdings = portfolioSummary.numberOfHoldings
+
+  let holdingsScore = 20
+
+  if (holdings >= 21) holdingsScore = 100
+  else if (holdings >= 11) holdingsScore = 80
+  else if (holdings >= 6) holdingsScore = 50
+
+  // 2. Concentration (40%)
+  const largestHoldingValue = Math.max(
+    ...portfolio.map((stock) => Number(stock.quantity) * Number(stock.currentPrice)),
+  )
+
+  const concentrationPercentage = (largestHoldingValue / totalPortfolioValue) * 100
+
+  let concentrationScore = 20
+
+  if (concentrationPercentage <= 10) concentrationScore = 100
+  else if (concentrationPercentage <= 20) concentrationScore = 80
+  else if (concentrationPercentage <= 30) concentrationScore = 60
+  else if (concentrationPercentage <= 40) concentrationScore = 40
+
+  // 3. Sector diversification (35%)
+  const largestSectorPercentage = Math.max(
+    ...Object.values(sectorExposure).map((sector) => sector.percentage),
+  )
+
+  let sectorScore = 20
+
+  if (largestSectorPercentage <= 25) sectorScore = 100
+  else if (largestSectorPercentage <= 40) sectorScore = 80
+  else if (largestSectorPercentage <= 50) sectorScore = 60
+  else if (largestSectorPercentage <= 60) sectorScore = 40
+
+  // Final weighted score
+  const score = Math.round(
+    holdingsScore * 0.25 +
+      concentrationScore * 0.40 +
+      sectorScore * 0.35,
+  )
+
+  let interpretation
+
+  if (score <= 20) interpretation = 'Very Concentrated'
+  else if (score <= 40) interpretation = 'Poor Diversification'
+  else if (score <= 60) interpretation = 'Moderate Diversification'
+  else if (score <= 80) interpretation = 'Good Diversification'
+  else interpretation = 'Excellent Diversification'
+
+  console.log('Diversification:')
+  console.log({
+    score,
+    interpretation,
+    breakdown: {
+      holdingsScore,
+      concentrationScore,
+      sectorScore,
+    },
+  })
+
+  return {
+    score,
+    interpretation,
+    breakdown: {
+      holdingsScore,
+      concentrationScore,
+      sectorScore,
+    },
+  }
 }
 
 export function calculateRiskTolerance(questionnaire) {
