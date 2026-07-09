@@ -1,14 +1,30 @@
 export function analysePortfolio(questionnaire) {
   const portfolio = questionnaire.portfolio ?? []
   const portfolioSummary = calculateTotalInvestment(portfolio)
+  const totalPortfolioValue = calculateTotalPortfolioValue(portfolio)
+  const portfolioChange = calculatePortfolioChange(totalPortfolioValue, portfolioSummary.totalInvestment)
+  const topHoldings = calculateTopHoldings(portfolio, totalPortfolioValue)
+  const assetAllocation = calculateAssetAllocation(portfolio, totalPortfolioValue)
   const sectorExposure = calculateSectorExposure(portfolio)
+  const diversification = calculateDiversification(
+    portfolio,
+    portfolioSummary,
+    sectorExposure,
+    totalPortfolioValue,
+  )
   const riskTolerance = calculateRiskTolerance(questionnaire)
   const portfolioRisk = calculatePortfolioRisk(portfolioSummary, sectorExposure, questionnaire)
   const riskComparison = compareRisk(riskTolerance, portfolioRisk)
 
+
   return {
     portfolioSummary,
+    totalPortfolioValue,
+    portfolioChange,
+    topHoldings,
+    assetAllocation,
     sectorExposure,
+    diversification,
     riskTolerance,
     portfolioRisk,
     riskComparison,
@@ -17,6 +33,7 @@ export function analysePortfolio(questionnaire) {
 }
 
 export function calculateTotalInvestment(portfolio) {
+  // total investment, total shares, number of holdings, and individual holdings with investment value
   let totalInvestment = 0
   let totalShares = 0
 
@@ -52,6 +69,72 @@ export function calculateTotalInvestment(portfolio) {
     numberOfHoldings: holdings.length,
     holdings,
   }
+}
+
+export function calculateTotalPortfolioValue(portfolio) {
+  const totalPortfolioValue = portfolio.reduce((total, stock) => {
+    const quantity = Number(stock.quantity)
+    const currentPrice = Number(stock.currentPrice)
+
+    return total + quantity * currentPrice
+  }, 0)
+
+  console.log('Total portfolio value:')
+  console.log(totalPortfolioValue)
+
+  return Number(totalPortfolioValue.toFixed(2))
+}
+
+export function calculatePortfolioChange(totalPortfolioValue, totalInvestment) {
+  if (totalInvestment === 0) {
+    return '0%'
+  }
+
+  const change = ((totalPortfolioValue - totalInvestment) / totalInvestment) * 100
+  const formattedChange = `${change >= 0 ? '+' : ''}${Math.round(change)}%`
+
+  console.log('Portfolio change:')
+  console.log(formattedChange)
+
+  return formattedChange
+}
+
+export function calculateTopHoldings(portfolio, totalPortfolioValue) {
+  const topHoldings = portfolio
+    .map((stock) => {
+      const value = Number(stock.quantity) * Number(stock.currentPrice)
+      const percentage = (value / totalPortfolioValue) * 100
+
+      return {
+        ticker: stock.ticker,
+        name: stock.name,
+        percentage: `${percentage.toFixed(1)}%`,
+      }
+    })
+    .sort((a, b) => parseFloat(b.percentage) - parseFloat(a.percentage))
+    .slice(0, 3)
+
+  console.log('Top 3 holdings:')
+  console.log(topHoldings)
+
+  return topHoldings
+}
+
+export function calculateAssetAllocation(portfolio, totalPortfolioValue) {
+  const assetAllocation = portfolio.map((stock) => {
+    const value = Number(stock.quantity) * Number(stock.currentPrice)
+    const percentage = Number(((value / totalPortfolioValue) * 100).toFixed(1))
+
+    return {
+      ticker: stock.ticker,
+      percentage,
+    }
+  })
+
+  console.log('Asset allocation:')
+  console.log(assetAllocation)
+
+  return assetAllocation
 }
 
 export function calculateSectorExposure(portfolio) {
@@ -90,6 +173,84 @@ export function calculateSectorExposure(portfolio) {
   console.log(sectorExposure)
 
   return sectorExposure
+}
+
+export function calculateDiversification(
+  portfolio,
+  portfolioSummary,
+  sectorExposure,
+  totalPortfolioValue,
+) {
+  // 1. Number of holdings (25%)
+  const holdings = portfolioSummary.numberOfHoldings
+
+  let holdingsScore = 20
+
+  if (holdings >= 21) holdingsScore = 100
+  else if (holdings >= 11) holdingsScore = 80
+  else if (holdings >= 6) holdingsScore = 50
+
+  // 2. Concentration (40%)
+  const largestHoldingValue = Math.max(
+    ...portfolio.map((stock) => Number(stock.quantity) * Number(stock.currentPrice)),
+  )
+
+  const concentrationPercentage = (largestHoldingValue / totalPortfolioValue) * 100
+
+  let concentrationScore = 20
+
+  if (concentrationPercentage <= 10) concentrationScore = 100
+  else if (concentrationPercentage <= 20) concentrationScore = 80
+  else if (concentrationPercentage <= 30) concentrationScore = 60
+  else if (concentrationPercentage <= 40) concentrationScore = 40
+
+  // 3. Sector diversification (35%)
+  const largestSectorPercentage = Math.max(
+    ...Object.values(sectorExposure).map((sector) => sector.percentage),
+  )
+
+  let sectorScore = 20
+
+  if (largestSectorPercentage <= 25) sectorScore = 100
+  else if (largestSectorPercentage <= 40) sectorScore = 80
+  else if (largestSectorPercentage <= 50) sectorScore = 60
+  else if (largestSectorPercentage <= 60) sectorScore = 40
+
+  // Final weighted score
+  const score = Math.round(
+    holdingsScore * 0.25 +
+      concentrationScore * 0.40 +
+      sectorScore * 0.35,
+  )
+
+  let interpretation
+
+  if (score <= 20) interpretation = 'Very Concentrated'
+  else if (score <= 40) interpretation = 'Poor Diversification'
+  else if (score <= 60) interpretation = 'Moderate Diversification'
+  else if (score <= 80) interpretation = 'Good Diversification'
+  else interpretation = 'Excellent Diversification'
+
+  console.log('Diversification:')
+  console.log({
+    score,
+    interpretation,
+    breakdown: {
+      holdingsScore,
+      concentrationScore,
+      sectorScore,
+    },
+  })
+
+  return {
+    score,
+    interpretation,
+    breakdown: {
+      holdingsScore,
+      concentrationScore,
+      sectorScore,
+    },
+  }
 }
 
 export function calculateRiskTolerance(questionnaire) {
