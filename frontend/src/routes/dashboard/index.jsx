@@ -89,8 +89,6 @@ function Dashboard() {
   // ===============================
 
   const portfolioValue = 52340
-  const totalProfit = 8145
-  const annualReturn = 18.4
 
   const beta = 1.12
   const totalInvested = 44195
@@ -205,13 +203,6 @@ function Dashboard() {
           title="Total Invested"
           value={`$${totalInvested.toLocaleString()}`}
           subtitle="Initial Investment"
-        />
-
-        <MetricCard
-          title="Total Return"
-          value={`${annualReturn}%`}
-          change={`$${totalProfit.toLocaleString()}`}
-          positive
         />
 
         <MetricCard
