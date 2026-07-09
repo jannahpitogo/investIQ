@@ -1,6 +1,7 @@
 import express from 'express'
 import { analysePortfolio } from '../services/portfolioService.js'
 import { generateSuggestions } from '../services/aiService.js'
+import { saveAnalysis } from '../services/databaseService.js'
 
 export const questionnaireRoutes = express.Router()
 
@@ -15,6 +16,8 @@ questionnaireRoutes.post('/', async (req, res) => {
     
     analysis.aiSuggestions = suggestions
     console.log('Suggestions:', suggestions)
+
+    await saveAnalysis(req.body, analysis)
 
     res.json({ analysis, suggestions })
   } catch (error) {
