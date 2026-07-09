@@ -102,6 +102,31 @@ export async function saveAnalysis(questionnaire, analysis) {
     }    
 }
 
-// to check in console, run: psql investiq -c 
+// to check in console, run: 
+// psql investiq -c 
 // \x to expand output
 // SELECT ai_suggestions FROM portfolio_analyses WHERE id = 3;
+
+
+export async function getAllAnalyses() {
+  const result = await pool.query(`
+    SELECT *
+    FROM portfolio_analyses
+    ORDER BY created_at DESC
+  `)
+
+  return result.rows
+}
+
+export async function getAnalysisById(id) {
+  const result = await pool.query(
+    `
+    SELECT *
+    FROM portfolio_analyses
+    WHERE id = $1
+  `,
+    [id],
+  )
+
+  return result.rows[0]
+}
