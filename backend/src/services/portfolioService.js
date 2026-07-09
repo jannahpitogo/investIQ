@@ -18,6 +18,7 @@ export function analysePortfolio(questionnaire) {
   const riskTolerance = calculateRiskTolerance(questionnaire)
   const portfolioRisk = calculatePortfolioRisk(portfolioSummary, sectorExposure, questionnaire)
   const riskComparison = compareRisk(riskTolerance, portfolioRisk)
+  const environmentalImpact = analyzeEnvironmentalImpact(questionnaire)
 
   return {
     portfolioSummary,
@@ -30,6 +31,7 @@ export function analysePortfolio(questionnaire) {
     riskTolerance,
     portfolioRisk,
     riskComparison,
+    environmentalImpact,
     // more metrics later...
   }
 }
@@ -380,5 +382,55 @@ export function compareRisk(riskTolerance, portfolioRisk) {
     difference,
     status,
     direction,
+  }
+}
+
+export function analyzeEnvironmentalImpact(questionnaire) {
+  const portfolio = questionnaire.portfolio ?? []
+  const exclusions = questionnaire.exclusions ?? []
+
+  const positiveIndustries = ['Renewable energy', 'Clean energy']
+  const negativeIndustries = ['Fossil Fuels', 'Fast fashion']
+
+  const positiveHoldings = portfolio.filter((stock) =>
+    positiveIndustries.includes(stock.industry),
+  )
+
+  const negativeHoldings = portfolio.filter((stock) =>
+    negativeIndustries.includes(stock.industry),
+  )
+
+  let status
+  let message
+
+  if (negativeHoldings.length > 0) {
+    status = 'Negative'
+
+    const names = negativeHoldings.map((stock) => stock.name).join(', ')
+
+    if (exclusions.some((e) => negativeIndustries.includes(e))) {
+      message = `Your portfolio still contains ${names}, which conflicts with your preference to avoid environmentally harmful industries.`
+    } else {
+      message = `Your portfolio includes ${names}, which operate in industries with notable environmental concerns. Consider cleaner alternatives if sustainability is important to you.`
+    }
+  } else if (positiveHoldings.length > 0) {
+    status = 'Positive'
+
+    const names = positiveHoldings.map((stock) => stock.name).join(', ')
+
+    message = `Positive impact. Your portfolio includes ${names}, supporting renewable or clean energy industries.`
+  } else {
+    status = 'Neutral'
+
+    message =
+      'Your portfolio has no significant exposure to either environmentally positive or environmentally harmful industries.'
+  }
+
+  console.log('Environmental impact:')
+  console.log({ status, message })
+
+  return {
+    status,
+    message,
   }
 }
