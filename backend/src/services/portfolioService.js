@@ -3,6 +3,7 @@ export function analysePortfolio(questionnaire) {
   const portfolioSummary = calculateTotalInvestment(portfolio)
   const totalPortfolioValue = calculateTotalPortfolioValue(portfolio)
   const portfolioChange = calculatePortfolioChange(totalPortfolioValue, portfolioSummary.totalInvestment)
+  const topHoldings = calculateTopHoldings(portfolio, totalPortfolioValue)
 
   const sectorExposure = calculateSectorExposure(portfolio)
   const riskTolerance = calculateRiskTolerance(questionnaire)
@@ -14,12 +15,11 @@ export function analysePortfolio(questionnaire) {
     portfolioSummary,
     totalPortfolioValue,
     portfolioChange,
+    topHoldings,
     sectorExposure,
     riskTolerance,
     portfolioRisk,
     riskComparison,
-
-
     // more metrics later...
   }
 }
@@ -89,6 +89,27 @@ export function calculatePortfolioChange(totalPortfolioValue, totalInvestment) {
   console.log(formattedChange)
 
   return formattedChange
+}
+
+export function calculateTopHoldings(portfolio, totalPortfolioValue) {
+  const topHoldings = portfolio
+    .map((stock) => {
+      const value = Number(stock.quantity) * Number(stock.currentPrice)
+      const percentage = (value / totalPortfolioValue) * 100
+
+      return {
+        ticker: stock.ticker,
+        name: stock.name,
+        percentage: `${percentage.toFixed(1)}%`,
+      }
+    })
+    .sort((a, b) => parseFloat(b.percentage) - parseFloat(a.percentage))
+    .slice(0, 3)
+
+  console.log('Top 3 holdings:')
+  console.log(topHoldings)
+
+  return topHoldings
 }
 
 export function calculateSectorExposure(portfolio) {
