@@ -223,7 +223,10 @@ function Dashboard() {
 
         <div className="left-column">
           <div className="dashboard-card">
-            <h2>Top 3 Holdings</h2>
+            <h2>
+              Top 3 Holdings
+              <InfoTooltip text="Shows the three largest investments in your portfolio by allocation percentage." />
+            </h2>
 
             <div className="top-holdings-list">
               {topHoldings.map((stock, index) => (
@@ -253,7 +256,10 @@ function Dashboard() {
         <div className="right-column">
           {/* Allocation */}
           <div className="dashboard-card">
-            <h2>Risk Tolerance</h2>
+            <h2>
+              Risk Tolerance
+              <InfoTooltip text="Your preferred investment risk level based on your questionnaire responses." />
+            </h2>
 
             <div className="tolerance-score">
               <h1>{riskTolerance.score}/100</h1>
@@ -276,7 +282,10 @@ function Dashboard() {
           </div>
 
           <div className="dashboard-card">
-            <h2>Risk Match</h2>
+            <h2>
+              Risk Assesment
+              <InfoTooltip text="Compares your personal risk tolerance with the actual risk level of your portfolio." />
+            </h2>
 
             <div className="comparison">
               <div>
@@ -295,7 +304,10 @@ function Dashboard() {
             </div>
           </div>
           <div className="dashboard-card">
-            <h2>Sector Allocation</h2>
+            <h2>
+              Sector Allocation
+              <InfoTooltip text="Displays how your investments are distributed across different market sectors." />
+            </h2>
 
             {sectors.map((sector) => (
               <div className="sector-row" key={sector.name}>
@@ -313,7 +325,10 @@ function Dashboard() {
           {/* Portfolio Risk */}
 
           <div className="dashboard-card">
-            <h2>Portfolio Risk</h2>
+            <h2>
+              Portfolio Risk
+              <InfoTooltip text="Measures portfolio risk using factors like concentration and market sensitivity (beta)." />
+            </h2>
 
             <div className="risk-item">
               <span>Risk Score</span>
@@ -329,7 +344,11 @@ function Dashboard() {
           {/* AI Insights */}
 
           <div className="dashboard-card">
-            <h2> Suggestions Tab </h2>
+            <h2>
+              {' '}
+              Suggestions Tab
+              <InfoTooltip text="AI-generated insights highlighting possible improvements and risks in your portfolio." />{' '}
+            </h2>
 
             <ul className="insight-list">
               {insights.map((item, index) => (
@@ -358,5 +377,12 @@ function MetricCard({ title, value, change, subtitle, positive }) {
 
       {subtitle && <p>{subtitle}</p>}
     </div>
+  )
+}
+function InfoTooltip({ text }) {
+  return (
+    <span className="info-tooltip">
+      ?<span className="tooltip-text">{text}</span>
+    </span>
   )
 }
