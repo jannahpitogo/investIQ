@@ -659,14 +659,14 @@ nav {
   display: inline-flex;
   align-items: center;
 
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.5rem;
 
   border-radius: 999px;
 
   background: #ffffff;
   border: 1px solid #e2e8f0;
 
-  font-size: 0.8rem;
+  font-size: 0.65rem;
   font-weight: 600;
 
   white-space: nowrap;
@@ -694,7 +694,7 @@ nav {
 }
 .q-breadcrumb-arrow {
   margin-left: 0.75rem;
-  color: #cbd5e1;
+  color: #050505;
 }
 @layer components {
   .btn {
