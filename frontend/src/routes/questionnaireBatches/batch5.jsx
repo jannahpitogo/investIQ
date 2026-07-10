@@ -286,9 +286,10 @@ export default function Batch5() {
 
             <div className="selected-stock-form">
               <div>
-                <label>Quantity</label>
+                <label htmlFor="new-quantity">Quantity</label>
 
                 <input
+                  id="new-quantity"
                   className="input input-bordered w-full"
                   type="number"
                   min="1"
@@ -303,9 +304,10 @@ export default function Batch5() {
               </div>
 
               <div>
-                <label>Buy Price</label>
+                <label htmlFor="new-buy-price">Buy Price</label>
 
                 <input
+                  id="new-buy-price"
                   className="input input-bordered w-full"
                   type="number"
                   min="0"
@@ -415,9 +417,10 @@ export default function Batch5() {
 
                 <div className="holding-grid">
                   <div className="holding-field">
-                    <label>Quantity</label>
+                    <label htmlFor={`quantity-${row.id}`}>Quantity</label>
 
                     <input
+                      id={`quantity-${row.id}`}
                       className="input input-bordered input-sm"
                       type="number"
                       min="1"
@@ -427,9 +430,10 @@ export default function Batch5() {
                   </div>
 
                   <div className="holding-field">
-                    <label>Buy Price</label>
+                    <label htmlFor={`buy-price-${row.id}`}>Buy Price</label>
 
                     <input
+                      id={`buy-price-${row.id}`}
                       className="input input-bordered input-sm"
                       type="number"
                       min="0"
