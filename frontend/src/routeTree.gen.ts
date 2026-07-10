@@ -13,7 +13,6 @@ import { Route as UsersRouteImport } from './routes/users'
 import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as QuestionnaireRouteImport } from './routes/questionnaire'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as QuestionnaireBatchesBatch5RouteImport } from './routes/questionnaireBatches/batch5'
@@ -43,9 +42,6 @@ const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
   path: '/privacy-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -95,9 +91,8 @@ const QuestionnaireBatchesBatch0Route =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/privacy-policy': typeof PrivacyPolicyRoute
   '/dashboard': typeof DashboardRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/questionnaire': typeof QuestionnaireRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/users': typeof UsersRoute
@@ -110,9 +105,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/privacy-policy': typeof PrivacyPolicyRoute
   '/dashboard': typeof DashboardRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/questionnaire': typeof QuestionnaireRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/users': typeof UsersRoute
@@ -126,9 +120,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/privacy-policy': typeof PrivacyPolicyRoute
   '/dashboard': typeof DashboardRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/questionnaire': typeof QuestionnaireRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/users': typeof UsersRoute
@@ -143,9 +136,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/about'
-    | '/privacy-policy'
     | '/dashboard'
+    | '/privacy-policy'
     | '/questionnaire'
     | '/terms-of-service'
     | '/users'
@@ -158,9 +150,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/about'
-    | '/privacy-policy'
     | '/dashboard'
+    | '/privacy-policy'
     | '/questionnaire'
     | '/terms-of-service'
     | '/users'
@@ -173,9 +164,8 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/about'
-    | '/privacy-policy'
     | '/dashboard'
+    | '/privacy-policy'
     | '/questionnaire'
     | '/terms-of-service'
     | '/users'
@@ -189,9 +179,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   DashboardRoute: typeof DashboardRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   QuestionnaireRoute: typeof QuestionnaireRoute
   TermsOfServiceRoute: typeof TermsOfServiceRoute
   UsersRoute: typeof UsersRoute
@@ -233,11 +222,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -299,9 +283,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  PrivacyPolicyRoute: PrivacyPolicyRoute,
   DashboardRoute: DashboardRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
   QuestionnaireRoute: QuestionnaireRoute,
   TermsOfServiceRoute: TermsOfServiceRoute,
   UsersRoute: UsersRoute,

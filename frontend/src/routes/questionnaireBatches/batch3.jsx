@@ -52,11 +52,7 @@ export default function Batch3() {
   const [monthlySwing, setMonthlySwing] = useState(answers.monthlySwing ?? null)
   const [returnsPriority, setReturnsPriority] = useState(answers.returnsPriority ?? null)
 
-  const canProceed =
-    !!portfolioDrop &&
-    !!comfortLevel &&
-    !!monthlySwing &&
-    !!returnsPriority
+  const canProceed = !!portfolioDrop && !!comfortLevel && !!monthlySwing && !!returnsPriority
 
   function handleNext() {
     const totalScore =
@@ -66,15 +62,15 @@ export default function Batch3() {
       (returnsPriority?.score ?? 0)
 
     updateAnswers({
-    portfolioDrop,
-    comfortLevel,
-    monthlySwing,
-    returnsPriority,
-    riskScore: totalScore,
-    riskProfile: getRiskProfile(totalScore),
+      portfolioDrop,
+      comfortLevel,
+      monthlySwing,
+      returnsPriority,
+      riskScore: totalScore,
+      riskProfile: getRiskProfile(totalScore),
 
-    lastCompletedBatch: 3,
-  })
+      lastCompletedBatch: 3,
+    })
 
     navigate({ to: '/questionnaireBatches/batch4' })
   }
@@ -128,7 +124,6 @@ export default function Batch3() {
         title="9. How would you feel if your portfolio's value swung up or down by 15% in a single month?"
         helper="Short-term volatility helps us understand your behavioural risk profile."
         completed={!!monthlySwing}
-
       >
         <div className="q-options">
           {q9Options.map((opt) => (
@@ -148,7 +143,7 @@ export default function Batch3() {
       <QuestionBlock
         title="10. When it comes to returns and risk, what matters most to you?"
         helper="This helps us balance growth vs stability in your recommendations."
-       completed={!!returnsPriority}
+        completed={!!returnsPriority}
       >
         <div className="q-options">
           {q10Options.map((opt) => (
@@ -174,11 +169,7 @@ export default function Batch3() {
           ← Back
         </button>
 
-        <button
-          className="btn btn-primary w-full"
-          disabled={!canProceed}
-          onClick={handleNext}
-        >
+        <button className="btn btn-primary w-full" disabled={!canProceed} onClick={handleNext}>
           Continue →
         </button>
       </div>

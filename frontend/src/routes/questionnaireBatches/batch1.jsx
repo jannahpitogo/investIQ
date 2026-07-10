@@ -126,11 +126,7 @@ export default function Batch1() {
           ← Back
         </button>
 
-        <button
-          className="btn btn-primary w-full"
-          disabled={!canProceed}
-          onClick={handleNext}
-        >
+        <button className="btn btn-primary w-full" disabled={!canProceed} onClick={handleNext}>
           Continue →
         </button>
       </div>

@@ -123,9 +123,7 @@ describe('Dashboard', () => {
   it('renders the dashboard disclaimer', () => {
     render(<Dashboard />)
 
-    expect(
-      screen.getByText(/mock data for demonstration purposes/i),
-    ).toBeInTheDocument()
+    expect(screen.getByText(/mock data for demonstration purposes/i)).toBeInTheDocument()
   })
 
   it('renders the Refresh Portfolio button', () => {

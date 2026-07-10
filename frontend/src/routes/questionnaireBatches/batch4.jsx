@@ -49,17 +49,13 @@ const highlightOptions = [
   'None of these',
 ]
 
-  function Batch4() {
-    const navigate = useNavigate()
-    const { answers, updateAnswers } = useQuestionnaire()
+function Batch4() {
+  const navigate = useNavigate()
+  const { answers, updateAnswers } = useQuestionnaire()
 
-    const [exclusions, setExclusions] = useState(
-      answers.exclusions ?? []
-    )
+  const [exclusions, setExclusions] = useState(answers.exclusions ?? [])
 
-    const [highlights, setHighlights] = useState(
-      answers.highlights ?? []
-    )
+  const [highlights, setHighlights] = useState(answers.highlights ?? [])
 
   function toggleExclusion(option) {
     if (option === 'None, I have no restrictions') {
@@ -92,14 +88,14 @@ const highlightOptions = [
   const canProceed = exclusions.length > 0 && highlights.length > 0
 
   function handleSubmit() {
-   updateAnswers({
-  exclusions,
-  highlights,
+    updateAnswers({
+      exclusions,
+      highlights,
 
-  lastCompletedBatch: 4,
-})
+      lastCompletedBatch: 4,
+    })
 
-navigate({ to: '/questionnaireBatches/batch5' })
+    navigate({ to: '/questionnaireBatches/batch5' })
   }
 
   return (

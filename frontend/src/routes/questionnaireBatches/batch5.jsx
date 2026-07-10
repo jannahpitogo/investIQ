@@ -85,9 +85,7 @@ export default function Batch5() {
     }
   })
 
-  const [rows, setRows] = useState( 
-    answers.portfolio ?? defaultPortfolio
-  )
+  const [rows, setRows] = useState(answers.portfolio ?? defaultPortfolio)
 
   const suggestions =
     query.trim().length >= 1
@@ -200,7 +198,6 @@ export default function Batch5() {
         selectedStock,
         questionnaireCompleted: true,
         lastCompletedBatch: 5,
-      })
       }
 
       localStorage.setItem('questionnaire', JSON.stringify(completeData))
@@ -210,10 +207,10 @@ export default function Batch5() {
       updateAnswers(completeData)
 
       navigate({ to: '/dashboard' })
-    } catch (err) { 
+    } catch (err) {
       console.error(err)
       alert('Something went wrong while saving your questionnaire.')
-      }
+    }
   }
 
   function handleBack() {

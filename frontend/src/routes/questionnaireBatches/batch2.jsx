@@ -46,18 +46,18 @@ function Batch2() {
 
   const canProceed = reason !== '' && horizon !== '' && contributionFrequency !== ''
 
-function handleNext() {
-  updateAnswers({
-    reason,
-    horizon,
-    contributionFrequency,
-    lastCompletedBatch: 2,
-  })
+  function handleNext() {
+    updateAnswers({
+      reason,
+      horizon,
+      contributionFrequency,
+      lastCompletedBatch: 2,
+    })
 
-  navigate({ 
-    to: '/questionnaireBatches/batch3' 
-  })
-}
+    navigate({
+      to: '/questionnaireBatches/batch3',
+    })
+  }
 
   return (
     <QuestionnaireLayout>
@@ -154,11 +154,7 @@ function handleNext() {
           ← Back
         </button>
 
-        <button
-          className="btn btn-primary w-full"
-          disabled={!canProceed}
-          onClick={handleNext}
-        >
+        <button className="btn btn-primary w-full" disabled={!canProceed} onClick={handleNext}>
           Continue →
         </button>
       </div>

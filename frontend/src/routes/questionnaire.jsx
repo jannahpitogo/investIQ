@@ -10,8 +10,7 @@ function QuestionnairePage() {
   const navigate = useNavigate()
   const { answers, resetAnswers } = useQuestionnaire()
 
-const hasSavedQuestionnaire =
-  Object.keys(answers).some(
+  const hasSavedQuestionnaire = Object.keys(answers).some(
     (key) =>
       ![
         'version',
@@ -19,16 +18,14 @@ const hasSavedQuestionnaire =
         'updatedAt',
         'lastCompletedBatch',
         'questionnaireCompleted',
-      ].includes(key)
+      ].includes(key),
   )
 
   const progress = answers.lastCompletedBatch ?? 0
 
   const isCompleted = answers.questionnaireCompleted === true
 
-  const progressPercent = isCompleted
-    ? 100
-    : Math.min(100, Math.round((progress / 5) * 100))
+  const progressPercent = isCompleted ? 100 : Math.min(100, Math.round((progress / 5) * 100))
 
   const lastUpdated = answers.updatedAt
     ? new Date(answers.updatedAt).toLocaleString([], {
@@ -37,17 +34,17 @@ const hasSavedQuestionnaire =
       })
     : null
 
-  const nextBatch = {
-  0: '/questionnaireBatches/batch0',
-  1: '/questionnaireBatches/batch1',
-  2: '/questionnaireBatches/batch2',
-  3: '/questionnaireBatches/batch3',
-  4: '/questionnaireBatches/batch4',
-  5: '/questionnaireBatches/batch5',
-}[progress] ?? '/questionnaireBatches/batch0'
+  const nextBatch =
+    {
+      0: '/questionnaireBatches/batch0',
+      1: '/questionnaireBatches/batch1',
+      2: '/questionnaireBatches/batch2',
+      3: '/questionnaireBatches/batch3',
+      4: '/questionnaireBatches/batch4',
+      5: '/questionnaireBatches/batch5',
+    }[progress] ?? '/questionnaireBatches/batch0'
 
   return (
-
     <QuestionnaireLayout>
       {/* FULL PAGE CENTERING AREA */}
       <div className="min-h-[70vh] flex items-center justify-center px-6 py-16">
@@ -77,139 +74,125 @@ const hasSavedQuestionnaire =
 
           {/* CTA */}
           <div className="pt-6 flex flex-col items-center gap-4">
+            {hasSavedQuestionnaire && (
+              <div className="w-full max-w-lg rounded-2xl border border-emerald-200 bg-emerald-50 p-6 shadow-sm">
+                <h2 className="text-xl font-semibold text-emerald-700">👋 Welcome back!</h2>
 
-    {hasSavedQuestionnaire && (
-      <div className="w-full max-w-lg rounded-2xl border border-emerald-200 bg-emerald-50 p-6 shadow-sm">
+                <p className="mt-2 text-sm text-gray-700">
+                  {answers.name ? `Welcome back, ${answers.name}!` : 'Welcome back!'}
 
-    <h2 className="text-xl font-semibold text-emerald-700">
-      👋 Welcome back!
-    </h2>
+                  <br />
 
-    <p className="mt-2 text-sm text-gray-700">
-    {answers.name
-      ? `Welcome back, ${answers.name}!`
-      : 'Welcome back!'}
+                  {isCompleted
+                    ? 'Your investment profile is ready. You can view your dashboard or continue editing your answers.'
+                    : 'We restored your saved questionnaire so you can continue where you left off.'}
+                </p>
 
-    <br />
+                {lastUpdated && (
+                  <p className="mt-2 text-xs text-gray-500">Last saved: {lastUpdated}</p>
+                )}
 
-    {isCompleted
-      ? 'Your investment profile is ready. You can view your dashboard or continue editing your answers.'
-      : 'We restored your saved questionnaire so you can continue where you left off.'}
-  </p>
+                <div className="mt-5">
+                  <div className="flex justify-between text-sm mb-2">
+                    <span>Progress</span>
 
-    {lastUpdated && (
-      <p className="mt-2 text-xs text-gray-500">
-        Last saved: {lastUpdated}
-      </p>
-    )}
+                    <span>{progressPercent}%</span>
+                  </div>
 
-    <div className="mt-5">
+                  <progress
+                    className="progress progress-primary w-full"
+                    value={progressPercent}
+                    max="100"
+                  />
+                  <p className="mt-3 text-sm text-gray-600">
+                    {isCompleted
+                      ? '✅ Questionnaire completed'
+                      : `Completed ${progress} of 5 steps`}
+                  </p>
+                </div>
 
-      <div className="flex justify-between text-sm mb-2">
-        <span>Progress</span>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  {isCompleted ? (
+                    <>
+                      <button
+                        className="btn btn-primary flex-1"
+                        onClick={() =>
+                          navigate({
+                            to: '/dashboard',
+                          })
+                        }
+                      >
+                        View Dashboard
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      className="btn btn-primary flex-1"
+                      onClick={() =>
+                        navigate({
+                          to: nextBatch,
+                        })
+                      }
+                    >
+                      Continue Questionnaire
+                    </button>
+                  )}
 
-        <span>{progressPercent}%</span>
-      </div>
+                  <button
+                    className="btn btn-outline flex-1"
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          'Start a new questionnaire? This will remove your saved answers.',
+                        )
+                      ) {
+                        resetAnswers()
 
-      <progress
-        className="progress progress-primary w-full"
-        value={progressPercent}
-        max="100"
-      />
-      <p className="mt-3 text-sm text-gray-600">
-    {isCompleted
-      ? '✅ Questionnaire completed'
-      : `Completed ${progress} of 5 steps`}
-  </p>
-    </div>
+                        navigate({
+                          to: '/questionnaireBatches/batch0',
+                        })
+                      }
+                    }}
+                  >
+                    Start New
+                  </button>
+                </div>
+              </div>
+            )}
 
-  <div className="mt-5 flex flex-wrap gap-3">
+            {!hasSavedQuestionnaire && (
+              <>
+                <button
+                  className="btn btn-primary w-64"
+                  onClick={() =>
+                    navigate({
+                      to: '/questionnaireBatches/batch0',
+                    })
+                  }
+                >
+                  Get Started
+                </button>
 
-  {isCompleted ? (
-    <>
-      <button
-        className="btn btn-primary flex-1"
-        onClick={() =>
-          navigate({
-            to: '/dashboard',
-          })
-        }
-      >
-        View Dashboard
-      </button>
+                <p className="text-xs text-base-content/50">
+                  You can change your answers at any time.
+                </p>
 
-    </>
-  ) : (
-    <button
-      className="btn btn-primary flex-1"
-      onClick={() =>
-        navigate({
-          to: nextBatch,
-        })
-      }
-    >
-      Continue Questionnaire
-    </button>
-  )}
-
-  <button
-    className="btn btn-outline flex-1"
-    onClick={() => {
-      if (
-        window.confirm(
-          'Start a new questionnaire? This will remove your saved answers.'
-        )
-      ) {
-        resetAnswers()
-
-        navigate({
-          to: '/questionnaireBatches/batch0',
-        })
-      }
-    }}
-  >
-    Start New
-  </button>
-
-</div> 
-
-</div>
-
-)}
-
-  {!hasSavedQuestionnaire && (
-    <>
-      <button
-        className="btn btn-primary w-64"
-        onClick={() =>
-          navigate({
-            to: '/questionnaireBatches/batch0',
-          })
-        }
-      >
-        Get Started
-      </button>
-
-      <p className="text-xs text-base-content/50">
-      You can change your answers at any time.
-    </p>
-
-    <p className="max-w-md text-center text-xs leading-relaxed text-base-content/60">
-      By continuing, you agree that InvestIQ may temporarily store your questionnaire
-      responses to personalize your experience and generate your investment profile.
-      For more information about how we collect, use, and protect your information,
-      please read our{' '}
-      <Link
-        to="/privacy-policy"
-        className="text-blue-600 hover:text-blue-700 underline"
-      >
-        Privacy Policy
-      </Link>.
-    </p>
-    </>
-  )}
-
-</div>
+                <p className="max-w-md text-center text-xs leading-relaxed text-base-content/60">
+                  By continuing, you agree that InvestIQ may temporarily store your questionnaire
+                  responses to personalize your experience and generate your investment profile. For
+                  more information about how we collect, use, and protect your information, please
+                  read our{' '}
+                  <Link
+                    to="/privacy-policy"
+                    className="text-blue-600 hover:text-blue-700 underline"
+                  >
+                    Privacy Policy
+                  </Link>
+                  .
+                </p>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </QuestionnaireLayout>

@@ -11,49 +11,49 @@ export function QuestionnaireProvider({ children }) {
 
     if (!saved) return {}
 
-   try {
-    const parsed = JSON.parse(saved)
+    try {
+      const parsed = JSON.parse(saved)
 
-    if (parsed.version !== STORAGE_VERSION) { 
+      if (parsed.version !== STORAGE_VERSION) {
+        localStorage.removeItem(STORAGE_KEY)
+        return {}
+      }
+
+      return parsed
+    } catch {
       localStorage.removeItem(STORAGE_KEY)
       return {}
     }
-
-    return parsed
-  } catch {
-    localStorage.removeItem(STORAGE_KEY)
-    return {}
-  }
-    })
+  })
 
   useEffect(() => {
-  if (Object.keys(answers).length === 0) {
-    localStorage.removeItem(STORAGE_KEY)
-    return
-  }
+    if (Object.keys(answers).length === 0) {
+      localStorage.removeItem(STORAGE_KEY)
+      return
+    }
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(answers))
-}, [answers])
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(answers))
+  }, [answers])
 
   function updateAnswers(newAnswers) {
-  setAnswers((prev) => {
-    const createdAt = prev.createdAt ?? new Date().toISOString()
+    setAnswers((prev) => {
+      const createdAt = prev.createdAt ?? new Date().toISOString()
 
-  return {
-    ...prev,
-    ...newAnswers,
-    
-    version: STORAGE_VERSION,
-    createdAt,
-    updatedAt: new Date().toISOString(),
-    lastVisitedBatch:
-    newAnswers.lastCompletedBatch ??
-    newAnswers.lastVisitedBatch ??
-    prev.lastVisitedBatch ??
-    0,
+      return {
+        ...prev,
+        ...newAnswers,
+
+        version: STORAGE_VERSION,
+        createdAt,
+        updatedAt: new Date().toISOString(),
+        lastVisitedBatch:
+          newAnswers.lastCompletedBatch ??
+          newAnswers.lastVisitedBatch ??
+          prev.lastVisitedBatch ??
+          0,
+      }
+    })
   }
-  })
-}
 
   function resetAnswers() {
     localStorage.removeItem(STORAGE_KEY)
