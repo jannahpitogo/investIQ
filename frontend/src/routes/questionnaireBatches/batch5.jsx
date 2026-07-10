@@ -144,10 +144,7 @@ export default function Batch5() {
         analysis,
       }
 
-      localStorage.setItem(
-        'questionnaire',
-        JSON.stringify(completeData),
-      )
+      localStorage.setItem('questionnaire', JSON.stringify(completeData))
 
       console.log('Saved:', completeData)
 
