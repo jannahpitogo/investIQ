@@ -139,13 +139,19 @@ export default function Batch5() {
 
       const analysis = await response.json()
 
-      localStorage.setItem('questionnaire', JSON.stringify(questionnaire))
-      console.log('Questionnaire saved to localStorage:', questionnaire)
-
-      updateAnswers({
-        portfolio: rows,
+      const completeData = {
+        ...questionnaire,
         analysis,
-      })
+      }
+
+      localStorage.setItem(
+        'questionnaire',
+        JSON.stringify(completeData),
+      )
+
+      console.log('Saved:', completeData)
+
+      updateAnswers(completeData)
 
       navigate({ to: '/dashboard' })
     } catch (err) {

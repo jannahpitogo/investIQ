@@ -17,8 +17,8 @@ function Dashboard() {
 
   const data = JSON.parse(storedQuestionnaire)
   const name = data.name
-  const analysis = data.analysis.analysis
-  const aiSuggestions = data.analysis.suggestions
+  const analysis = data.analysis
+  // const aiSuggestions = data.analysis.suggestions
 
   const {
   portfolioSummary,
@@ -33,6 +33,7 @@ function Dashboard() {
   riskComparison,
   environmentalImpact,
   socialImpact,
+  aiSuggestions
 } = analysis
 
   const holdings = portfolioSummary.holdings
@@ -66,7 +67,7 @@ function Dashboard() {
     percentage: value.percentage,
   }))
 
-  
+
   if (!analysis) {
   return <p>No portfolio analysis found.</p>
   }
