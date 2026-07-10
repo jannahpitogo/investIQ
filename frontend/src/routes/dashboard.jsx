@@ -167,7 +167,7 @@ function Dashboard() {
                       className="allocation-fill"
                       style={{
                         width: `${allocationMap[stock.ticker]}%`,
-                        backgroundColor: '#22c55e',
+                        backgroundColor: sectorColors[stock.sector] ?? '#22c55e',
                       }}
                     />
                   </div>

@@ -118,7 +118,7 @@ export function calculateTopHoldings(portfolio, totalPortfolioValue) {
         percentage: `${percentage.toFixed(1)}%`,
       }
     })
-    .sort((a, b) => parseFloat(b.percentage) - parseFloat(a.percentage))
+    .toSorted((a, b) => parseFloat(b.percentage) - parseFloat(a.percentage))
     .slice(0, 3)
 
   console.log('Top 3 holdings:')
