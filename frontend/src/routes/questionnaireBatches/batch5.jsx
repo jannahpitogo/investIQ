@@ -85,7 +85,9 @@ export default function Batch5() {
     }
   })
 
-  const [rows, setRows] = useState(defaultPortfolio)
+  const [rows, setRows] = useState( 
+    answers.portfolio ?? defaultPortfolio
+  )
 
   const suggestions =
     query.trim().length >= 1
@@ -195,12 +197,16 @@ export default function Batch5() {
       updateAnswers({
         portfolio: rows,
         analysis,
+        selectedStock,
+        questionnaireCompleted: true,
+        lastCompletedBatch: 5,
       })
 
       navigate({ to: '/dashboard' })
-    } catch (err) {
+    } catch (err) { 
       console.error(err)
-    }
+      alert('Something went wrong while saving your questionnaire.')
+      }
   }
 
   function handleBack() {
@@ -215,7 +221,7 @@ export default function Batch5() {
       <QuestionBlock
         title="13. What investments do you currently hold?"
         helper="Search for stocks and enter quantities and buy prices."
-        state={rows.length > 0 ? 'completed' : ''}
+        completed={rows.length > 0}
       />
 
       {/* SEARCH */}
