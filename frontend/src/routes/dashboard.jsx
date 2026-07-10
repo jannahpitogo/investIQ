@@ -12,87 +12,124 @@ function Dashboard() {
   // Replace with backend API later
   // ===============================
 
-  const holdings = [
-    {
-      name: 'Apple',
-      allocation: 24,
-      change: '+3.2%',
-      sector: 'Technology',
-    },
-    {
-      name: 'Microsoft',
-      allocation: 18,
-      change: '+2.1%',
-      sector: 'Technology',
-    },
-    {
-      name: 'NVIDIA',
-      allocation: 16,
-      change: '+5.4%',
-      sector: 'Technology',
-    },
-    {
-      name: 'Tesla',
-      allocation: 11,
-      change: '-1.6%',
-      sector: 'Consumer',
-    },
-    {
-      name: 'Amazon',
-      allocation: 9,
-      change: '+1.8%',
-      sector: 'Consumer',
-    },
-    {
-      name: 'JPMorgan',
-      allocation: 10,
-      change: '+0.9%',
-      sector: 'Finance',
-    },
-    {
-      name: 'Johnson & Johnson',
-      allocation: 7,
-      change: '+2.5%',
-      sector: 'Healthcare',
-    },
-    {
-      name: 'Exxon Mobil',
-      allocation: 5,
-      change: '-0.8%',
-      sector: 'Energy',
-    },
-  ]
+  const storedQuestionnaire = localStorage.getItem('questionnaire')
+  console.log(storedQuestionnaire)
 
-  const analysis = {
-    riskTolerance: {
-      score: 75,
-      profile: 'Aggressive',
-    },
-
-    portfolioRisk: {
-      score: 62,
-      profile: 'High',
-      reasons: [
-        'Large concentration in Technology sector.',
-        'One investment represents a large share of the portfolio.',
-      ],
-    },
-
-    riskComparison: {
-      status: 'Good',
-      direction: 'Portfolio is aligned with your tolerance',
-    },
+  if (!storedQuestionnaire) {
+  return <p>No portfolio analysis found.</p>
   }
+
+  const data = JSON.parse(storedQuestionnaire)
+
+  const analysis = data.analysis.analysis
+  const aiSuggestions = data.analysis.suggestions
+
+  const {
+  portfolioSummary,
+  totalPortfolioValue,
+  portfolioChange,
+  topHoldings,
+  assetAllocation,
+  sectorExposure,
+  diversification,
+  riskTolerance,
+  portfolioRisk,
+  riskComparison,
+  environmentalImpact,
+  socialImpact,
+} = analysis
+
+  // const holdings = [
+  //   {
+  //     name: 'Apple',
+  //     allocation: 24,
+  //     change: '+3.2%',
+  //     sector: 'Technology',
+  //   },
+  //   {
+  //     name: 'Microsoft',
+  //     allocation: 18,
+  //     change: '+2.1%',
+  //     sector: 'Technology',
+  //   },
+  //   {
+  //     name: 'NVIDIA',
+  //     allocation: 16,
+  //     change: '+5.4%',
+  //     sector: 'Technology',
+  //   },
+  //   {
+  //     name: 'Tesla',
+  //     allocation: 11,
+  //     change: '-1.6%',
+  //     sector: 'Consumer',
+  //   },
+  //   {
+  //     name: 'Amazon',
+  //     allocation: 9,
+  //     change: '+1.8%',
+  //     sector: 'Consumer',
+  //   },
+  //   {
+  //     name: 'JPMorgan',
+  //     allocation: 10,
+  //     change: '+0.9%',
+  //     sector: 'Finance',
+  //   },
+  //   {
+  //     name: 'Johnson & Johnson',
+  //     allocation: 7,
+  //     change: '+2.5%',
+  //     sector: 'Healthcare',
+  //   },
+  //   {
+  //     name: 'Exxon Mobil',
+  //     allocation: 5,
+  //     change: '-0.8%',
+  //     sector: 'Energy',
+  //   },
+  // ]
+
+  const holdings = portfolioSummary.holdings
+
+  // const analysis = {
+  //   riskTolerance: {
+  //     score: 75,
+  //     profile: 'Aggressive',
+  //   },
+
+  //   portfolioRisk: {
+  //     score: 62,
+  //     profile: 'High',
+  //     reasons: [
+  //       'Large concentration in Technology sector.',
+  //       'One investment represents a large share of the portfolio.',
+  //     ],
+  //   },
+
+  //   riskComparison: {
+  //     status: 'Good',
+  //     direction: 'Portfolio is aligned with your tolerance',
+  //   },
+  // }
   // ===============================
   // Portfolio Summary
   // ===============================
 
-  const portfolioValue = 52340
+  // const portfolioValue = 52340
 
-  const beta = 1.12
-  const totalInvested = 44195
-  const numberOfHoldings = holdings.length
-  const { riskTolerance, portfolioRisk, riskComparison } = analysis
+  const portfolioValue = totalPortfolioValue
+
+  // const beta = 1.12
+  // const totalInvested = 44195
+  const totalInvested = portfolioSummary.totalInvestment
+  // const numberOfHoldings = holdings.length
+  const numberOfHoldings = portfolioSummary.numberOfHoldings
+  // const { riskTolerance, portfolioRisk, riskComparison } = analysis
+
+  const allocationMap = Object.fromEntries(
+    assetAllocation.map(item => [item.ticker, item.percentage])
+  )
 
   // ===============================
   // Sector Allocation
@@ -106,70 +143,78 @@ function Dashboard() {
     Energy: '#06b6d4',
   }
   const COLORS = ['#4f46e5', '#22c55e', '#f59e0b', '#ef4444', '#06b6d4']
+  const sectors = Object.entries(sectorExposure).map(([sector, value]) => ({
+    sector,
+    percentage: value.percentage,
+  }))
 
-  const sectors = Object.values(
-    holdings.reduce((acc, stock) => {
-      if (!acc[stock.sector]) {
-        acc[stock.sector] = {
-          sector: stock.sector,
-          percentage: 0,
-        }
-      }
+  // const sectors = Object.values(
+  //   holdings.reduce((acc, stock) => {
+  //     if (!acc[stock.sector]) {
+  //       acc[stock.sector] = {
+  //         sector: stock.sector,
+  //         percentage: 0,
+  //       }
+  //     }
 
-      acc[stock.sector].percentage += stock.allocation
+  //     acc[stock.sector].percentage += stock.allocation
 
-      return acc
-    }, {}),
-  )
+  //     return acc
+  //   }, {}),
+  // )
 
   // ===============================
   // Diversification Score (HHI)
   // ===============================
 
-  const hhi = holdings.reduce((sum, stock) => {
-    const weight = stock.allocation / 100
-    return sum + weight * weight
-  }, 0)
+  // const hhi = holdings.reduce((sum, stock) => {
+  //   const weight = stock.allocation / 100
+  //   return sum + weight * weight
+  // }, 0)
 
-  const diversificationScore = Math.round((1 - hhi) * 100)
+  // const diversificationScore = Math.round((1 - hhi) * 100)
 
   // ===============================
   // Risk Score
   // ===============================
 
-  const concentrationPenalty = hhi * 20
-  const betaPenalty = beta
+  // const concentrationPenalty = hhi * 20
+  // const betaPenalty = beta
 
-  const riskScore = Math.min(
-    10,
-    Math.max(1, Number((concentrationPenalty + betaPenalty).toFixed(1))),
-  )
+  // const riskScore = Math.min(
+  //   10,
+  //   Math.max(1, Number((concentrationPenalty + betaPenalty).toFixed(1))),
+  // )
 
-  const riskLevel = riskScore < 4 ? 'Low' : riskScore < 7 ? 'Medium' : 'High'
+  // const riskLevel = riskScore < 4 ? 'Low' : riskScore < 7 ? 'Medium' : 'High'
 
-  const diversificationLabel =
-    diversificationScore >= 80
-      ? 'Well Diversified'
-      : diversificationScore >= 60
-        ? 'Moderately Diversified'
-        : 'Highly Concentrated'
+  // const diversificationLabel =
+  //   diversificationScore >= 80
+  //     ? 'Well Diversified'
+  //     : diversificationScore >= 60
+  //       ? 'Moderately Diversified'
+  //       : 'Highly Concentrated'
 
   // ===============================
   // Portfolio Intelligence
   // ===============================
 
-  const largestHolding = holdings.reduce((a, b) => (a.allocation > b.allocation ? a : b))
-  const topHoldings = [...holdings].toSorted((a, b) => b.allocation - a.allocation).slice(0, 3)
+  // const largestHolding = holdings.reduce((a, b) => (a.allocation > b.allocation ? a : b))
+  // const topHoldings = [...holdings].toSorted((a, b) => b.allocation - a.allocation).slice(0, 3)
 
-  const largestSector = sectors.reduce((a, b) => (a.percentage > b.percentage ? a : b))
+  // const largestSector = sectors.reduce((a, b) => (a.percentage > b.percentage ? a : b))
 
-  const insights = [
-    `Largest holding is ${largestHolding.name} (${largestHolding.allocation}%).`,
-    `${largestSector.sector} represents ${largestSector.percentage}% of your portfolio.`,
-    `Diversification score is ${diversificationScore}/100, indicating a ${diversificationLabel.toLowerCase()}.`,
-    `Overall portfolio risk is ${riskLevel}.`,
-    `Consider increasing exposure to Healthcare or Energy to reduce concentration risk.`,
-  ]
+  // const insights = [
+  //   `Largest holding is ${largestHolding.name} (${largestHolding.allocation}%).`,
+  //   `${largestSector.sector} represents ${largestSector.percentage}% of your portfolio.`,
+  //   `Diversification score is ${diversificationScore}/100, indicating a ${diversificationLabel.toLowerCase()}.`,
+  //   `Overall portfolio risk is ${riskLevel}.`,
+  //   `Consider increasing exposure to Healthcare or Energy to reduce concentration risk.`,
+  // ]
+
+  if (!analysis) {
+  return <p>No portfolio analysis found.</p>
+  }
 
   return (
     <div className="dashboard">
@@ -224,15 +269,15 @@ function Dashboard() {
 
                   <div className="holding-info">
                     <strong>{stock.name}</strong>
-                    <span>{stock.sector}</span>
+                    <span>{stock.percentage}%</span>
                   </div>
 
                   <div className="holding-stats">
-                    <strong>{stock.allocation}%</strong>
+                    <strong>{allocationMap[stock.percentage]}%</strong>
 
-                    <span className={stock.change.startsWith('+') ? 'positive' : 'negative'}>
+                    {/* <span className={stock.change.startsWith('+') ? 'positive' : 'negative'}>
                       {stock.change}
-                    </span>
+                    </span> */}
                   </div>
                 </div>
               ))}
@@ -256,17 +301,17 @@ function Dashboard() {
                   <div className="stock-allocation-header">
                     <div>
                       <strong>{stock.name}</strong>
-                      <p>{stock.sector}</p>
+                      <p>{stock.ticker}</p>
                     </div>
 
-                    <span>{stock.allocation}%</span>
+                    <span>{allocationMap[stock.ticker]}%</span>
                   </div>
 
                   <div className="allocation-bar">
                     <div
                       className="allocation-fill"
                       style={{
-                        width: `${stock.allocation}%`,
+                        width: `${allocationMap[stock.ticker]}%`,
                         backgroundColor: sectorColors[stock.sector],
                       }}
                     />
@@ -312,8 +357,8 @@ function Dashboard() {
           {/* Diversification Score */}
           <MetricCard
             title="Diversification Score"
-            value={`${diversificationScore} / 100`}
-            subtitle={diversificationLabel}
+            value={`${diversification.score} / 100`}
+            subtitle={diversification.interpretation}
           />
 
           {/* Portfolio Risk */}
@@ -340,7 +385,39 @@ function Dashboard() {
 
             <p>Based on your questionnaire responses, your risk preference is classified as:</p>
 
-            <strong>{riskTolerance.profile} Investor</strong>
+            <strong>{riskTolerance.profile} Risk Tolerance</strong>
+          </div>
+
+          <div className="dashboard-card">
+            <h2>
+              Portfolio Risk
+              <InfoTooltip text="Your preferred investment risk level based on your questionnaire responses." />
+            </h2>
+
+            <div className="tolerance-score">
+              <h1>{portfolioRisk.score}/100</h1>
+
+              <span>{portfolioRisk.profile}</span>
+            </div>
+
+            <div className="progress">
+              <div
+                className="progress-fill"
+                style={{
+                  width: `${portfolioRisk.score}%`,
+                }}
+              />
+            </div>
+
+            <strong>{portfolioRisk.profile} Portfolio Risk</strong>
+
+            <p>Reasons for risk score:</p>  
+            <ul>
+              {portfolioRisk.reasons.map((reason) => (
+                <li key={reason}>- {reason}</li>
+              ))}
+            </ul>
+
           </div>
 
           <div className="dashboard-card">
@@ -360,10 +437,20 @@ function Dashboard() {
                 <strong>{portfolioRisk.score}/100</strong>
               </div>
             </div>
+            
+            <div className={`match-status ${riskComparison.difference}`}>
+              Difference: {riskComparison.difference}
+            </div>
 
             <div className={`match-status ${riskComparison.status.toLowerCase()}`}>
-              {riskComparison.status}
+              Status: {riskComparison.status}
             </div>
+
+            
+            <br />
+            {/* <p>Reasons for risk score::</p> */}
+
+            <strong>{riskComparison.direction}</strong>
           </div>
 
           {/* AI Insights */}
@@ -376,9 +463,13 @@ function Dashboard() {
             </h2>
 
             <ul className="insight-list">
-              {insights.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
+              {aiSuggestions.map((item) => (
+                  <li key={item.title}>
+                    <strong>{item.title}</strong>
+                    <br />
+                    {item.message}
+                  </li>
+                ))}
             </ul>
           </div>
         </div>
