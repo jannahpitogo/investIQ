@@ -8,123 +8,202 @@ export const Route = createFileRoute('/privacy-policy')({
 function PrivacyPolicy() {
   return (
     <QuestionnaireLayout>
-      <main className="mx-auto max-w-5xl px-6 py-12">
-        <div className="rounded-3xl bg-base-100 shadow-xl border border-base-200 p-8 md:p-12">
+      <main className="policy-page">
+        <div className="policy-card">
 
-          {/* Header */}
-          <div className="text-center mb-14">
-            <h1 className="text-4xl md:text-5xl font-bold text-emerald-600 mb-5">
-              Privacy Policy
-            </h1>
+          {/* Hero */}
+          <div className="policy-hero">
 
-            <div className="badge badge-primary badge-outline mb-6">
-              Legal Information
+            <div className="policy-badge">
+              🛡 Legal Information
             </div>
 
-            <p className="text-base leading-8 text-base-content/80 max-w-3xl">
+            <h1>Privacy Policy</h1>
+
+            <div className="policy-divider"></div>
+
+            <p className="policy-subtitle">
               Learn how InvestIQ collects, stores, and uses your information while you use the
               platform.
             </p>
 
-            <p className="mt-6 text-sm uppercase tracking-widest text-base-content/50">
+            <p className="policy-date">
               Last updated • July 2026
             </p>
+
           </div>
 
-          <section className="mb-14">
-            <h2 className="text-2xl font-bold text-emerald-600 mb-5">
-              Information We Collect
-            </h2>
+          {/* Information We Collect */}
+          <section className="policy-section">
 
-            <p className="text-base leading-8 text-base-content/80 max-w-3xl">
-              InvestIQ collects information that you voluntarily provide while using the platform. This may include your name, age, current situation, investment goals, investment time horizon, contribution frequency, risk preferences, portfolio holdings, and environmental or social investment preferences. We only collect information that is necessary to personalize your experience and generate your investment insights.
-            </p>
+            <div className="policy-icon">
+              👤
+            </div>
+
+            <div className="policy-content">
+
+              <h2>
+                1. Information We Collect
+              </h2>
+
+              <p className="policy-text">
+                InvestIQ collects information that you voluntarily provide while using the platform.
+                This may include your name, age, current situation, investment goals, investment
+                time horizon, contribution frequency, risk preferences, portfolio holdings, and
+                environmental or social investment preferences. We only collect information that is
+                necessary to personalize your experience and generate your investment insights.
+              </p>
+
+            </div>
+
           </section>
 
-          <hr className="border-base-200 my-12" />
+          <div className="policy-divider-line"></div>
 
-          <section className="mb-14">
-            <h2 className="text-2xl font-bold text-emerald-600 mb-5">
-              How We Use Your Information
-            </h2>
+          {/* How We Use */}
+          <section className="policy-section">
 
-            <p className="leading-8 text-base-content/80">
-              Your information is used to generate portfolio insights,
-              personalize recommendations, improve the platform, and provide
-              educational investment analysis.
-            </p>
+            <div className="policy-icon">
+              📊
+            </div>
+
+            <div className="policy-content">
+
+              <h2>
+                2. How We Use Your Information
+              </h2>
+
+              <p className="policy-text">
+                Your information is used to generate portfolio insights,
+                personalize recommendations, improve the platform, and provide
+                educational investment analysis.
+              </p>
+
+            </div>
+
           </section>
 
-          <hr className="border-base-200 my-12" />
+          <div className="policy-divider-line"></div>
 
-          <section className="mb-14">
-            <h2 className="text-2xl font-bold text-emerald-600 mb-5">
-              How We Store Your Information
-            </h2>
+          {/* Storage */}
+          <section className="policy-section">
 
-            <p className="leading-8 text-base-content/80 mb-6">
-              While completing the questionnaire, your progress is temporarily saved in
-              your browser using Local Storage so that you can continue where you left off
-              if you leave or refresh the page.
-            </p>
+            <div className="policy-icon">
+              🗄️
+            </div>
 
-            <p className="leading-8 text-base-content/80">
-              When you submit your questionnaire, your responses are securely transmitted to
-              our backend, where they are stored in our database and used to generate your
-              personalized investment analysis and dashboard. InvestIQ does not sell your
-              personal information to third parties.
-            </p>
-          </section>
-    
-          <hr className="border-base-200 my-12" />
+            <div className="policy-content">
 
-          <section className="mb-14">
-            <h2 className="text-2xl font-bold text-emerald-600 mb-5">
-              Your Choices
-            </h2>
+              <h2>
+                3. How We Store Your Information
+              </h2>
 
-            <p className="leading-8 text-base-content/80">
-              You may restart your questionnaire at any time, which clears your locally stored questionnaire data from your browser. Future versions of InvestIQ will provide additional options for accessing, updating, exporting, or deleting your personal information in accordance with applicable privacy laws.
-            </p>
-          </section>
+              <p className="policy-text">
+                While completing the questionnaire, your progress is temporarily
+                saved in your browser using Local Storage so that you can continue
+                where you left off if you leave or refresh the page.
+              </p>
 
-          <hr className="border-base-200 my-12" />
+              <p className="policy-text">
+                When you submit your questionnaire, your responses are securely
+                transmitted to our backend, where they are stored in our database
+                and used to generate your personalized investment analysis and
+                dashboard. InvestIQ does not sell your personal information to
+                third parties.
+              </p>
 
-          <section className="mb-14">
-            <h2 className="text-2xl font-bold text-emerald-600 mb-5">
-              Contact
-            </h2>
+            </div>
 
-            <p className="leading-8 text-base-content/80">
-              If you have questions about this Privacy Policy or how your data
-              is handled, please contact the InvestIQ team.
-            </p>
           </section>
 
-          <hr className="border-base-200 my-12" />
+          <div className="policy-divider-line"></div>
 
-          <div className="mt-16 rounded-2xl border border-blue-200 bg-gradient-to-r from-blue-50 to-sky-50 p-6 shadow-sm">
-            <h3 className="font-semibold text-blue-900 mb-3">
-              Important Notice
-            </h3>
+          {/* Choices */}
+          <section className="policy-section">
 
-            <p className="text-sm leading-7 text-blue-800">
-              InvestIQ is currently a Minimum Viable Product (MVP) developed for
-              educational and research purposes. At this stage, the platform supports
-              U.S. stock market analysis only. Our privacy practices, features, and data
-              handling processes may evolve as InvestIQ continues to grow and additional
-              functionality is introduced.
-            </p>
+            <div className="policy-icon">
+              🔒
+            </div>
+
+            <div className="policy-content">
+
+              <h2>
+                4. Your Choices
+              </h2>
+
+              <p className="policy-text">
+                You may restart your questionnaire at any time, which clears your
+                locally stored questionnaire data from your browser. Future
+                versions of InvestIQ will provide additional options for
+                accessing, updating, exporting, or deleting your personal
+                information in accordance with applicable privacy laws.
+              </p>
+
+            </div>
+
+          </section>
+
+          <div className="policy-divider-line"></div>
+
+          {/* Contact */}
+          <section className="policy-section">
+
+            <div className="policy-icon">
+              ✉️
+            </div>
+
+            <div className="policy-content">
+
+              <h2>
+                5. Contact
+              </h2>
+
+              <p className="policy-text">
+                If you have questions about this Privacy Policy or how your data
+                is handled, please contact the InvestIQ team.
+              </p>
+
+            </div>
+
+          </section>
+
+          {/* Notice */}
+          <div className="policy-notice">
+
+            <div className="policy-notice-icon">
+              🛡️
+            </div>
+
+            <div>
+
+              <h3>
+                Important Notice
+              </h3>
+
+              <p>
+                InvestIQ is currently a Minimum Viable Product (MVP) developed
+                for educational and research purposes. At this stage, the
+                platform supports U.S. stock market analysis only. Our privacy
+                practices, features, and data handling processes may evolve as
+                InvestIQ continues to grow and additional functionality is
+                introduced.
+              </p>
+
+            </div>
+
           </div>
 
-                    <div className="border-t border-base-200 pt-8 mt-10 flex justify-end">
+          {/* Footer */}
+          <div className="policy-footer">
+
             <button
               type="button"
-              className="btn btn-primary"
+              className="btn btn-outline btn-wide"
               onClick={() => window.history.back()}
             >
               ← Back
             </button>
+
           </div>
 
         </div>
