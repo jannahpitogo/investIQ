@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UsersRouteImport } from './routes/users'
+import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as QuestionnaireRouteImport } from './routes/questionnaire'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as AboutRouteImport } from './routes/about'
@@ -24,6 +25,11 @@ import { Route as QuestionnaireBatchesBatch0RouteImport } from './routes/questio
 const UsersRoute = UsersRouteImport.update({
   id: '/users',
   path: '/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
+  id: '/terms-of-service',
+  path: '/terms-of-service',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuestionnaireRoute = QuestionnaireRouteImport.update({
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/questionnaire': typeof QuestionnaireRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
   '/users': typeof UsersRoute
   '/questionnaireBatches/batch0': typeof QuestionnaireBatchesBatch0Route
   '/questionnaireBatches/batch1': typeof QuestionnaireBatchesBatch1Route
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/questionnaire': typeof QuestionnaireRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
   '/users': typeof UsersRoute
   '/questionnaireBatches/batch0': typeof QuestionnaireBatchesBatch0Route
   '/questionnaireBatches/batch1': typeof QuestionnaireBatchesBatch1Route
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/questionnaire': typeof QuestionnaireRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
   '/users': typeof UsersRoute
   '/questionnaireBatches/batch0': typeof QuestionnaireBatchesBatch0Route
   '/questionnaireBatches/batch1': typeof QuestionnaireBatchesBatch1Route
@@ -130,6 +139,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/privacy-policy'
     | '/questionnaire'
+    | '/terms-of-service'
     | '/users'
     | '/questionnaireBatches/batch0'
     | '/questionnaireBatches/batch1'
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/privacy-policy'
     | '/questionnaire'
+    | '/terms-of-service'
     | '/users'
     | '/questionnaireBatches/batch0'
     | '/questionnaireBatches/batch1'
@@ -156,6 +167,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/privacy-policy'
     | '/questionnaire'
+    | '/terms-of-service'
     | '/users'
     | '/questionnaireBatches/batch0'
     | '/questionnaireBatches/batch1'
@@ -170,6 +182,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   QuestionnaireRoute: typeof QuestionnaireRoute
+  TermsOfServiceRoute: typeof TermsOfServiceRoute
   UsersRoute: typeof UsersRoute
   QuestionnaireBatchesBatch0Route: typeof QuestionnaireBatchesBatch0Route
   QuestionnaireBatchesBatch1Route: typeof QuestionnaireBatchesBatch1Route
@@ -186,6 +199,13 @@ declare module '@tanstack/react-router' {
       path: '/users'
       fullPath: '/users'
       preLoaderRoute: typeof UsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms-of-service': {
+      id: '/terms-of-service'
+      path: '/terms-of-service'
+      fullPath: '/terms-of-service'
+      preLoaderRoute: typeof TermsOfServiceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/questionnaire': {
@@ -266,6 +286,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   QuestionnaireRoute: QuestionnaireRoute,
+  TermsOfServiceRoute: TermsOfServiceRoute,
   UsersRoute: UsersRoute,
   QuestionnaireBatchesBatch0Route: QuestionnaireBatchesBatch0Route,
   QuestionnaireBatchesBatch1Route: QuestionnaireBatchesBatch1Route,
