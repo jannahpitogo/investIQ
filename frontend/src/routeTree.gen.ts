@@ -14,6 +14,7 @@ import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as QuestionnaireRouteImport } from './routes/questionnaire'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as QuestionnaireBatchesBatch5RouteImport } from './routes/questionnaireBatches/batch5'
 import { Route as QuestionnaireBatchesBatch4RouteImport } from './routes/questionnaireBatches/batch4'
@@ -45,6 +46,9 @@ const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -93,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/dashboard': typeof DashboardRoute
   '/questionnaire': typeof QuestionnaireRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/users': typeof UsersRoute
@@ -107,6 +112,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/dashboard': typeof DashboardRoute
   '/questionnaire': typeof QuestionnaireRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/users': typeof UsersRoute
@@ -122,6 +128,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/dashboard': typeof DashboardRoute
   '/questionnaire': typeof QuestionnaireRoute
   '/terms-of-service': typeof TermsOfServiceRoute
   '/users': typeof UsersRoute
@@ -138,6 +145,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/privacy-policy'
+    | '/dashboard'
     | '/questionnaire'
     | '/terms-of-service'
     | '/users'
@@ -152,6 +160,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/privacy-policy'
+    | '/dashboard'
     | '/questionnaire'
     | '/terms-of-service'
     | '/users'
@@ -166,6 +175,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/privacy-policy'
+    | '/dashboard'
     | '/questionnaire'
     | '/terms-of-service'
     | '/users'
@@ -181,6 +191,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  DashboardRoute: typeof DashboardRoute
   QuestionnaireRoute: typeof QuestionnaireRoute
   TermsOfServiceRoute: typeof TermsOfServiceRoute
   UsersRoute: typeof UsersRoute
@@ -227,6 +238,11 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -285,6 +301,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
+  DashboardRoute: DashboardRoute,
   QuestionnaireRoute: QuestionnaireRoute,
   TermsOfServiceRoute: TermsOfServiceRoute,
   UsersRoute: UsersRoute,
