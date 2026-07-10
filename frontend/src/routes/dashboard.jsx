@@ -212,11 +212,41 @@ function Dashboard() {
           </div>
 
           {/* Diversification Score */}
-          <MetricCard
+          {/* <MetricCard
             title="Diversification Score"
             value={`${diversification.score} / 100`}
             subtitle={diversification.interpretation}
-          />
+          /> */}
+
+          <div className="dashboard-card">
+            <h2>
+              Diversification Score
+              <InfoTooltip text="Indicates how well your investments are spread across different assets, reducing risk." /> 
+            </h2>
+
+            <div className="tolerance-score">
+              <h1>{diversification.score}/100</h1>
+
+              <span>{diversification.interpretation}</span>
+            </div>
+
+            <div className="progress">
+              <div
+                className="progress-fill"
+                style={{
+                  width: `${diversification.score}%`,
+                }}
+              />
+            </div>
+
+            <p>Diversification breakdown:</p>
+
+            <ul>
+              <li>- Holding Score: {diversification.breakdown.holdingsScore}/100</li>
+              <li>- Concentration Score: {diversification.breakdown.concentrationScore}/100</li>
+              <li>- Sector Score: {diversification.breakdown.sectorScore}/100</li>
+            </ul>
+          </div>
 
           {/* Portfolio Risk */}
           <div className="dashboard-card">
