@@ -20,7 +20,7 @@ function Dashboard() {
   }
 
   const data = JSON.parse(storedQuestionnaire)
-
+  const name = data.name
   const analysis = data.analysis.analysis
   const aiSuggestions = data.analysis.suggestions
 
@@ -222,6 +222,7 @@ function Dashboard() {
 
       <div className="dashboard-header">
         <div>
+          <h1>Welcome {name} 👋</h1>
           <h1>Portfolio Dashboard</h1>
           <p>Understand your investments. Make better decisions with AI-powered suggestions.</p>
         </div>
