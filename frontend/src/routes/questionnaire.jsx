@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import QuestionnaireLayout from '../components/questionnaireLayout.jsx'
 import { useQuestionnaire } from '../context/questionnaireContext'
 
@@ -201,8 +201,21 @@ const hasSavedQuestionnaire =
       </button>
 
       <p className="text-xs text-base-content/50">
-        You can change your answers at any time.
-      </p>
+      You can change your answers at any time.
+    </p>
+
+    <p className="max-w-md text-center text-xs leading-relaxed text-base-content/60">
+      By continuing, you agree that InvestIQ may temporarily store your questionnaire
+      responses to personalize your experience and generate your investment profile.
+      For more information about how we collect, use, and protect your information,
+      please read our{' '}
+      <Link
+        to="/privacy-policy"
+        className="link link-primary"
+      >
+        Privacy Policy
+      </Link>.
+    </p>
     </>
   )}
 
