@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "lint": "oxlint src",
     "format": "oxfmt",
+    "format:check": "oxfmt --check",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui"
