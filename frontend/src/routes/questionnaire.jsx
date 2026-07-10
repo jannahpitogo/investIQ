@@ -201,7 +201,7 @@ const hasSavedQuestionnaire =
       please read our{' '}
       <Link
         to="/privacy-policy"
-        className="link link-primary"
+        className="text-blue-600 hover:text-blue-700 underline"
       >
         Privacy Policy
       </Link>.
