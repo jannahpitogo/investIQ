@@ -138,16 +138,6 @@ const hasSavedQuestionnaire =
         View Dashboard
       </button>
 
-      <button
-        className="btn btn-secondary flex-1"
-        onClick={() =>
-          navigate({
-            to: nextBatch,
-          })
-        }
-      >
-        Resume Questionnaire
-      </button>
     </>
   ) : (
     <button
