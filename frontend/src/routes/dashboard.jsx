@@ -52,7 +52,7 @@ function Dashboard() {
   // ===============================
   // Sector Allocation
   // ===============================
-  
+
   const sectorColors = {
     Technology: '#4f46e5',
     Healthcare: '#22c55e',
@@ -67,10 +67,10 @@ function Dashboard() {
   }))
 
   const statusIcons = {
-    positive: "✅ ",
-    warning: "⚠️ ",
-    info: "ℹ️ ",
-  };
+    positive: '✅ ',
+    warning: '⚠️ ',
+    info: 'ℹ️ ',
+  }
 
   if (!analysis) {
     return <p>No portfolio analysis found.</p>
@@ -85,12 +85,9 @@ function Dashboard() {
           <h1>Welcome {name} 👋</h1>
           <h1>Portfolio Dashboard</h1>
           <p>Understand your investments. Make better decisions with AI-powered suggestions.</p>
-          <div className="disclaimer">
-        ⚠️ The results are for educational purposes only.
-      </div>
+          <div className="disclaimer">⚠️ The results are for educational purposes only.</div>
         </div>
       </div>
-      
 
       {/* ================= METRICS ================= */}
 
@@ -114,37 +111,37 @@ function Dashboard() {
 
       <div className="dashboard-content">
         {/* Stock Allocation */}
-          <div className="dashboard-card stock-allocation-card">
-            <h2>
-              Stock Allocation
-              <InfoTooltip text="Shows how your portfolio is distributed across each stock." />
-            </h2>
+        <div className="dashboard-card stock-allocation-card">
+          <h2>
+            Stock Allocation
+            <InfoTooltip text="Shows how your portfolio is distributed across each stock." />
+          </h2>
 
-            <div className="stock-allocation-list">
-              {holdings.map((stock) => (
-                <div key={stock.name} className="stock-allocation-item">
-                  <div className="stock-allocation-header">
-                    <div>
-                      <strong>{stock.name}</strong>
-                      <p>{stock.ticker}</p>
-                    </div>
-
-                    <span>{allocationMap[stock.ticker]}%</span>
+          <div className="stock-allocation-list">
+            {holdings.map((stock) => (
+              <div key={stock.name} className="stock-allocation-item">
+                <div className="stock-allocation-header">
+                  <div>
+                    <strong>{stock.name}</strong>
+                    <p>{stock.ticker}</p>
                   </div>
 
-                  <div className="allocation-bar">
-                    <div
-                      className="allocation-fill"
-                      style={{
-                        width: `${allocationMap[stock.ticker]}%`,
-                        backgroundColor: sectorColors[stock.sector] ?? '#22c55e',
-                      }}
-                    />
-                  </div>
+                  <span>{allocationMap[stock.ticker]}%</span>
                 </div>
-              ))}
-            </div>
+
+                <div className="allocation-bar">
+                  <div
+                    className="allocation-fill"
+                    style={{
+                      width: `${allocationMap[stock.ticker]}%`,
+                      backgroundColor: sectorColors[stock.sector] ?? '#22c55e',
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
           </div>
+        </div>
         {/* LEFT COLUMN */}
 
         {/* <div className="left-column"> */}
@@ -154,8 +151,7 @@ function Dashboard() {
         {/* RIGHT COLUMN */}
 
         <div className="right-column">
-
-              {/* Top 3 holdings */}
+          {/* Top 3 holdings */}
           <div className="dashboard-card">
             <h2>
               Top 3 Holdings
@@ -183,7 +179,7 @@ function Dashboard() {
               ))}
             </div>
           </div>
-          
+
           {/* Sector Exposure */}
 
           <div className="dashboard-card">
@@ -254,7 +250,9 @@ function Dashboard() {
             <div className="tolerance-score">
               <h1>{diversification.score}/100</h1>
 
-              <span className={`match-status ${diversification.interpretation}`}>{diversification.interpretation}</span>
+              <span className={`match-status ${diversification.interpretation}`}>
+                {diversification.interpretation}
+              </span>
             </div>
 
             <div className="progress">
@@ -285,7 +283,9 @@ function Dashboard() {
             <div className="tolerance-score">
               <h1>{riskTolerance.score}/100</h1>
 
-              <span className={`match-status ${riskTolerance.profile}`}>{riskTolerance.profile}</span>
+              <span className={`match-status ${riskTolerance.profile}`}>
+                {riskTolerance.profile}
+              </span>
             </div>
 
             <div className="progress">
@@ -311,7 +311,9 @@ function Dashboard() {
             <div className="tolerance-score">
               <h1>{portfolioRisk.score}/100</h1>
 
-              <span className={`match-status ${portfolioRisk.profile}`}>{portfolioRisk.profile}</span>
+              <span className={`match-status ${portfolioRisk.profile}`}>
+                {portfolioRisk.profile}
+              </span>
             </div>
 
             <div className="progress">
@@ -341,7 +343,7 @@ function Dashboard() {
 
             <div className="comparison">
               <div className={`match-status ${riskTolerance.profile}`}>
-                <span >Your Tolerance</span>
+                <span>Your Tolerance</span>
                 <strong>{riskTolerance.score}/100</strong>
               </div>
 
@@ -365,7 +367,6 @@ function Dashboard() {
             <strong>{riskComparison.direction}</strong>
           </div>
 
-
           {/* AI Insights */}
 
           <div className="dashboard-card">
@@ -382,7 +383,7 @@ function Dashboard() {
             <ul className="insight-list">
               {aiSuggestions.map((item) => (
                 <li key={item.title} className={`match-suggestion-status ${item.type}`}>
-                  <span>{statusIcons[item.type] || "ℹ️"}</span> 
+                  <span>{statusIcons[item.type] || 'ℹ️'}</span>
                   <strong>{item.title}</strong>
                   <br />
                   {item.message}
