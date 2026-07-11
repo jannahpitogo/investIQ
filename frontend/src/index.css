@@ -225,10 +225,10 @@ body {
 nav {
   padding: 1rem 2rem;
   background: linear-gradient(160deg, #ecfdf5 0%, #f0fdf9 50%, #ecfdf5 100%);
-
 }
 
-.hero, .dashboard {
+.hero,
+.dashboard {
   background: linear-gradient(160deg, #ecfdf5 0%, #f0fdf9 50%, #ecfdf5 100%);
 }
 
