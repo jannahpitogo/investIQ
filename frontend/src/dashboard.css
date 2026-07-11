@@ -4,11 +4,11 @@
 
 .dashboard {
   width: 100%;
-  max-width: 1600px;
+  /* max-width: 1600px; */
   margin: 0 auto;
   min-height: 100vh;
 
-  padding: 40px;
+  padding: 40px 100px;
 
   display: flex;
   flex-direction: column;
@@ -56,7 +56,7 @@
 .dashboard-header p {
   font-size: 1.05rem;
   color: #64748b;
-  max-width: 620px;
+  /* max-width: 620px; */
   line-height: 1.7;
 }
 
