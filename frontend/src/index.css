@@ -221,9 +221,17 @@ body {
   font-size: 0.9rem;
   font-weight: 500;
 }
+
 nav {
   padding: 1rem 2rem;
+  background: linear-gradient(160deg, #ecfdf5 0%, #f0fdf9 50%, #ecfdf5 100%);
 }
+
+.hero,
+.dashboard {
+  background: linear-gradient(160deg, #ecfdf5 0%, #f0fdf9 50%, #ecfdf5 100%);
+}
+
 .testimonials-section {
   padding: 5rem 1.5rem;
   text-align: center;
@@ -470,9 +478,9 @@ nav {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(16, 185, 129, 0.12);
+  /* border-bottom: 1px solid rgba(16, 185, 129, 0.12); */
 }
 
 .q-header-container {
