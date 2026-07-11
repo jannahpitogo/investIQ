@@ -113,43 +113,8 @@ function Dashboard() {
       {/* ================= MAIN CONTENT ================= */}
 
       <div className="dashboard-content">
-        {/* LEFT COLUMN */}
-
-        <div className="left-column">
-          <div className="dashboard-card">
-            <h2>
-              Top 3 Holdings
-              <InfoTooltip text="Shows the three largest investments in your portfolio by allocation percentage." />
-            </h2>
-
-            <div className="top-holdings-list">
-              {topHoldings.map((stock, index) => (
-                <div className="holding-row" key={stock.name}>
-                  <div className="holding-rank">#{index + 1}</div>
-
-                  <div className="holding-info">
-                    <strong>{stock.name}</strong>
-                    <span>{stock.ticker}</span>
-                  </div>
-
-                  <div className="holding-stats">
-                    <strong>{allocationMap[stock.ticker]}%</strong>
-
-                    {/* <span className={stock.change.startsWith('+') ? 'positive' : 'negative'}>
-                      {stock.change}
-                    </span> */}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* RIGHT COLUMN */}
-
-        <div className="right-column">
-          {/* Stock Allocation */}
-          <div className="dashboard-card">
+        {/* Stock Allocation */}
+          <div className="dashboard-card stock-allocation-card">
             <h2>
               Stock Allocation
               <InfoTooltip text="Shows how your portfolio is distributed across each stock." />
@@ -180,7 +145,45 @@ function Dashboard() {
               ))}
             </div>
           </div>
+        {/* LEFT COLUMN */}
 
+        {/* <div className="left-column"> */}
+
+        {/* </div> */}
+
+        {/* RIGHT COLUMN */}
+
+        <div className="right-column">
+
+              {/* Top 3 holdings */}
+          <div className="dashboard-card">
+            <h2>
+              Top 3 Holdings
+              <InfoTooltip text="Shows the three largest investments in your portfolio by allocation percentage." />
+            </h2>
+
+            <div className="top-holdings-list">
+              {topHoldings.map((stock, index) => (
+                <div className="holding-row" key={stock.name}>
+                  <div className="holding-rank">#{index + 1}</div>
+
+                  <div className="holding-info">
+                    <strong>{stock.name}</strong>
+                    <span>{stock.ticker}</span>
+                  </div>
+
+                  <div className="holding-stats">
+                    <strong>{allocationMap[stock.ticker]}%</strong>
+
+                    {/* <span className={stock.change.startsWith('+') ? 'positive' : 'negative'}>
+                      {stock.change}
+                    </span> */}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
           {/* Sector Exposure */}
 
           <div className="dashboard-card">
@@ -212,6 +215,34 @@ function Dashboard() {
                 </PieChart>
               </ResponsiveContainer>
             </div>
+          </div>
+
+          {/* Environmental & Social Impact */}
+
+          <div className="dashboard-card">
+            <h2>
+              Environmental Impact
+              <InfoTooltip text="How your portfolio aligns with environmentally friendly industries." />
+            </h2>
+
+            <div className={`impact-status ${environmentalImpact.status.toLowerCase()}`}>
+              {environmentalImpact.status}
+            </div>
+
+            <p>{environmentalImpact.message}</p>
+          </div>
+
+          <div className="dashboard-card">
+            <h2>
+              Social Impact
+              <InfoTooltip text="Whether your portfolio aligns with the ethical values you selected." />
+            </h2>
+
+            <div className={`impact-status ${socialImpact.status.toLowerCase()}`}>
+              {socialImpact.status}
+            </div>
+
+            <p>{socialImpact.message}</p>
           </div>
 
           <div className="dashboard-card">
@@ -334,33 +365,6 @@ function Dashboard() {
             <strong>{riskComparison.direction}</strong>
           </div>
 
-          {/* Environmental & Social Impact */}
-
-          <div className="dashboard-card">
-            <h2>
-              Environmental Impact
-              <InfoTooltip text="How your portfolio aligns with environmentally friendly industries." />
-            </h2>
-
-            <div className={`impact-status ${environmentalImpact.status.toLowerCase()}`}>
-              {environmentalImpact.status}
-            </div>
-
-            <p>{environmentalImpact.message}</p>
-          </div>
-
-          <div className="dashboard-card">
-            <h2>
-              Social Impact
-              <InfoTooltip text="Whether your portfolio aligns with the ethical values you selected." />
-            </h2>
-
-            <div className={`impact-status ${socialImpact.status.toLowerCase()}`}>
-              {socialImpact.status}
-            </div>
-
-            <p>{socialImpact.message}</p>
-          </div>
 
           {/* AI Insights */}
 
