@@ -52,7 +52,7 @@ function Dashboard() {
   // ===============================
   // Sector Allocation
   // ===============================
-
+  
   const sectorColors = {
     Technology: '#4f46e5',
     Healthcare: '#22c55e',
@@ -65,6 +65,12 @@ function Dashboard() {
     sector,
     percentage: value.percentage,
   }))
+
+  const statusIcons = {
+    positive: "✅ ",
+    warning: "⚠️ ",
+    info: "ℹ️ ",
+  };
 
   if (!analysis) {
     return <p>No portfolio analysis found.</p>
@@ -217,7 +223,7 @@ function Dashboard() {
             <div className="tolerance-score">
               <h1>{diversification.score}/100</h1>
 
-              <span>{diversification.interpretation}</span>
+              <span className={`match-status ${diversification.interpretation}`}>{diversification.interpretation}</span>
             </div>
 
             <div className="progress">
@@ -248,7 +254,7 @@ function Dashboard() {
             <div className="tolerance-score">
               <h1>{riskTolerance.score}/100</h1>
 
-              <span>{riskTolerance.profile}</span>
+              <span className={`match-status ${riskTolerance.profile}`}>{riskTolerance.profile}</span>
             </div>
 
             <div className="progress">
@@ -274,7 +280,7 @@ function Dashboard() {
             <div className="tolerance-score">
               <h1>{portfolioRisk.score}/100</h1>
 
-              <span>{portfolioRisk.profile}</span>
+              <span className={`match-status ${portfolioRisk.profile}`}>{portfolioRisk.profile}</span>
             </div>
 
             <div className="progress">
@@ -303,18 +309,18 @@ function Dashboard() {
             </h2>
 
             <div className="comparison">
-              <div>
-                <span>Your Tolerance</span>
+              <div className={`match-status ${riskTolerance.profile}`}>
+                <span >Your Tolerance</span>
                 <strong>{riskTolerance.score}/100</strong>
               </div>
 
-              <div>
+              <div className={`match-status ${portfolioRisk.profile}`}>
                 <span>Portfolio Risk</span>
                 <strong>{portfolioRisk.score}/100</strong>
               </div>
             </div>
 
-            <div className={`match-status ${riskComparison.difference}`}>
+            <div className={`match-status ${riskComparison.status.toLowerCase()}`}>
               Difference: {riskComparison.difference}
             </div>
 
@@ -371,7 +377,8 @@ function Dashboard() {
 
             <ul className="insight-list">
               {aiSuggestions.map((item) => (
-                <li key={item.title}>
+                <li key={item.title} className={`match-suggestion-status ${item.type}`}>
+                  <span>{statusIcons[item.type] || "ℹ️"}</span> 
                   <strong>{item.title}</strong>
                   <br />
                   {item.message}

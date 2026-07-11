@@ -370,8 +370,43 @@
 
 .match-status.good {
   background: #dcfce7;
+  color: #1eb054;
+}
 
+.match-status.fair, .match-status.Moderate {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.match-status.excellent, .match-status.Conservative {
+  background: #dcfce7;
   color: #15803d;
+}
+
+.match-status.poor, .match-status.Aggressive, .match-status.High {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.match-suggestion-status.positive {
+  background: #dcfce7;
+  color: #15803d;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.match-suggestion-status.warning {
+  background: #fef3c7;
+  color: #920e0e;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.match-suggestion-status.info {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 6px 12px;
+  border-radius: 6px;
 }
 
 /* ===========================
