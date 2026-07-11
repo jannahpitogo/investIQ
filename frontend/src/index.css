@@ -221,9 +221,17 @@ body {
   font-size: 0.9rem;
   font-weight: 500;
 }
+
 nav {
   padding: 1rem 2rem;
+  background: linear-gradient(160deg, #ecfdf5 0%, #f0fdf9 50%, #ecfdf5 100%);
+
 }
+
+.hero, .dashboard {
+  background: linear-gradient(160deg, #ecfdf5 0%, #f0fdf9 50%, #ecfdf5 100%);
+}
+
 .testimonials-section {
   padding: 5rem 1.5rem;
   text-align: center;
@@ -453,7 +461,7 @@ nav {
 
 .q-page {
   min-height: 100vh;
-  /* background: linear-gradient(160deg, #ecfdf5 0%, #f0fdf9 50%, #ecfdf5 100%); */
+  background: linear-gradient(160deg, #ecfdf5 0%, #f0fdf9 50%, #ecfdf5 100%);
   display: flex;
   flex-direction: column;
 }
