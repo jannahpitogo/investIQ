@@ -212,3 +212,49 @@ test('comparing risk reports portfolio more conservative than tolerance', () => 
   expect(result.direction).toBe('Portfolio is more conservative than your tolerance')
   expect(result.status).toBe('Good')
 })
+
+//Environmental Impact
+test('analyze environmental impact that flags "Negative" with a conflict message when an excluded negative industry is held', () => {
+  const questionnaire = {
+    portfolio: [{ name: 'OilCo', industry: 'Fossil Fuels' }],
+    exclusions: ['Fossil Fuels'],
+  }
+  const result = analyzeEnvironmentalImpact(questionnaire)
+  expect(result.status).toBe('Negative')
+  expect(result.message).toContain('conflicts with your preference')
+  expect(result.message).toContain('OilCo')
+})
+
+test('analyze environmental impact that flags "Negative" with a suggestion message when negative industry is not excluded', () => {
+  const questionnaire = {
+    portfolio: [{ name: 'OilCo', industry: 'Fossil Fuels' }],
+    exclusions: [],
+  }
+  const result = analyzeEnvironmentalImpact(questionnaire)
+  expect(result.status).toBe('Negative')
+  expect(result.message).toContain('Consider cleaner alternatives')
+})
+
+test('analyze environmental impact that flags "Positive" when only positive industries are held', () => {
+  const questionnaire = {
+    portfolio: [{ name: 'SolarCo', industry: 'Renewable energy' }],
+    exclusions: [],
+  }
+  const result = analyzeEnvironmentalImpact(questionnaire)
+  expect(result.status).toBe('Positive')
+  expect(result.message).toContain('SolarCo')
+})
+
+test('analyze environmental impact that flags "Neutral" when no positive or negative industries are held', () => {
+  const questionnaire = {
+    portfolio: [{ name: 'RandomCo', industry: 'Retail' }],
+    exclusions: [],
+  }
+  const result = analyzeEnvironmentalImpact(questionnaire)
+  expect(result.status).toBe('Neutral')
+})
+
+test('analyze environmental impact that defaults to Neutral for an empty/undefined portfolio', () => {
+  const result = analyzeEnvironmentalImpact({})
+  expect(result.status).toBe('Neutral')
+})
