@@ -139,3 +139,22 @@ test('calculate diversification where it scores a broad, balanced portfolio well
   expect(result.interpretation).toBe('Excellent Diversification')
   expect(result.breakdown).toEqual({ holdingsScore: 100, concentrationScore: 100, sectorScore: 100 })
 })
+
+
+//Risk Tolerance
+test('calculate risk tolerance normalizes riskScore from range [4,16] to [0,100]', () => {
+  expect(calculateRiskTolerance({ riskScore: 4, riskProfile: 'Conservative' })).toEqual({
+    score: 0,
+    profile: 'Conservative',
+  })
+  expect(calculateRiskTolerance({ riskScore: 16, riskProfile: 'Aggressive' })).toEqual({
+    score: 100,
+    profile: 'Aggressive',
+  })
+  expect(calculateRiskTolerance({ riskScore: 10, riskProfile: 'Balanced' })).toEqual({
+    score: 50,
+    profile: 'Balanced',
+  })
+})
+
+
