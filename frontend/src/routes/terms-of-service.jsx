@@ -124,7 +124,7 @@ function TermsOfService() {
           <div className="policy-footer">
             <button
               type="button"
-              className="btn btn-outline btn-wide"
+              className="page-back-btn"
               onClick={() => window.history.back()}
             >
               ← Back
