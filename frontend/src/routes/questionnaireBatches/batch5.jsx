@@ -390,7 +390,7 @@ export default function Batch5() {
 
                     <td className="text-center" aria-label="Remove option">
                       <button
-                        className="btn btn-ghost btn-sm text-error"
+                        className="remove-btn"
                         onClick={() => removeRow(row.id)}
                       >
                         Remove 🗑️
