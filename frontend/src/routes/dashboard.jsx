@@ -6,7 +6,7 @@ export const Route = createFileRoute('/dashboard')({
   component: Dashboard,
 })
 
-function Dashboard() {
+export default function Dashboard() {
   const storedQuestionnaire = localStorage.getItem('questionnaire')
   console.log(storedQuestionnaire)
 
