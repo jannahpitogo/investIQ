@@ -192,3 +192,23 @@ test('calculate portfolio risk scores very high risk for a concentrated, short-h
     ]),
   )
 })
+
+
+// Compare Risk
+test('comparing risk reports "Excellent" and alignment when scores are equal', () => {
+  const result = compareRisk({ score: 50 }, { score: 50 })
+  expect(result).toEqual({ difference: 0, status: 'Excellent', direction: 'Portfolio is aligned with your tolerance' })
+})
+
+test('comparing risk reports portfolio riskier than tolerance', () => {
+  const result = compareRisk({ score: 20 }, { score: 80 })
+  expect(result.difference).toBe(60)
+  expect(result.status).toBe('Poor')
+  expect(result.direction).toBe('Portfolio is riskier than your tolerance')
+})
+
+test('comparing risk reports portfolio more conservative than tolerance', () => {
+  const result = compareRisk({ score: 80 }, { score: 60 })
+  expect(result.direction).toBe('Portfolio is more conservative than your tolerance')
+  expect(result.status).toBe('Good')
+})
