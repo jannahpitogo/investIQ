@@ -258,3 +258,40 @@ test('analyze environmental impact that defaults to Neutral for an empty/undefin
   const result = analyzeEnvironmentalImpact({})
   expect(result.status).toBe('Neutral')
 })
+
+//Social Impact
+test('analyze the social impact that returns "Positive" when no held companies match the selected boycott categories', () => {
+  const questionnaire = {
+    portfolio: [{ name: 'CleanCo' }],
+    highlights: ['Animal testing'],
+  }
+  const result = analyzeSocialImpact(questionnaire)
+  expect(result.status).toBe('Positive')
+  expect(result.conflicts).toEqual([])
+})
+
+test('analyze the social impact that returns "Conflict" when a held company matches a selected boycott category', () => {
+  const questionnaire = {
+    portfolio: [{ name: 'Burger King' }],
+    highlights: ['Animal Rights'],
+  }
+  const result = analyzeSocialImpact(questionnaire)
+  expect(result.status).toBe('Conflict')
+  expect(result.conflicts).toEqual([{ category: 'Animal Rights', companies: ['Burger King'] }])
+  expect(result.message).toContain('Burger King')
+})
+
+test('analyze the social impact that ignores highlights that have no matching boycott category', () => {
+  const questionnaire = {
+    portfolio: [{ name: 'CosmeticCo' }],
+    highlights: ['Not a real category'],
+  }
+  const result = analyzeSocialImpact(questionnaire)
+  expect(result.status).toBe('Positive')
+})
+
+test('analyze the social impact that defaults to "Positive" for empty/undefined portfolio and highlights', () => {
+  const result = analyzeSocialImpact({})
+  expect(result.status).toBe('Positive')
+  expect(result.conflicts).toEqual([])
+})
