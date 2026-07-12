@@ -119,3 +119,23 @@ test('calculate sector exposure, groups stocks with no sector under "Unknown"', 
   const result = calculateSectorExposure(portfolio)
   expect(result.Unknown).toEqual({ total_value: 10, percentage: 100 })
 })
+
+//Diversification
+test('calculate diversification where it scores a concentrated portfolio poorly', () => {
+  const portfolio = [{ quantity: 1, currentPrice: 100 }]
+  const summary = { numberOfHoldings: 1 }
+  const sectorExposure = { Tech: { percentage: 100 } }
+  const result = calculateDiversification(portfolio, summary, sectorExposure, 100)
+  expect(result.score).toBeLessThanOrEqual(20)
+  expect(result.interpretation).toBe('Very Concentrated')
+  expect(result.breakdown).toEqual({ holdingsScore: 20, concentrationScore: 20, sectorScore: 20 })
+})
+
+test('calculate diversification where it scores a broad, balanced portfolio well', () => {
+  const portfolio = Array.from({ length: 25 }, () => ({ quantity: 1, currentPrice: 4 }))
+  const summary = { numberOfHoldings: 25 }
+  const sectorExposure = { A: { percentage: 20 }, B: { percentage: 20 }, C: { percentage: 20 }, D: { percentage: 20 }, E: { percentage: 20 } }
+  const result = calculateDiversification(portfolio, summary, sectorExposure, 100)
+  expect(result.interpretation).toBe('Excellent Diversification')
+  expect(result.breakdown).toEqual({ holdingsScore: 100, concentrationScore: 100, sectorScore: 100 })
+})
