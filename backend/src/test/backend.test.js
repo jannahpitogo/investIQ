@@ -157,4 +157,38 @@ test('calculate risk tolerance normalizes riskScore from range [4,16] to [0,100]
   })
 })
 
+// Portfolio Risk
+test('calculate portfolio risk scores low risk for a diversified, long-horizon portfolio', () => {
+  const summary = {
+    numberOfHoldings: 25,
+    totalInvestment: 1000,
+    holdings: [{ investment: 40 }, { investment: 40 }],
+  }
+  const sectorExposure = { A: { percentage: 15 } }
+  const questionnaire = { horizon: 'More than 5 years' }
+  const result = calculatePortfolioRisk(summary, sectorExposure, questionnaire)
+  expect(result.profile).toBe('Low')
+  expect(result.score).toBeLessThan(25)
+  expect(result.reasons).toEqual(['Very long-term investment horizon.'])
+})
 
+test('calculate portfolio risk scores very high risk for a concentrated, short-horizon portfolio', () => {
+  const summary = {
+    numberOfHoldings: 2,
+    totalInvestment: 100,
+    holdings: [{ investment: 90 }, { investment: 10 }],
+  }
+  const sectorExposure = { Tech: { percentage: 90 } }
+  const questionnaire = { horizon: 'Less than 1 year' }
+  const result = calculatePortfolioRisk(summary, sectorExposure, questionnaire)
+  expect(result.profile).toBe('Very High')
+  expect(result.score).toBe(100)
+  expect(result.reasons).toEqual(
+    expect.arrayContaining([
+      'More than half of your portfolio is invested in one sector.',
+      'Very few holdings.',
+      'One investment represents a very large share of the portfolio.',
+      'Very short investment horizon.',
+    ]),
+  )
+})
