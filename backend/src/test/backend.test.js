@@ -106,3 +106,16 @@ test('calculate asset allocation where it returns ticker and percentage of total
     { ticker: 'BBB', percentage: 37.5 }, // 90/240
   ])
 })
+
+//Sector Exposure
+test('calculate sector exposure, groups value (at buyPrice) and percentage by sector', () => {
+  const result = calculateSectorExposure(basicPortfolio)
+  expect(result.Tech).toEqual({ total_value: 100, percentage: 50 })
+  expect(result.Finance).toEqual({ total_value: 100, percentage: 50 })
+})
+
+test('calculate sector exposure, groups stocks with no sector under "Unknown"', () => {
+  const portfolio = [{ quantity: 1, buyPrice: 10 }]
+  const result = calculateSectorExposure(portfolio)
+  expect(result.Unknown).toEqual({ total_value: 10, percentage: 100 })
+})
