@@ -1,5 +1,5 @@
 import { test, expect, vi, beforeEach } from 'vitest'
-import { BOYCOTT_LIST } from '../data/boycottList.js'
+// import { BOYCOTT_LIST } from '../data/boycottList.js'
 
 import {
   analysePortfolio,

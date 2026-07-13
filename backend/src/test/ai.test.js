@@ -69,7 +69,7 @@ test('generate suggestions that returns the parsed JSON content from the model r
 test('generate suggestions that throws if the model response is not valid JSON', async () => {
   mockOpenAiReply('not valid json')
 
-  await expect(generateSuggestions(questionnaire, analysis)).rejects.toThrow()
+  await expect(generateSuggestions(questionnaire, analysis)).rejects.toThrow('not valid JSON')
 })
 
 test('generate suggestions that propagates errors from the OpenAI client', async () => {
