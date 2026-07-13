@@ -295,3 +295,46 @@ test('analyze the social impact that defaults to "Positive" for empty/undefined 
   expect(result.status).toBe('Positive')
   expect(result.conflicts).toEqual([])
 })
+
+// Overall Portfolio Analysis
+test('analyze the overall portfolio that assembles all sub-metrics into one result object', () => {
+  const questionnaire = {
+    portfolio: basicPortfolio,
+    riskScore: 10,
+    riskProfile: 'Balanced',
+    horizon: '3-5 years',
+    exclusions: [],
+    highlights: [],
+  }
+  const result = analysePortfolio(questionnaire)
+
+  expect(result).toHaveProperty('portfolioSummary')
+  expect(result).toHaveProperty('totalPortfolioValue', 240)
+  expect(result).toHaveProperty('portfolioChange')
+  expect(result).toHaveProperty('topHoldings')
+  expect(result).toHaveProperty('assetAllocation')
+  expect(result).toHaveProperty('sectorExposure')
+  expect(result).toHaveProperty('diversification')
+  expect(result).toHaveProperty('riskTolerance')
+  expect(result).toHaveProperty('portfolioRisk')
+  expect(result).toHaveProperty('riskComparison')
+  expect(result).toHaveProperty('environmentalImpact')
+  expect(result).toHaveProperty('socialImpact')
+})
+
+test('analyze the overall portfolio that handles an empty portfolio without throwing', () => {
+  const questionnaire = {
+    portfolio: [],
+    riskScore: 4,
+    riskProfile: 'Conservative',
+    horizon: 'Less than 1 year',
+  }
+  expect(() => analysePortfolio(questionnaire)).not.toThrow()
+})
+
+
+
+
+
+
+
