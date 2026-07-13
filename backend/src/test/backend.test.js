@@ -21,8 +21,24 @@ beforeEach(() => {
   vi.spyOn(console, 'log').mockImplementation(() => {})
 })
 
-const stockA = { ticker: 'AAA', name: 'Alpha Inc', quantity: 10, buyPrice: 10, currentPrice: 15, sector: 'Tech', industry: 'Software' }
-const stockB = { ticker: 'BBB', name: 'Beta Inc', quantity: 5, buyPrice: 20, currentPrice: 18, sector: 'Finance', industry: 'Banking' }
+const stockA = {
+  ticker: 'AAA',
+  name: 'Alpha Inc',
+  quantity: 10,
+  buyPrice: 10,
+  currentPrice: 15,
+  sector: 'Tech',
+  industry: 'Software',
+}
+const stockB = {
+  ticker: 'BBB',
+  name: 'Beta Inc',
+  quantity: 5,
+  buyPrice: 20,
+  currentPrice: 18,
+  sector: 'Finance',
+  industry: 'Banking',
+}
 const basicPortfolio = [stockA, stockB]
 
 //TotalInvestment
@@ -134,12 +150,21 @@ test('calculate diversification where it scores a concentrated portfolio poorly'
 test('calculate diversification where it scores a broad, balanced portfolio well', () => {
   const portfolio = Array.from({ length: 25 }, () => ({ quantity: 1, currentPrice: 4 }))
   const summary = { numberOfHoldings: 25 }
-  const sectorExposure = { A: { percentage: 20 }, B: { percentage: 20 }, C: { percentage: 20 }, D: { percentage: 20 }, E: { percentage: 20 } }
+  const sectorExposure = {
+    A: { percentage: 20 },
+    B: { percentage: 20 },
+    C: { percentage: 20 },
+    D: { percentage: 20 },
+    E: { percentage: 20 },
+  }
   const result = calculateDiversification(portfolio, summary, sectorExposure, 100)
   expect(result.interpretation).toBe('Excellent Diversification')
-  expect(result.breakdown).toEqual({ holdingsScore: 100, concentrationScore: 100, sectorScore: 100 })
+  expect(result.breakdown).toEqual({
+    holdingsScore: 100,
+    concentrationScore: 100,
+    sectorScore: 100,
+  })
 })
-
 
 //Risk Tolerance
 test('calculate risk tolerance normalizes riskScore from range [4,16] to [0,100]', () => {
@@ -193,11 +218,14 @@ test('calculate portfolio risk scores very high risk for a concentrated, short-h
   )
 })
 
-
 // Compare Risk
 test('comparing risk reports "Excellent" and alignment when scores are equal', () => {
   const result = compareRisk({ score: 50 }, { score: 50 })
-  expect(result).toEqual({ difference: 0, status: 'Excellent', direction: 'Portfolio is aligned with your tolerance' })
+  expect(result).toEqual({
+    difference: 0,
+    status: 'Excellent',
+    direction: 'Portfolio is aligned with your tolerance',
+  })
 })
 
 test('comparing risk reports portfolio riskier than tolerance', () => {
@@ -331,10 +359,3 @@ test('analyze the overall portfolio that handles an empty portfolio without thro
   }
   expect(() => analysePortfolio(questionnaire)).not.toThrow()
 })
-
-
-
-
-
-
-

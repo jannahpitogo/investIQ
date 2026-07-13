@@ -18,14 +18,19 @@ const questionnaire = { name: 'Jane Doe', riskProfile: 'Balanced' }
 const analysis = { totalPortfolioValue: 240, portfolioChange: 20 }
 
 const validAiResponse = {
-  suggestions: [{ title: 'Diversify', type: 'warning', message: 'Consider spreading holdings across more sectors.' }],
+  suggestions: [
+    {
+      title: 'Diversify',
+      type: 'warning',
+      message: 'Consider spreading holdings across more sectors.',
+    },
+  ],
 }
 function mockOpenAiReply(content) {
   mockCreate.mockResolvedValue({
     choices: [{ message: { content } }],
   })
 }
-
 
 // generateSuggestions tests
 test('generate suggestions that calls calls the OpenAI client with the expected model and settings', async () => {
@@ -72,4 +77,3 @@ test('generate suggestions that propagates errors from the OpenAI client', async
 
   await expect(generateSuggestions(questionnaire, analysis)).rejects.toThrow('rate limit exceeded')
 })
-
