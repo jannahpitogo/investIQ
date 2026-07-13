@@ -11,14 +11,16 @@ const teamMembers = [
     role: 'Team Lead & Fullstack Developer',
     title: 'The Swiss Army Knife',
     image: '/images/team/trang.png',
-    description: "Connected all the pieces by tackling full-stack development, reviewing pull requests, handling deployments, coordinating the team, and filling in wherever help was needed.",
+    description:
+      'Connected all the pieces by tackling full-stack development, reviewing pull requests, handling deployments, coordinating the team, and filling in wherever help was needed.',
   },
   {
     name: 'Jannah Pitogo',
     role: 'Web Developer',
     title: 'The Research Guru',
     image: '/images/team/jannah.jpg',
-    description: "Powered the backend with the application's core logic, hunted down bugs through testing and QA, and made sure our presentation looked as good as our code.",
+    description:
+      "Powered the backend with the application's core logic, hunted down bugs through testing and QA, and made sure our presentation looked as good as our code.",
   },
   {
     name: 'Diksha Aggarwal',
@@ -26,7 +28,7 @@ const teamMembers = [
     title: 'The Quality Detective',
     image: '/images/team/diksha.jpg',
     description:
-      "Led the development of the landing page, contributed to dashboard implementation, and performed application testing and quality assurance.",
+      'Led the development of the landing page, contributed to dashboard implementation, and performed application testing and quality assurance.',
   },
   {
     name: 'Ifeoma Osegbo',
@@ -34,32 +36,25 @@ const teamMembers = [
     title: 'The Frontend Design Wizard',
     image: '/images/team/ifeoma.PNG',
     description:
-      "Brought the frontend to life with a user-focused and business-minded design approach, becoming the go-to expert for the questionnaire page.",
+      'Brought the frontend to life with a user-focused and business-minded design approach, becoming the go-to expert for the questionnaire page.',
   },
 ]
-
 
 function About() {
   return (
     <QuestionnaireLayout>
       <main className="about-page">
         <div className="about-card">
-
           {/* Hero */}
           <section className="about-hero">
-            <div className="about-badge">
-              About InvestIQ
-            </div>
+            <div className="about-badge">About InvestIQ</div>
 
-            <h1>
-              Built to help beginner investors make more informed decisions.
-            </h1>
+            <h1>Built to help beginner investors make more informed decisions.</h1>
 
             <p>
-              InvestIQ is an educational web application that helps retail
-              investors understand portfolio diversification, investment risk,
-              and environmental and social considerations through interactive
-              learning and personalized insights.
+              InvestIQ is an educational web application that helps retail investors understand
+              portfolio diversification, investment risk, and environmental and social
+              considerations through interactive learning and personalized insights.
             </p>
           </section>
 
@@ -69,9 +64,9 @@ function About() {
               <h3>Meet the InvestIQ Team</h3>
 
               <p>
-                The team behind InvestIQ during the Migracode capstone project,
-                collaborating to build a platform that helps beginner investors make
-                more informed investment decisions.
+                The team behind InvestIQ during the Migracode capstone project, collaborating to
+                build a platform that helps beginner investors make more informed investment
+                decisions.
               </p>
             </div>
 
@@ -87,29 +82,21 @@ function About() {
               </p>
             </div>
 
-          
-              <div className="team-grid">
-                {teamMembers.map((member) => (
-                  <div className="team-card" key={member.name}>
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="team-member-photo"
-                    />
+            <div className="team-grid">
+              {teamMembers.map((member) => (
+                <div className="team-card" key={member.name}>
+                  <img src={member.image} alt={member.name} className="team-member-photo" />
 
-                    <h3>{member.name}</h3>
+                  <h3>{member.name}</h3>
 
-                    <p className="team-role">{member.role}</p>
+                  <p className="team-role">{member.role}</p>
 
-                    <p className="team-title">{member.title}</p>
+                  <p className="team-title">{member.title}</p>
 
-                    <p className="team-description">
-                      {member.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            
+                  <p className="team-description">{member.description}</p>
+                </div>
+              ))}
+            </div>
           </section>
 
           {/* Leadership */}
@@ -117,15 +104,14 @@ function About() {
             <h2>Project Leadership</h2>
 
             <div className="leadership-grid">
-
               <div className="leader-card">
                 <h3>Product Owner</h3>
 
                 <h4>- Yassine Y.</h4>
 
                 <p>
-                  Product owner responsible for guiding the project vision,
-                  defining requirements, and supporting the development team.
+                  Product owner responsible for guiding the project vision, defining requirements,
+                  and supporting the development team.
                 </p>
               </div>
 
@@ -135,11 +121,10 @@ function About() {
                 <h4>- John Cowie</h4>
 
                 <p>
-                  Provided technical mentorship, code reviews, and development
-                  guidance throughout the project.
+                  Provided technical mentorship, code reviews, and development guidance throughout
+                  the project.
                 </p>
               </div>
-
             </div>
           </section>
 
@@ -151,9 +136,8 @@ function About() {
               <h3>Migracode Barcelona</h3>
 
               <p>
-                InvestIQ was developed as part of the Migracode Software
-                Development Program. We are grateful to the mentors,
-                volunteers, and the entire Migracode community for their
+                InvestIQ was developed as part of the Migracode Software Development Program. We are
+                grateful to the mentors, volunteers, and the entire Migracode community for their
                 continuous support and encouragement throughout this project.
               </p>
             </div>
@@ -161,15 +145,10 @@ function About() {
 
           {/* Footer */}
           <div className="about-footer">
-            <button
-              type="button"
-              className="page-back-btn"
-              onClick={() => window.history.back()}
-            >
+            <button type="button" className="page-back-btn" onClick={() => window.history.back()}>
               ← Back
             </button>
           </div>
-
         </div>
       </main>
     </QuestionnaireLayout>

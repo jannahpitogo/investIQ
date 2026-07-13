@@ -29,7 +29,6 @@ export default function QuestionnaireLayout({ children }) {
           </div>
 
           <div className="footer-links">
-
             <div className="footer-column">
               <h4>About</h4>
 

@@ -374,14 +374,13 @@ nav {
   display: block;
   font-size: 1rem;
   font-weight: 700;
-
 }
 .footer-brand p {
   display: block;
   padding-left: 0.75rem;
   margin-bottom: 0.5rem;
   color: #f8f9f9;
-  transition: color 0.2s ease;  
+  transition: color 0.2s ease;
   border-left: 2px solid #10b981;
 }
 
@@ -1175,7 +1174,6 @@ nav {
     padding: 0.75rem;
   }
 }
-
 
 /* ===========================
    Saved Questionnaire Card

@@ -36,7 +36,9 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <p className="helper-text">Takes less than 2 - 5 minutes • No financial experience required</p>
+        <p className="helper-text">
+          Takes less than 2 - 5 minutes • No financial experience required
+        </p>
       </section>
 
       {/* Features Section */}
@@ -128,7 +130,6 @@ export default function HomePage() {
 
           {/* Links */}
           <div className="footer-links">
-
             {/* About */}
             <div className="footer-column">
               <h4>About</h4>

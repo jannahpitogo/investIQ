@@ -87,9 +87,7 @@ function QuestionnairePage() {
                 </p>
 
                 {lastUpdated && (
-                  <p className="saved-questionnaire-date">
-                    Last saved: {lastUpdated}
-                  </p>
+                  <p className="saved-questionnaire-date">Last saved: {lastUpdated}</p>
                 )}
 
                 <div className="saved-questionnaire-progress">
@@ -98,11 +96,7 @@ function QuestionnairePage() {
                     <span>{progressPercent}%</span>
                   </div>
 
-                  <progress
-                    className="saved-progress-bar"
-                    value={progressPercent}
-                    max="100"
-                  />
+                  <progress className="saved-progress-bar" value={progressPercent} max="100" />
 
                   <p className="progress-status">
                     {isCompleted
@@ -169,18 +163,17 @@ function QuestionnairePage() {
                   Get Started
                 </button>
 
-                <p className="questionnaire-helper">
-                  You can change your answers at any time.
-                </p>
+                <p className="questionnaire-helper">You can change your answers at any time.</p>
 
                 <p className="questionnaire-disclaimer">
                   By continuing, you agree that InvestIQ may temporarily store your questionnaire
-                  responses to personalize your experience and generate your investment profile.
-                  For more information about how we collect, use, and protect your information,
-                  please read our{' '}
+                  responses to personalize your experience and generate your investment profile. For
+                  more information about how we collect, use, and protect your information, please
+                  read our{' '}
                   <Link to="/privacy-policy" className="policy-link">
                     Privacy Policy
-                  </Link>.
+                  </Link>
+                  .
                 </p>
               </>
             )}

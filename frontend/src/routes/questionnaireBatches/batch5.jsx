@@ -389,10 +389,7 @@ export default function Batch5() {
                     <td className="text-center font-semibold">{value}</td>
 
                     <td className="text-center" aria-label="Remove option">
-                      <button
-                        className="remove-btn"
-                        onClick={() => removeRow(row.id)}
-                      >
+                      <button className="remove-btn" onClick={() => removeRow(row.id)}>
                         Remove 🗑️
                       </button>
                     </td>
