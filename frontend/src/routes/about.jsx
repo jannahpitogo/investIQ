@@ -5,7 +5,6 @@ export const Route = createFileRoute('/about')({
   component: About,
 })
 
-/*
 const teamMembers = [
   {
     name: 'Trang Do Thuy',
@@ -32,7 +31,7 @@ const teamMembers = [
     image: '/images/team/ifeoma.PNG',
   },
 ]
-*/
+
 
 function About() {
   return (
@@ -82,7 +81,7 @@ function About() {
               </p>
             </div>
 
-            {/*
+          
               <div className="team-grid">
                 {teamMembers.map((member) => (
                   <div className="team-card" key={member.name}>
@@ -102,7 +101,7 @@ function About() {
                   </div>
                 ))}
               </div>
-              */}
+            
           </section>
 
           {/* Leadership */}
