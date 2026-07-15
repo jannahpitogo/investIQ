@@ -97,8 +97,8 @@ export default function Dashboard() {
           <h1>Portfolio Dashboard</h1>
           <p>Understand your investments. Make better decisions with AI-powered suggestions.</p>
           <div className="disclaimer">
-            ⚠️ The results are for educational purposes only. Current stock information is fixed and
-            get from{' '}
+            ⚠️ The results are for educational purposes only. Current stock list is limitied and
+            fixed. Data is get from{' '}
             <a href="https://edition.cnn.com/markets" target="_blank" rel="noopener noreferrer">
               CNN
             </a>{' '}
