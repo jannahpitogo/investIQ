@@ -11,7 +11,7 @@ export default function HomePage() {
     <main>
       {/* Hero Section */}
       <section className="hero">
-        <h1 className="font-bold text-lg text-emerald-600 hero-title">InvestIQ</h1>
+        <h1 className="hero-title gradient-text">InvestIQ</h1>
         <br />
         <div className="badge">Built for retail investors</div>
         <h1 className="hero-title">
