@@ -297,7 +297,8 @@ export default function Dashboard() {
 
           {/* Portfolio Risk */}
           <div className="dashboard-card">
-            <h2>Risk Tolerance
+            <h2>
+              Risk Tolerance
               <InfoTooltip text="Your preferred investment risk level based on your questionnaire responses." />
             </h2>
             <div className="tolerance-score">
