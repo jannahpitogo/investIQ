@@ -149,7 +149,7 @@ body {
   font-size: 1.05rem;
   background: white;
   padding: 2rem;
-  border-radius: 25px;  
+  border-radius: 25px;
 }
 
 .features-section {
@@ -458,7 +458,7 @@ nav {
   display: grid;
   place-items: center;
   width: 100%;
-   font-size: 0.9rem;
+  font-size: 0.9rem;
   color: #475569;
 }
 

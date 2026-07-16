@@ -201,7 +201,7 @@ export default function Dashboard() {
 
             <strong>{riskComparison.direction}</strong>
           </div>
-          
+
           {/* Top 3 holdings */}
           <div className="dashboard-card">
             <h2>
@@ -294,13 +294,11 @@ export default function Dashboard() {
               <li>- Concentration Score: {diversification.breakdown.concentrationScore}/100</li>
               <li>- Sector Score: {diversification.breakdown.sectorScore}/100</li>
             </ul>
-          </div>          
+          </div>
 
           {/* Portfolio Risk */}
           <div className="dashboard-card">
-            <h2>
-              Risk Tolerance
-            </h2>
+            <h2>Risk Tolerance</h2>
 
             <div className="tolerance-score">
               <h1>{riskTolerance.score}/100</h1>
@@ -318,7 +316,10 @@ export default function Dashboard() {
                 }}
               />
             </div>
-            <p>The more aggressive your risk tolerance, the more comfortable you are with large losses in exchange for higher potential growth.</p>
+            <p>
+              The more aggressive your risk tolerance, the more comfortable you are with large
+              losses in exchange for higher potential growth.
+            </p>
             <br></br>
             <p>Based on your questionnaire responses, your risk preference is classified as:</p>
 
@@ -384,7 +385,7 @@ export default function Dashboard() {
             </div>
 
             <p>{socialImpact.message}</p>
-          </div>          
+          </div>
 
           {/* AI Insights */}
 
@@ -410,22 +411,19 @@ export default function Dashboard() {
               ))}
             </ul>
           </div>
-
         </div>
 
         {/* Footer  */}
-          <div className="about-footer">
-            <button type="button" className="page-back-btn" onClick={() => window.history.back()}>
-              ← Back
-            </button>
-          </div>
-
-          <div className="footer-bottom-dashboard">
-          <p>© {new Date().getFullYear()} InvestIQ. All rights reserved.</p>
+        <div className="about-footer">
+          <button type="button" className="page-back-btn" onClick={() => window.history.back()}>
+            ← Back
+          </button>
         </div>
 
+        <div className="footer-bottom-dashboard">
+          <p>© {new Date().getFullYear()} InvestIQ. All rights reserved.</p>
+        </div>
       </div>
-      
     </div>
   )
 }

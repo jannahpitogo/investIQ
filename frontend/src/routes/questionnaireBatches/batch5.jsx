@@ -209,8 +209,8 @@ export default function Batch5() {
         }
 
         throw new Error(
-  `${response.status}: ${serverMessage || `Server error (${response.status}).`}`
-)
+          `${response.status}: ${serverMessage || `Server error (${response.status}).`}`,
+        )
       }
 
       const analysis = await response.json()
@@ -534,16 +534,11 @@ export default function Batch5() {
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl p-8 shadow-xl text-center">
             <span className="loading loading-spinner loading-lg text-primary"></span>
-            <p className="mt-4 font-semibold">
-              Creating your investment insights...
-            </p>
-            <p className="text-sm opacity-60 mt-2">
-              This may take a few moments.
-            </p>
+            <p className="mt-4 font-semibold">Creating your investment insights...</p>
+            <p className="text-sm opacity-60 mt-2">This may take a few moments.</p>
           </div>
         </div>
       )}
-      
     </QuestionnaireLayout>
   )
 }
