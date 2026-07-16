@@ -152,6 +152,38 @@ export default function Dashboard() {
         {/* RIGHT COLUMN */}
 
         <div className="right-column">
+          <div className="dashboard-card">
+            <h2>
+              Risk Assessment
+              <InfoTooltip text="Compares your personal risk tolerance with the actual risk level of your portfolio." />
+            </h2>
+
+            <div className="comparison">
+              <div className={`match-status ${riskTolerance.profile}`}>
+                <span>Your Tolerance</span>
+                <strong>{riskTolerance.score}/100</strong>
+              </div>
+
+              <div className={`match-status ${portfolioRisk.profile}`}>
+                <span>Portfolio Risk</span>
+                <strong>{portfolioRisk.score}/100</strong>
+              </div>
+            </div>
+
+            <div className={`match-status ${riskComparison.status.toLowerCase()}`}>
+              Difference: {riskComparison.difference}
+            </div>
+
+            <div className={`match-status ${riskComparison.status.toLowerCase()}`}>
+              Status: {riskComparison.status}
+            </div>
+
+            <br />
+            {/* <p>Reasons for risk score::</p> */}
+
+            <strong>{riskComparison.direction}</strong>
+          </div>
+          
           {/* Top 3 holdings */}
           <div className="dashboard-card">
             <h2>
@@ -214,34 +246,6 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Environmental & Social Impact */}
-
-          <div className="dashboard-card">
-            <h2>
-              Environmental Impact
-              <InfoTooltip text="How your portfolio aligns with environmentally friendly industries." />
-            </h2>
-
-            <div className={`impact-status ${environmentalImpact.status.toLowerCase()}`}>
-              {environmentalImpact.status}
-            </div>
-
-            <p>{environmentalImpact.message}</p>
-          </div>
-
-          <div className="dashboard-card">
-            <h2>
-              Social Impact
-              <InfoTooltip text="Whether your portfolio aligns with the ethical values you selected." />
-            </h2>
-
-            <div className={`impact-status ${socialImpact.status.toLowerCase()}`}>
-              {socialImpact.status}
-            </div>
-
-            <p>{socialImpact.message}</p>
-          </div>
-
           <div className="dashboard-card">
             <h2>
               Diversification Score
@@ -273,6 +277,36 @@ export default function Dashboard() {
               <li>- Sector Score: {diversification.breakdown.sectorScore}/100</li>
             </ul>
           </div>
+
+          {/* Environmental & Social Impact */}
+
+          <div className="dashboard-card">
+            <h2>
+              Environmental Impact
+              <InfoTooltip text="How your portfolio aligns with environmentally friendly industries." />
+            </h2>
+
+            <div className={`impact-status ${environmentalImpact.status.toLowerCase()}`}>
+              {environmentalImpact.status}
+            </div>
+
+            <p>{environmentalImpact.message}</p>
+          </div>
+
+          <div className="dashboard-card">
+            <h2>
+              Social Impact
+              <InfoTooltip text="Whether your portfolio aligns with the ethical values you selected." />
+            </h2>
+
+            <div className={`impact-status ${socialImpact.status.toLowerCase()}`}>
+              {socialImpact.status}
+            </div>
+
+            <p>{socialImpact.message}</p>
+          </div>
+
+          
 
           {/* Portfolio Risk */}
           <div className="dashboard-card">
@@ -336,37 +370,7 @@ export default function Dashboard() {
             </ul>
           </div>
 
-          <div className="dashboard-card">
-            <h2>
-              Risk Assessment
-              <InfoTooltip text="Compares your personal risk tolerance with the actual risk level of your portfolio." />
-            </h2>
-
-            <div className="comparison">
-              <div className={`match-status ${riskTolerance.profile}`}>
-                <span>Your Tolerance</span>
-                <strong>{riskTolerance.score}/100</strong>
-              </div>
-
-              <div className={`match-status ${portfolioRisk.profile}`}>
-                <span>Portfolio Risk</span>
-                <strong>{portfolioRisk.score}/100</strong>
-              </div>
-            </div>
-
-            <div className={`match-status ${riskComparison.status.toLowerCase()}`}>
-              Difference: {riskComparison.difference}
-            </div>
-
-            <div className={`match-status ${riskComparison.status.toLowerCase()}`}>
-              Status: {riskComparison.status}
-            </div>
-
-            <br />
-            {/* <p>Reasons for risk score::</p> */}
-
-            <strong>{riskComparison.direction}</strong>
-          </div>
+          
 
           {/* AI Insights */}
 
