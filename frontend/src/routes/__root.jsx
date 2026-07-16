@@ -27,6 +27,9 @@ function RootLayout() {
           </div>
 
           <div className="q-header-links">
+            <Link to="/questionnaire" className="q-header-link">
+              Questionnaire
+            </Link>
             <Link to="/about" className="q-header-link">
               About
             </Link>
