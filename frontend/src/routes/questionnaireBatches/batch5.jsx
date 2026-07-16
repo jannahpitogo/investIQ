@@ -258,7 +258,7 @@ export default function Batch5() {
       {/* Header */}
       <QuestionBlock
         title="13. What investments do you currently hold?"
-        helper="Search for stocks and enter quantities and buy prices."
+        helper="Search for stocks and enter quantities and buy prices. The current list is for reference only. Feel free to update it."
         completed={rows.length > 0}
       />
 
