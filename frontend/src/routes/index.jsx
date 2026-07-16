@@ -116,6 +116,23 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+    <section className="cta-section">
+      <div className="cta-content">
+      <h2>Ready to Invest Smarter?</h2>
+      <div className="hero-actions">
+
+        <Link to="/questionnaire" className="primary-btn">
+          Get Started →
+        </Link>
+
+        <p className="helper-text">
+          Takes less than 2 - 5 minutes • No financial experience required
+        </p>
+      </div>
+      </div>
+    </section>
+
       {/* Footer */}
       <footer className="footer">
         <div className="footer-container">
