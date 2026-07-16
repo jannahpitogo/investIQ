@@ -190,6 +190,21 @@ export default function Batch5() {
         body: JSON.stringify(questionnaire),
       })
 
+      if (!response.ok) {
+        let serverMessage = ''
+
+        try {
+          const errorPayload = await response.json()
+          serverMessage = errorPayload?.message || errorPayload?.error || ''
+        } catch {
+          // Ignore parse errors and fall back to a generic message below.
+        }
+
+        throw new Error(
+  `${response.status}: ${serverMessage || `Server error (${response.status}).`}`
+)
+      }
+
       const analysis = await response.json()
 
       const completeData = {
@@ -209,7 +224,26 @@ export default function Batch5() {
       navigate({ to: '/dashboard' })
     } catch (err) {
       console.error(err)
-      alert('Something went wrong while saving your questionnaire.')
+
+      const message = err instanceof Error ? err.message : ''
+      const normalized = message.toLowerCase()
+
+      let userMessage =
+        'We could not complete your request, so the dashboard was not opened. Please try again.'
+
+      if (normalized.includes('failed to fetch') || normalized.includes('network')) {
+        userMessage =
+          'Could not connect to the server. Please make sure the backend is running, then try again.'
+      } else if (normalized.includes('400')) {
+        userMessage =
+          'Some portfolio data looks invalid. Please check quantity and buy price values, then try again.'
+      } else if (normalized.includes('500')) {
+        userMessage =
+          'The server had an internal error while generating your analysis. Please try again in a moment.'
+      } else if (message) {
+        userMessage = message
+      }
+      alert(`${userMessage}\n\nYour current entries are still on this page.`)
     }
   }
 
