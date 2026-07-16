@@ -614,6 +614,15 @@ nav {
   font-style: italic;
 }
 
+.q-main-text {
+  max-width: 700px;
+
+  margin: 0 auto;
+
+  color: var(--text);
+  font-size: 1.1rem;
+}
+
 .q-helperError {
   color: var(--error);
 }
@@ -1299,6 +1308,25 @@ nav {
 
 .saved-questionnaire-buttons .btn {
   flex: 1;
+}
+
+.questionnaire-start-btn {
+  border: none;
+  cursor: pointer;
+
+  padding: 1rem 2rem;
+
+  border-radius: 12px;
+
+  color: white;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
 }
 
 .saved-progress-bar {
