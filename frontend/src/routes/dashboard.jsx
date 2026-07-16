@@ -276,43 +276,12 @@ export default function Dashboard() {
               <li>- Concentration Score: {diversification.breakdown.concentrationScore}/100</li>
               <li>- Sector Score: {diversification.breakdown.sectorScore}/100</li>
             </ul>
-          </div>
-
-          {/* Environmental & Social Impact */}
-
-          <div className="dashboard-card">
-            <h2>
-              Environmental Impact
-              <InfoTooltip text="How your portfolio aligns with environmentally friendly industries." />
-            </h2>
-
-            <div className={`impact-status ${environmentalImpact.status.toLowerCase()}`}>
-              {environmentalImpact.status}
-            </div>
-
-            <p>{environmentalImpact.message}</p>
-          </div>
-
-          <div className="dashboard-card">
-            <h2>
-              Social Impact
-              <InfoTooltip text="Whether your portfolio aligns with the ethical values you selected." />
-            </h2>
-
-            <div className={`impact-status ${socialImpact.status.toLowerCase()}`}>
-              {socialImpact.status}
-            </div>
-
-            <p>{socialImpact.message}</p>
-          </div>
-
-          
+          </div>          
 
           {/* Portfolio Risk */}
           <div className="dashboard-card">
             <h2>
               Risk Tolerance
-              <InfoTooltip text="Your preferred investment risk level based on your questionnaire responses." />
             </h2>
 
             <div className="tolerance-score">
@@ -331,7 +300,8 @@ export default function Dashboard() {
                 }}
               />
             </div>
-
+            <p>The more aggressive your risk tolerance, the more comfortable you are with large losses in exchange for higher potential growth.</p>
+            <br></br>
             <p>Based on your questionnaire responses, your risk preference is classified as:</p>
 
             <strong>{riskTolerance.profile} Risk Tolerance</strong>
@@ -370,7 +340,33 @@ export default function Dashboard() {
             </ul>
           </div>
 
-          
+          {/* Environmental & Social Impact */}
+
+          <div className="dashboard-card">
+            <h2>
+              Environmental Impact
+              <InfoTooltip text="How your portfolio aligns with environmentally friendly industries." />
+            </h2>
+
+            <div className={`impact-status ${environmentalImpact.status.toLowerCase()}`}>
+              {environmentalImpact.status}
+            </div>
+
+            <p>{environmentalImpact.message}</p>
+          </div>
+
+          <div className="dashboard-card">
+            <h2>
+              Social Impact
+              <InfoTooltip text="Whether your portfolio aligns with the ethical values you selected." />
+            </h2>
+
+            <div className={`impact-status ${socialImpact.status.toLowerCase()}`}>
+              {socialImpact.status}
+            </div>
+
+            <p>{socialImpact.message}</p>
+          </div>          
 
           {/* AI Insights */}
 
