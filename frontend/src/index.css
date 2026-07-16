@@ -497,13 +497,23 @@ nav {
   z-index: 100;
   background: rgba(255, 255, 255, 0);
   backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
   /* border-bottom: 1px solid rgba(16, 185, 129, 0.12); */
 }
 
+.q-header-links {
+  display: flex;
+  gap: 1.5rem;
+  margin-left: auto;
+}
+
 .q-header-container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 0 2rem;
+  max-width: none;
+  margin: 0;
+  padding: 0;
 }
 
 .q-logo {
