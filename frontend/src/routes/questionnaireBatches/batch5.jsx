@@ -13,6 +13,8 @@ export const Route = createFileRoute('/questionnaireBatches/batch5')({
 
 export default function Batch5() {
   const navigate = useNavigate()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const { answers, updateAnswers } = useQuestionnaire()
 
   const [query, setQuery] = useState('')
@@ -176,6 +178,8 @@ export default function Batch5() {
     rows.length > 0 && rows.every((r) => Number(r.quantity) > 0 && Number(r.buyPrice) > 0)
 
   async function handleFinish() {
+    setIsSubmitting(true)
+
     const questionnaire = {
       ...answers,
       portfolio: rows,
@@ -244,6 +248,8 @@ export default function Batch5() {
         userMessage = message
       }
       alert(`${userMessage}\n\nYour current entries are still on this page.`)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -509,9 +515,31 @@ export default function Batch5() {
           disabled={!canProceed}
           onClick={handleFinish}
         >
-          View Insights →
+          {isSubmitting ? (
+            <>
+              <span className="loading loading-spinner loading-sm"></span>
+              Generating Insights...
+            </>
+          ) : (
+            'View Insights →'
+          )}
         </button>
       </div>
+
+      {isSubmitting && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-8 shadow-xl text-center">
+            <span className="loading loading-spinner loading-lg text-primary"></span>
+            <p className="mt-4 font-semibold">
+              Creating your investment insights...
+            </p>
+            <p className="text-sm opacity-60 mt-2">
+              This may take a few moments.
+            </p>
+          </div>
+        </div>
+      )}
+      
     </QuestionnaireLayout>
   )
 }
