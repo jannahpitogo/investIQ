@@ -25,6 +25,18 @@ function RootLayout() {
               InvestIQ
             </Link>
           </div>
+
+          <div className="q-header-links">
+            <Link to="/about" className="q-header-link">
+              About
+            </Link>
+            <Link to="/privacy-policy" className="q-header-link">
+              Privacy
+            </Link>
+            <Link to="/terms-of-service" className="q-header-link">
+              Terms
+            </Link>
+          </div>
         </header>
         {/* <Link
           to="/about"
