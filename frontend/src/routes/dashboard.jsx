@@ -61,7 +61,18 @@ export default function Dashboard() {
     Consumer: '#ef4444',
     Energy: '#06b6d4',
   }
-  const COLORS = ['#4f46e5', '#22c55e', '#f59e0b', '#ef4444', '#06b6d4']
+  const COLORS = [
+    '#4f46e5',
+    '#22c55e',
+    '#f59e0b',
+    '#ef4444',
+    '#06b6d4',
+    '#8b5cf6',
+    '#f97316',
+    '#e11d48',
+    '#3b82f6',
+    '#10b981',
+  ]
   const sectors = Object.entries(sectorExposure).map(([sector, value]) => ({
     sector,
     percentage: value.percentage,
@@ -86,7 +97,14 @@ export default function Dashboard() {
           <h1>Welcome {name} 👋</h1>
           <h1>Portfolio Dashboard</h1>
           <p>Understand your investments. Make better decisions with AI-powered suggestions.</p>
-          <div className="disclaimer">⚠️ The results are for educational purposes only.</div>
+          <div className="disclaimer">
+            ⚠️ The results are for educational purposes only. Current stock list is limitied and
+            fixed. Data is get from{' '}
+            <a href="https://edition.cnn.com/markets" target="_blank" rel="noopener noreferrer">
+              CNN
+            </a>{' '}
+            on June 26, 2026.
+          </div>
         </div>
       </div>
 

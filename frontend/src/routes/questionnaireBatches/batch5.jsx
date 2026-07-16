@@ -186,7 +186,11 @@ export default function Batch5() {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/questionnaire', {
+      const API_URL = import.meta.env.DEV
+        ? 'http://localhost:3000'
+        : 'https://investiq-backend-n3sv.onrender.com'
+      console.log('Backend URL:', `${API_URL}/api/questionnaire`)
+      const response = await fetch(`${API_URL}/api/questionnaire`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
