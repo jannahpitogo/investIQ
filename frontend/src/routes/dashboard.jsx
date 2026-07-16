@@ -375,7 +375,7 @@ export default function Dashboard() {
 
           <div className="dashboard-card">
             <h2>
-              Social Impact
+              Social Values Alignment
               <InfoTooltip text="Whether your portfolio aligns with the ethical values you selected." />
             </h2>
 
